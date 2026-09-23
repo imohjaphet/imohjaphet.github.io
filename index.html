@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Imoh Japhet — Automation Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #0E1416;
+    --card: #161F22;
+    --ink: #F3F6F5;
+    --ink-soft: #9BADA9;
+    --line: #26343580;
+    --signal: #F5A623;
+    --teal: #4FD1C5;
+    --teal-soft: #12302D;
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --paper: #E9EDEC;
+      --card: #F6F8F7;
+      --ink: #1C2B33;
+      --ink-soft: #48585F;
+      --line: #C7D0CD;
+      --signal: #B9812C;
+      --teal: #2B7A73;
+      --teal-soft: #DCE7E5;
+    }
+  }
+  :root[data-theme="light"] {
+    --paper: #E9EDEC;
+    --card: #F6F8F7;
+    --ink: #1C2B33;
+    --ink-soft: #48585F;
+    --line: #C7D0CD;
+    --signal: #B9812C;
+    --teal: #2B7A73;
+    --teal-soft: #DCE7E5;
+  }
+
+  * { box-sizing: border-box; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: env(safe-area-inset-top, 0px);
+  }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-attachment: fixed;
+    background-position: -1px -1px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation: none !important; transition: none !important; }
+  }
+
+  h1, h2, h3 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    line-height: 1.12;
+    margin: 0;
+    letter-spacing: -0.015em;
+  }
+
+  a { color: var(--teal); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--signal); outline-offset: 3px; }
+
+  ::selection { background: var(--signal); color: #171717; }
+
+  .wrap {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  header.top {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    z-index: 10;
+    background: color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .top-inner .name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1.05rem;
+    white-space: nowrap;
+  }
+  .top-inner nav {
+    display: flex;
+    gap: 20px;
+    font-size: 0.92rem;
+  }
+  .top-inner nav { align-items: center; }
+  .top-inner nav a { color: var(--ink-soft); text-decoration: none; }
+  .top-inner nav a:hover { color: var(--teal); }
+  .top-inner nav a.nav-cta {
+    color: var(--paper);
+    background: var(--signal);
+    padding: 7px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+  .top-inner nav a.nav-cta:hover { color: var(--paper); opacity: 0.9; }
+
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 5px 12px;
+    background: var(--card);
+  }
+  .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--signal);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 25%, transparent);
+  }
+
+  section { padding: 64px 0; }
+  section.hero { padding-top: 64px; padding-bottom: 0; }
+
+  .hero h1 { font-size: clamp(2.4rem, 7vw, 4.1rem); max-width: 14ch; }
+  .hero .sub { color: var(--ink-soft); font-size: 1.15rem; max-width: 54ch; margin-top: 20px; }
+  .hero .role { color: var(--teal); font-family: 'IBM Plex Mono', monospace; font-size: 0.9rem; margin-top: 16px; display: block; }
+
+  .cta-row { margin-top: 32px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.98rem;
+    padding: 13px 24px;
+    border-radius: 7px;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid transparent;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .btn.primary { background: var(--signal); color: #17140C; }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px color-mix(in srgb, var(--signal) 60%, transparent); }
+  .btn.ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+  .btn.ghost:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-2px); }
+
+  .marquee {
+    margin-top: 46px;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .marquee-track {
+    display: inline-flex;
+    gap: 40px;
+    animation: scroll-left 26s linear infinite;
+  }
+  .marquee-track span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.02em;
+  }
+  .marquee-track span.hi { color: var(--teal); }
+  @keyframes scroll-left {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+
+  .section-head { margin-bottom: 36px; }
+  .section-head .kicker { font-family: 'IBM Plex Mono', monospace; color: var(--teal); font-size: 0.85rem; }
+  .section-head h2 { font-size: clamp(1.6rem, 4vw, 2.1rem); margin-top: 10px; max-width: 32ch; }
+
+  .diagram-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 24px 20px 18px;
+    margin: 28px 0 8px;
+    overflow-x: auto;
+  }
+  .diagram-card svg { display: block; margin: 0 auto; width: 100%; height: auto; min-width: 560px; }
+
+  .before-after {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 28px;
+  }
+  @media (max-width: 620px) { .before-after { grid-template-columns: 1fr; } }
+  .ba-block {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .ba-block .label { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 8px; display: block; }
+  .ba-block p { margin: 0; color: var(--ink); }
+
+  .stack-row {
+    margin-top: 22px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .chip {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    border: 1px solid var(--line);
+    border-radius: 5px;
+    padding: 4px 10px;
+    background: var(--card);
+  }
+
+  .decision {
+    margin-top: 22px;
+    border-left: 3px solid var(--signal);
+    padding: 4px 0 4px 18px;
+    color: var(--ink-soft);
+  }
+  .decision strong { color: var(--ink); }
+
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 26px;
+  }
+  @media (max-width: 620px) { .stat-grid { grid-template-columns: 1fr 1fr; } }
+  .stat {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 16px 14px;
+    text-align: left;
+  }
+  .stat {
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .stat:hover { transform: translateY(-3px); border-color: var(--teal); }
+  .stat .num {
+    display: block;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 2rem;
+    color: var(--signal);
+  }
+  .stat .lbl {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--ink-soft);
+    margin-top: 4px;
+    line-height: 1.35;
+  }
+
+  .build-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  @media (max-width: 620px) { .build-grid { grid-template-columns: 1fr; } }
+  .build-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .build-card:hover { transform: translateY(-3px); border-color: var(--teal); }
+  .build-card .cat {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--teal);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .build-card h3 { font-size: 1.02rem; margin-bottom: 8px; }
+  .build-card p { color: var(--ink-soft); font-size: 0.92rem; margin: 0; }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+  }
+  @media (max-width: 620px) { .offer-grid { grid-template-columns: 1fr; } }
+  .offer-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px;
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .offer-card:hover { transform: translateY(-3px); border-color: var(--signal); }
+  .offer-card h3 { font-size: 1.08rem; margin-bottom: 8px; }
+  .offer-card p { color: var(--ink-soft); font-size: 0.96rem; margin: 0; }
+
+  .about p { max-width: 62ch; color: var(--ink); margin-bottom: 16px; }
+  .about .fact-row { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 26px; }
+  .fact { min-width: 140px; }
+  .fact .k { font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink-soft); display: block; margin-bottom: 4px; }
+  .fact .v { font-size: 0.95rem; }
+
+  .contact-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 30px 26px;
+    margin-top: 24px;
+  }
+  .contact-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+  .contact-list a { text-decoration: none; font-weight: 500; }
+  .contact-list .k { color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; display: inline-block; width: 76px; }
+
+  .cta-band-outer {
+    width: 100vw;
+    margin-left: calc(50% - 50vw);
+    background: var(--signal);
+  }
+  .cta-band {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .cta-band h2 {
+    color: #171208;
+    font-size: clamp(1.4rem, 3.6vw, 1.9rem);
+    max-width: 20ch;
+  }
+  .cta-band .btn.primary { background: #171208; color: var(--signal); }
+  .cta-band .btn.primary:hover { box-shadow: 0 10px 24px -8px rgba(0,0,0,0.4); }
+
+  footer {
+    padding: 30px 0 44px;
+    text-align: left;
+    color: var(--ink-soft);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--line);
+    margin-top: 20px;
+  }
+
+  .flow-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; fill: var(--ink); }
+  .flow-sub { font-family: 'IBM Plex Sans', sans-serif; font-size: 10.5px; fill: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="top-inner">
+    <span class="name">Imoh Japhet</span>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#builds">More builds</a>
+      <a href="#offer">Services</a>
+      <a href="#about">About</a>
+      <a class="nav-cta" href="#contact">Hire me</a>
+    </nav>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <span class="status-pill"><span class="dot"></span> open to new automation work</span>
+    <h1 style="margin-top:24px;">Manual work is a bug. I ship the fix.</h1>
+    <span class="role">n8n · Zapier · AI-assisted automation</span>
+    <p class="sub">I design automation systems that take a process off someone's plate entirely — wiring up the tools a team already uses, adding AI only where it earns its place, and planning for the step that fails, not just the one that works.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="#work">See the flagship build</a>
+      <a class="btn ghost" href="#contact">Start a project</a>
+    </div>
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee-track">
+        <span class="hi">n8n</span><span>Zapier</span><span class="hi">Airtable</span><span>OpenRouter</span><span class="hi">Pinecone</span><span>Google Sheets</span><span class="hi">Telegram</span><span>Slack</span><span class="hi">Gmail</span><span>Google Forms</span>
+        <span class="hi">n8n</span><span>Zapier</span><span class="hi">Airtable</span><span>OpenRouter</span><span class="hi">Pinecone</span><span>Google Sheets</span><span class="hi">Telegram</span><span>Slack</span><span class="hi">Gmail</span><span>Google Forms</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="section-head">
+      <span class="kicker">featured build · Zapier + Airtable</span>
+      <h2>Ambassador Commission Automation</h2>
+    </div>
+
+    <p style="color:var(--ink-soft); max-width:62ch;">A capstone build for Cybervast AI Automation's referral program: three connected Zaps that take a referral from a single Google Form submission all the way to a confirmed, correctly-calculated commission — with zero manual steps in between.</p>
+
+    <div class="diagram-card">
+      <svg viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Three Zaps: Zap 1 Google Form to Zapier to Airtable CRM to Gmail notifications; Zap 2 Airtable two minute poll to Zapier to Gmail payment confirmation; Zap 3 monthly schedule to Zapier to Airtable aggregate to Gmail reports">
+        <defs>
+          <marker id="arrowc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--teal)"></path>
+          </marker>
+          <symbol id="ic-form" viewBox="0 0 60 60">
+            <rect width="60" height="60" rx="12" fill="#673AB7"/>
+            <rect x="14" y="16" width="26" height="4" rx="2" fill="#fff"/>
+            <rect x="14" y="26" width="26" height="4" rx="2" fill="#fff" opacity="0.75"/>
+            <rect x="14" y="36" width="17" height="4" rx="2" fill="#fff" opacity="0.55"/>
+            <path d="M35 40 L39 44 L47 34" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </symbol>
+          <symbol id="ic-zap" viewBox="0 0 60 60">
+            <rect width="60" height="60" rx="12" fill="#FF4A00"/>
+            <path d="M31 11 L18 35 H28 L25 49 L43 25 H32 L31 11 Z" fill="#fff"/>
+          </symbol>
+          <symbol id="ic-air" viewBox="0 0 60 60">
+            <rect width="60" height="60" rx="12" fill="#F6F8F7" stroke="#C7D0CD"/>
+            <polygon points="30,11 45,18.5 30,26 15,18.5" fill="#FFBE0B"/>
+            <polygon points="15,22.5 29,29.5 29,48 15,41" fill="#2D7FF9"/>
+            <polygon points="45,22.5 31,29.5 31,48 45,41" fill="#F82B60"/>
+          </symbol>
+          <symbol id="ic-mail" viewBox="0 0 60 60">
+            <rect width="60" height="60" rx="12" fill="#fff" stroke="#C7D0CD"/>
+            <rect x="11" y="18" width="38" height="25" rx="3" fill="#EA4335"/>
+            <polygon points="11,18 30,33 49,18" fill="#fff"/>
+          </symbol>
+          <symbol id="ic-clock" viewBox="0 0 60 60">
+            <circle cx="30" cy="30" r="21" fill="var(--paper)" stroke="var(--teal)" stroke-width="3"/>
+            <line x1="30" y1="30" x2="30" y2="17" stroke="var(--teal)" stroke-width="3" stroke-linecap="round"/>
+            <line x1="30" y1="30" x2="39" y2="35" stroke="var(--teal)" stroke-width="3" stroke-linecap="round"/>
+          </symbol>
+        </defs>
+
+        <!-- Zap 1 -->
+        <text x="0" y="16" class="flow-label" fill="var(--teal)">ZAP 1 — Onboarding &amp; CRM</text>
+        <line x1="126" y1="54" x2="260" y2="54" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <line x1="316" y1="54" x2="450" y2="54" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <line x1="506" y1="54" x2="640" y2="54" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <use href="#ic-form" x="70" y="26" width="56" height="56"/>
+        <use href="#ic-zap" x="260" y="26" width="56" height="56"/>
+        <use href="#ic-air" x="450" y="26" width="56" height="56"/>
+        <use href="#ic-mail" x="640" y="26" width="56" height="56"/>
+        <text x="98" y="98" text-anchor="middle" class="flow-sub">Google Form</text>
+        <text x="288" y="98" text-anchor="middle" class="flow-sub">Zapier</text>
+        <text x="478" y="98" text-anchor="middle" class="flow-sub">Airtable CRM</text>
+        <text x="668" y="98" text-anchor="middle" class="flow-sub">3 emails sent</text>
+
+        <!-- Zap 2 -->
+        <text x="0" y="142" class="flow-label" fill="var(--teal)">ZAP 2 — Payment Confirmation</text>
+        <line x1="126" y1="180" x2="260" y2="180" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <line x1="316" y1="180" x2="640" y2="180" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <use href="#ic-clock" x="70" y="152" width="56" height="56"/>
+        <use href="#ic-zap" x="260" y="152" width="56" height="56"/>
+        <use href="#ic-mail" x="640" y="152" width="56" height="56"/>
+        <text x="98" y="224" text-anchor="middle" class="flow-sub">Airtable poll (2 min)</text>
+        <text x="288" y="224" text-anchor="middle" class="flow-sub">Zapier</text>
+        <text x="668" y="224" text-anchor="middle" class="flow-sub">Confirmed emails</text>
+
+        <!-- Zap 3 -->
+        <text x="0" y="268" class="flow-label" fill="var(--teal)">ZAP 3 — Monthly Report</text>
+        <line x1="126" y1="306" x2="260" y2="306" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <line x1="316" y1="306" x2="450" y2="306" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <line x1="506" y1="306" x2="640" y2="306" stroke="var(--teal)" stroke-width="1.6" marker-end="url(#arrowc)"/>
+        <use href="#ic-clock" x="70" y="278" width="56" height="56"/>
+        <use href="#ic-zap" x="260" y="278" width="56" height="56"/>
+        <use href="#ic-air" x="450" y="278" width="56" height="56"/>
+        <use href="#ic-mail" x="640" y="278" width="56" height="56"/>
+        <text x="98" y="350" text-anchor="middle" class="flow-sub">1st, 8am</text>
+        <text x="288" y="350" text-anchor="middle" class="flow-sub">Aggregate per ambassador</text>
+        <text x="478" y="350" text-anchor="middle" class="flow-sub">Airtable totals</text>
+        <text x="668" y="350" text-anchor="middle" class="flow-sub">Reports sent</text>
+      </svg>
+    </div>
+    <p style="color:var(--ink-soft); font-size:0.86rem; margin-top:2px;">All three Zaps read and write the same Airtable base, so it stays the single source of truth across the whole referral lifecycle.</p>
+
+    <div class="before-after">
+      <div class="ba-block">
+        <span class="label">before</span>
+        <p>Referrals tracked across scattered WhatsApp chats and email threads. Admins calculated each ambassador's 20% commission by hand every month — slowly, and with frequent disputes. Nobody was notified when the ₦20,000 acceptance fee actually landed.</p>
+      </div>
+      <div class="ba-block">
+        <span class="label">after</span>
+        <p>Every referral is logged to one Airtable CRM the moment the form is submitted. Commission is calculated by an Airtable formula, never by hand. Marking a fee "Paid" notifies the ambassador within two minutes, and monthly reports send themselves.</p>
+      </div>
+    </div>
+
+    <div class="decision">
+      <strong>Key decision —</strong> the 20% commission formula lives in Airtable, not inside the Zap logic, so one formula edit updates every record at once — and supports moving to tiered rates later without touching a single Zap.
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat"><span class="num">3</span><span class="lbl">Zaps replace every manual step</span></div>
+      <div class="stat"><span class="num">&lt;2 min</span><span class="lbl">fee confirmation to ambassador notice</span></div>
+      <div class="stat"><span class="num">0</span><span class="lbl">commission miscalculations since launch</span></div>
+      <div class="stat"><span class="num">20%</span><span class="lbl">standard referral commission rate</span></div>
+    </div>
+
+    <div class="stack-row" style="margin-top:26px;">
+      <span class="chip">Google Forms</span>
+      <span class="chip">Zapier</span>
+      <span class="chip">Airtable CRM</span>
+      <span class="chip">Gmail</span>
+    </div>
+  </section>
+
+  <section id="builds">
+    <div class="section-head">
+      <span class="kicker">more builds</span>
+      <h2>Other systems I've put together.</h2>
+    </div>
+    <div class="build-grid">
+      <div class="build-card">
+        <span class="cat">automation</span>
+        <h3>Email Categorizer, Logger &amp; Urgent Alert</h3>
+        <p>A self-hosted n8n workflow that categorizes inbound email, logs every entry to a spreadsheet, and pings Slack the moment something is flagged urgent.</p>
+      </div>
+      <div class="build-card">
+        <span class="cat">automation</span>
+        <h3>School Exam Auto-Marking &amp; Results Grading</h3>
+        <p>Marks submitted exams and compiles results and grades without a teacher going paper by paper.</p>
+      </div>
+      <div class="build-card">
+        <span class="cat">ai agent</span>
+        <h3>RAG Agent on a Live Knowledge Base</h3>
+        <p>Answers questions by retrieving from a Pinecone vector store that updates as the underlying knowledge base changes.</p>
+      </div>
+      <div class="build-card">
+        <span class="cat">ai agent</span>
+        <h3>RAG CX Agent — Telegram Bot</h3>
+        <p>A support bot on Telegram that pulls its answers from a live Airtable knowledge base instead of fixed scripts.</p>
+      </div>
+      <div class="build-card">
+        <span class="cat">ai agent</span>
+        <h3>AI-Powered Customer Feedback System</h3>
+        <p>Collects incoming feedback and surfaces themes and sentiment automatically, instead of someone reading it all by hand.</p>
+      </div>
+      <div class="build-card">
+        <span class="cat">ai agent</span>
+        <h3>AI Lead Qualification Assistant</h3>
+        <p>Built for a real estate company to qualify inbound leads before they ever reach a sales rep's calendar.</p>
+      </div>
+      <div class="build-card">
+        <span class="cat">content</span>
+        <h3>Content Request Multi-Agent System</h3>
+        <p>Turns a single content request into a finished blog post plus matching social posts, split across cooperating agents.</p>
+      </div>
+      <div class="build-card">
+        <span class="cat">content</span>
+        <h3>Social Content Repurpose System</h3>
+        <p>Takes one piece of content and reshapes it into the different formats each social platform expects.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="offer">
+    <div class="section-head">
+      <span class="kicker">what I do</span>
+      <h2>Automation built around your actual tools, not a demo.</h2>
+    </div>
+    <div class="offer-grid">
+      <div class="offer-card">
+        <h3>n8n workflow builds</h3>
+        <p>Connecting the apps you already use — inbox, spreadsheets, Slack, calendars — into one system that runs without someone babysitting it.</p>
+      </div>
+      <div class="offer-card">
+        <h3>AI inside the workflow</h3>
+        <p>Adding a model where it genuinely helps — categorizing, summarizing, drafting a reply — configured through OpenRouter so you're not locked to one provider.</p>
+      </div>
+      <div class="offer-card">
+        <h3>Self-hosted infrastructure</h3>
+        <p>Running n8n on your own infrastructure when data control or cost matters more than convenience.</p>
+      </div>
+      <div class="offer-card">
+        <h3>Failure-aware design</h3>
+        <p>Thinking through what happens when an API is down or a model returns nonsense, so the workflow degrades safely instead of silently dropping work.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="section-head">
+      <span class="kicker">about</span>
+      <h2>I like systems that keep working when nobody's watching.</h2>
+    </div>
+    <p>I build automation on n8n because it handles real branching logic and custom code where the no-code nodes run out. I'm currently running it self-hosted, with an AI assistant wired in through OpenRouter for the steps that benefit from a model's judgment.</p>
+    <p>I care less about a workflow looking impressive on a good day, and more about what it does on a bad one — a failed API call, a malformed input, a message that doesn't fit the expected shape.</p>
+    <div class="fact-row">
+      <div class="fact"><span class="k">automation</span><span class="v">n8n</span></div>
+      <div class="fact"><span class="k">ai</span><span class="v">OpenRouter models, AI classification</span></div>
+      <div class="fact"><span class="k">data</span><span class="v">Google Sheets, Gmail, Slack</span></div>
+    </div>
+  </section>
+
+  <div class="cta-band-outer">
+    <div class="cta-band">
+      <h2>Stop doing the job a workflow could do for you.</h2>
+      <a class="btn primary" href="#contact">Book a build</a>
+    </div>
+  </div>
+
+  <section id="contact">
+    <div class="section-head">
+      <span class="kicker">contact</span>
+      <h2>Have a manual process worth automating?</h2>
+    </div>
+    <p style="color:var(--ink-soft); max-width:56ch;">Tell me what you're doing by hand right now — sorting emails, chasing leads, updating a spreadsheet — and I'll tell you what a workflow for it would look like.</p>
+    <div class="contact-card">
+      <ul class="contact-list">
+        <li><span class="k">email</span> <a href="mailto:contact.imohjaphet@gmail.com">contact.imohjaphet@gmail.com</a></li>
+        <li><span class="k">phone</span> <a href="tel:+234730367349">+234 730 367 349</a></li>
+        <li><span class="k">linkedin</span> <a href="https://www.linkedin.com/in/bitcoindon" target="_blank" rel="noopener">linkedin.com/in/bitcoindon</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <footer>Imoh Japhet — Automation Engineer</footer>
+</div>
+
+</body>
+</html>
