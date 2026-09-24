@@ -317,6 +317,11 @@
       overflow: hidden;
       margin-top: 28px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      transition: all 0.3s ease;
+    }
+    .spotlight-pulse {
+      border-color: var(--teal) !important;
+      box-shadow: 0 0 36px rgba(79, 209, 197, 0.45) !important;
     }
     .sim-bar {
       display: flex;
@@ -974,8 +979,14 @@
             I design automation systems that take a process off someone's plate entirely — wiring up the tools a team already uses, adding AI only where it earns its place, and planning for the step that fails, not just the one that works.
           </p>
           <div class="hero-actions">
-            <a href="#work" class="cta-btn">Explore Flagship Build</a>
-            <button onclick="triggerSimZap1()" class="btn-secondary">▶ Try Live Simulator</button>
+            <a href="#work" class="cta-btn">
+              <span>See the Flagship Build</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:4px;"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </a>
+            <button onclick="jumpToSimulator(event)" class="btn-secondary" style="border-color:var(--teal); color:var(--ink);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="#4FD1C5" style="margin-right:2px;"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+              <span>Try Live Simulator</span>
+            </button>
             <a href="#contact" class="btn-secondary">Request Workflow Audit</a>
           </div>
         </div>
@@ -1065,9 +1076,10 @@
     </section>
 
     <!-- Flagship Work Section + Interactive Live Simulator -->
-    <section id="work">
+    <section id="work" style="scroll-margin-top: 80px;">
+      <div id="simulator" style="position:relative; top:-80px;"></div>
       <div class="section-header">
-        <span class="kicker">Featured Capstone Build · Zapier + Airtable</span>
+        <span class="kicker">Featured Capstone Build · Zapier + Airtable · Interactive Live Simulator</span>
         <h2>Ambassador Commission Automation</h2>
       </div>
       <p style="color:var(--ink-soft); max-width:68ch; font-size:1.05rem;">
@@ -1603,6 +1615,21 @@
 
       const countElem = document.getElementById('recordCountText');
       if (countElem) countElem.textContent = simRecords.length + ' records in base';
+    }
+
+    function jumpToSimulator(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      const target = document.getElementById('work') || document.getElementById('simulator');
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+          const box = document.querySelector('.flagship-box');
+          if (box) {
+            box.classList.add('spotlight-pulse');
+            setTimeout(() => box.classList.remove('spotlight-pulse'), 2200);
+          }
+        }, 350);
+      }
     }
 
     function pulseLane(lineIds, duration) {
