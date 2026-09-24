@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Imoh Japhet — AI & Automation Engineer</title>
+  <title>Imoh Japhet — AI Automation Portfolio</title>
   <meta name="description" content="Production-grade AI & Automation Engineering portfolio: n8n, Zapier, Pinecone live RAG agents, and resilient workflow systems.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       --paper: #0E1416;
@@ -16,7 +16,7 @@
       --card-border: rgba(79, 209, 197, 0.16);
       --ink: #F3F6F5;
       --ink-soft: #9BADA9;
-      --ink-muted: #647B75;
+      --ink-muted: #5D726D;
       --line: rgba(38, 52, 53, 0.75);
       --signal: #F5A623;
       --signal-hover: #e09419;
@@ -72,13 +72,14 @@
     button { font-family: inherit; cursor: pointer; border: none; background: none; }
     ::selection { background: var(--signal); color: #0E1416; }
 
-    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    
     header.top-nav {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: color-mix(in srgb, var(--paper) 90%, transparent);
-      backdrop-filter: blur(10px);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--line);
     }
     .top-inner {
@@ -92,34 +93,47 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      color: var(--ink);
+    }
+    .brand-icon {
+      width: 38px;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--card);
+      border: 1px solid var(--teal);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--teal);
+    }
+    .brand-text {
       font-family: 'Space Grotesk', sans-serif;
       font-weight: 700;
       font-size: 1.15rem;
-      color: var(--ink);
+      line-height: 1.1;
     }
-    .brand span.role-tag {
+    .brand-role {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.72rem;
-      font-weight: 500;
-      padding: 3px 8px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 4px;
-      color: var(--teal);
+      color: var(--ink-soft);
+      display: block;
     }
     nav.nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 22px;
       font-size: 0.92rem;
       font-weight: 500;
     }
     nav.nav-links a { color: var(--ink-soft); }
     nav.nav-links a:hover { color: var(--ink); }
     .theme-toggle-btn {
-      padding: 6px 12px;
+      padding: 7px 12px;
       border: 1px solid var(--line);
-      border-radius: 6px;
+      border-radius: 8px;
       background: var(--card);
       color: var(--ink);
       font-size: 0.85rem;
@@ -132,28 +146,30 @@
     .cta-btn {
       background: var(--signal);
       color: #0E1416 !important;
-      padding: 8px 18px;
-      border-radius: 6px;
+      padding: 9px 20px;
+      border-radius: 8px;
       font-weight: 600;
       font-size: 0.92rem;
       transition: all 0.2s ease;
       display: inline-flex;
       align-items: center;
       gap: 6px;
+      cursor: pointer;
     }
     .cta-btn:hover { background: var(--signal-hover); transform: translateY(-1px); }
     .btn-secondary {
       background: var(--card);
       border: 1px solid var(--line);
       color: var(--ink);
-      padding: 8px 18px;
-      border-radius: 6px;
+      padding: 9px 20px;
+      border-radius: 8px;
       font-weight: 600;
       font-size: 0.92rem;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: all 0.2s;
+      cursor: pointer;
     }
     .btn-secondary:hover { border-color: var(--teal); color: var(--teal); transform: translateY(-1px); }
 
@@ -177,7 +193,8 @@
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--signal) 30%, transparent);
     }
 
-    section { padding: 80px 0; }
+    section { padding: 84px 0; border-top: 1px solid var(--line); }
+    section:first-of-type { border-top: none; }
     .section-header { margin-bottom: 36px; }
     .kicker {
       font-family: 'IBM Plex Mono', monospace;
@@ -187,8 +204,9 @@
       color: var(--teal);
       display: block;
       margin-bottom: 8px;
+      font-weight: 600;
     }
-    .section-header h2 { font-size: 2.1rem; color: var(--ink); }
+    .section-header h2 { font-size: 2.2rem; color: var(--ink); }
 
     /* Hero section */
     .hero-grid {
@@ -196,13 +214,14 @@
       grid-template-columns: 1.25fr 0.75fr;
       align-items: center;
       gap: 48px;
+      padding-top: 24px;
     }
-    @media (max-width: 860px) {
+    @media (max-width: 880px) {
       .hero-grid { grid-template-columns: 1fr; }
       nav.nav-links { display: none; }
     }
     .hero-title {
-      font-size: clamp(2.3rem, 5vw, 3.4rem);
+      font-size: clamp(2.4rem, 5.2vw, 3.6rem);
       margin: 20px 0 14px;
       line-height: 1.1;
     }
@@ -210,21 +229,32 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 1.05rem;
       color: var(--teal);
-      display: block;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
       margin-bottom: 16px;
+    }
+    .hero-role span.tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: var(--teal-soft);
+      border: 1px solid var(--card-border);
+      font-size: 0.85rem;
     }
     .hero-desc {
       color: var(--ink-soft);
       font-size: 1.1rem;
       line-height: 1.65;
-      margin-bottom: 28px;
+      margin-bottom: 30px;
       max-width: 62ch;
     }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 32px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 34px; }
 
     /* Mascot Bot */
     .bot-container {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: 16px;
@@ -232,9 +262,22 @@
     }
     #heroBotSvg {
       width: 100%;
-      max-width: 320px;
-      filter: drop-shadow(0 10px 24px rgba(0,0,0,0.4));
-      transition: transform 0.1s ease-out;
+      max-width: 310px;
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,0.4));
+      cursor: pointer;
+    }
+    .bot-tooltip {
+      margin-bottom: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.76rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: var(--card);
+      border: 1px solid var(--teal);
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     /* Marquee */
@@ -244,61 +287,191 @@
       border-top: 1px solid var(--line);
       border-bottom: 1px solid var(--line);
       background: var(--card);
-      padding: 14px 0;
-      margin-top: 40px;
+      padding: 15px 0;
+      margin-top: 48px;
     }
     .marquee-track {
       display: flex;
       width: max-content;
-      animation: marqueeAnim 28s linear infinite;
-      gap: 32px;
+      animation: marqueeAnim 30s linear infinite;
+      gap: 36px;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.88rem;
     }
+    .marquee-container:hover .marquee-track { animation-play-state: paused; }
     @keyframes marqueeAnim {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
     }
     .m-item { color: var(--ink-soft); display: flex; align-items: center; gap: 10px; }
     .m-item.highlight { color: var(--teal); font-weight: 600; }
+    .m-item.amber { color: var(--signal); font-weight: 600; }
 
-    /* Flagship build */
+    /* Flagship build & Interactive Simulator */
     .flagship-box {
       background: var(--card);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 32px;
       position: relative;
       overflow: hidden;
-      margin-top: 24px;
+      margin-top: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
     }
+    .sim-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 20px;
+    }
+    .sim-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+    .sim-btn {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .sim-btn:hover { border-color: var(--teal); color: var(--teal); }
+    .sim-btn.active-zap { border-color: var(--signal); color: var(--signal); background: rgba(245, 166, 35, 0.08); }
+    
+    .live-console {
+      background: #090E10;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--teal);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .console-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--teal);
+      box-shadow: 0 0 8px var(--teal);
+    }
+
+    /* Visual 3-Zap SVG Architecture Flow Diagram */
+    .diagram-container {
+      width: 100%;
+      overflow-x: auto;
+      padding: 16px 8px;
+      margin: 16px 0 24px 0;
+      background: #070B0D;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .diagram-svg {
+      width: 100%;
+      min-width: 820px;
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      user-select: none;
+    }
+    .diagram-line {
+      transition: stroke 0.2s ease;
+    }
+    .pulse-line {
+      stroke-dasharray: 6 3;
+      animation: dashAnim 0.8s linear infinite;
+    }
+    @keyframes dashAnim {
+      to { stroke-dashoffset: -18; }
+    }
+
     .flow-steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 20px;
       margin: 28px 0;
     }
-    @media (max-width: 800px) {
+    @media (max-width: 840px) {
       .flow-steps { grid-template-columns: 1fr; }
     }
     .flow-step-card {
       background: color-mix(in srgb, var(--paper) 60%, transparent);
       border: 1px solid var(--line);
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 20px;
     }
     .flow-step-card .num {
       display: inline-block;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
+      font-weight: 600;
       background: var(--teal-soft);
       color: var(--teal);
       padding: 2px 8px;
       border-radius: 4px;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .flow-step-card h4 { font-size: 1.05rem; margin-bottom: 8px; color: var(--ink); }
     .flow-step-card p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.5; }
+
+    /* Interactive Table */
+    .airtable-card {
+      background: #0A0F11;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 20px;
+      margin-top: 24px;
+      overflow-x: auto;
+    }
+    .airtable-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--ink);
+    }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+    }
+    table.data-table th {
+      text-align: left;
+      padding: 10px;
+      color: var(--ink-soft);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255,255,255,0.02);
+    }
+    table.data-table td {
+      padding: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: var(--ink);
+    }
+    .status-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .status-tag.paid { background: rgba(79, 209, 197, 0.15); color: var(--teal); border: 1px solid rgba(79, 209, 197, 0.3); }
+    .status-tag.pending { background: rgba(245, 166, 35, 0.15); color: var(--signal); border: 1px solid rgba(245, 166, 35, 0.3); }
 
     .ba-grid {
       display: grid;
@@ -306,12 +479,12 @@
       gap: 20px;
       margin: 28px 0;
     }
-    @media (max-width: 700px) {
+    @media (max-width: 720px) {
       .ba-grid { grid-template-columns: 1fr; }
     }
     .ba-card {
       padding: 22px;
-      border-radius: 10px;
+      border-radius: 12px;
       border: 1px solid var(--line);
     }
     .ba-card.before { background: rgba(239, 68, 68, 0.05); border-color: rgba(239, 68, 68, 0.2); }
@@ -339,13 +512,13 @@
     .stat-box {
       background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 16px;
+      border-radius: 10px;
+      padding: 18px;
       text-align: center;
     }
     .stat-box .val {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       color: var(--signal);
       display: block;
@@ -358,22 +531,26 @@
       display: block;
     }
 
-    /* Builds grid */
+    /* Builds grid & Filter */
     .filter-bar {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
       margin-bottom: 28px;
     }
+    .filter-pills { display: flex; flex-wrap: wrap; gap: 8px; }
     .filter-btn {
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 0.86rem;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.82rem;
       font-family: 'IBM Plex Mono', monospace;
       border: 1px solid var(--line);
       background: var(--card);
       color: var(--ink-soft);
       cursor: pointer;
+      transition: all 0.2s;
     }
     .filter-btn.active {
       background: var(--teal-soft);
@@ -381,25 +558,38 @@
       color: var(--teal);
       font-weight: 600;
     }
+    .search-input {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--ink);
+      width: 240px;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--teal); }
+
     .build-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 22px;
     }
     .build-card {
       background: var(--card);
       border: 1px solid var(--card-border);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 14px;
+      padding: 26px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      transition: all 0.2s ease;
+      transition: all 0.25s ease;
     }
     .build-card:hover {
       border-color: var(--teal);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.3);
     }
     .build-badge {
       display: inline-block;
@@ -407,17 +597,21 @@
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.72rem;
       text-transform: uppercase;
-      padding: 2px 8px;
+      padding: 3px 9px;
       border-radius: 4px;
       background: var(--teal-soft);
       color: var(--teal);
       margin-bottom: 14px;
+      font-weight: 600;
     }
-    .build-card h3 { font-size: 1.2rem; margin-bottom: 10px; color: var(--ink); }
-    .build-card p { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 18px; line-height: 1.55; }
-    .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+    .build-badge.automation { background: rgba(245, 166, 35, 0.12); color: var(--signal); }
+    .build-badge.content { background: rgba(168, 85, 247, 0.12); color: #C084FC; }
+
+    .build-card h3 { font-size: 1.25rem; margin-bottom: 10px; color: var(--ink); }
+    .build-card p { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 20px; line-height: 1.6; }
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
     .stack-tag {
-      font-size: 0.75rem;
+      font-size: 0.74rem;
       font-family: 'IBM Plex Mono', monospace;
       padding: 3px 8px;
       border-radius: 4px;
@@ -425,24 +619,91 @@
       border: 1px solid var(--line);
       color: var(--ink-soft);
     }
+    .inspect-btn {
+      width: 100%;
+      padding: 8px 14px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .inspect-btn:hover {
+      background: var(--teal-soft);
+      border-color: var(--teal);
+      color: var(--teal);
+    }
+
+    /* Architecture Modal */
+    .modal-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .modal-backdrop.open { display: flex; }
+    .modal-box {
+      background: #141D20;
+      border: 1px solid var(--teal);
+      border-radius: 16px;
+      max-width: 720px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      padding: 32px;
+      color: #F3F6F5;
+      position: relative;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.4rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-close:hover { color: #fff; }
+    .node-box {
+      background: #0B1012;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+    }
 
     /* Services */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 24px;
+      margin-bottom: 40px;
     }
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
       .services-grid { grid-template-columns: 1fr; }
     }
     .service-card {
       background: var(--card);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 28px;
+      border-radius: 14px;
+      padding: 30px;
     }
     .service-card:hover { border-color: var(--teal); }
-    .service-card h3 { font-size: 1.3rem; margin-bottom: 8px; color: var(--ink); }
+    .service-card h3 { font-size: 1.3rem; margin-bottom: 6px; color: var(--ink); }
     .service-card .highlight {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.84rem;
@@ -450,89 +711,219 @@
       margin-bottom: 14px;
       display: block;
     }
-    .service-card p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.6; }
+    .service-card p { color: var(--ink-soft); font-size: 0.94rem; line-height: 1.6; margin-bottom: 16px; }
+    .service-card ul { list-style: none; space-y: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 0.78rem; color: var(--ink); }
+    .service-card ul li { margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; }
+    .service-card ul li::before { content: "✓"; color: var(--teal); font-weight: bold; }
+
+    /* Tool Grid */
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .tool-pill {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+    }
+    .tool-pill strong { display: block; color: var(--ink); font-size: 0.88rem; }
+    .tool-pill span { color: var(--ink-soft); font-size: 0.72rem; }
 
     /* Calculator */
     .calc-card {
       background: var(--card);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 32px;
+      border-radius: 16px;
+      padding: 36px;
       margin-top: 24px;
     }
     .calc-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 32px;
+      gap: 36px;
       align-items: center;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 800px) {
       .calc-grid { grid-template-columns: 1fr; }
     }
-    .calc-input-group { margin-bottom: 18px; }
+    .calc-input-group { margin-bottom: 22px; }
     .calc-input-group label {
       display: flex;
       justify-content: space-between;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.85rem;
-      color: var(--ink-soft);
-      margin-bottom: 6px;
+      color: var(--ink);
+      margin-bottom: 8px;
     }
     .calc-input-group input[type="range"] {
       width: 100%;
       accent-color: var(--teal);
+      cursor: pointer;
     }
     .calc-output-box {
       background: var(--paper);
       border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 14px;
+      padding: 28px;
       text-align: center;
     }
-    .calc-metric { margin-bottom: 16px; }
+    .calc-metric { margin-bottom: 18px; }
     .calc-metric .metric-val {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 2.2rem;
+      font-size: 2.5rem;
       font-weight: 700;
       color: var(--teal);
       display: block;
+      line-height: 1.1;
     }
     .calc-metric .metric-lbl {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       color: var(--ink-soft);
+      margin-top: 4px;
+      display: block;
     }
 
     /* Contact */
     .contact-card {
       background: var(--card);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 36px;
-      margin-top: 20px;
+      margin-top: 24px;
     }
-    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 36px;
+    }
+    @media (max-width: 840px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+    .social-btn-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 520px) {
+      .social-btn-grid { grid-template-columns: 1fr; }
+    }
+    .social-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 14px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .social-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    .social-btn.linkedin:hover { border-color: #0A66C2; color: #0A66C2; }
+    .social-btn.whatsapp:hover { border-color: #25D366; color: #25D366; }
+    .social-btn.facebook:hover { border-color: #1877F2; color: #1877F2; }
+    .social-btn.instagram:hover { border-color: #E1306C; color: #E1306C; }
+    .social-btn-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .social-btn-brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+    .social-btn-brand svg { width: 18px; height: 18px; fill: currentColor; }
+    .social-btn .handle {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      width: fit-content;
+      color: var(--ink-soft);
+    }
+    .contact-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
     .contact-list li {
       display: flex;
       align-items: center;
-      gap: 16px;
-      font-size: 1.05rem;
+      justify-content: space-between;
+      padding: 12px 14px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-size: 0.9rem;
     }
     .contact-list .c-label {
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       color: var(--teal);
-      min-width: 90px;
       text-transform: uppercase;
+      display: block;
     }
+    .copy-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.06);
+      cursor: pointer;
+      color: var(--ink-soft);
+      border: 1px solid var(--line);
+    }
+    .copy-pill:hover { color: var(--teal); border-color: var(--teal); }
+
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      color: var(--ink);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--teal); }
+    textarea.form-control { resize: vertical; min-height: 100px; }
 
     footer {
       border-top: 1px solid var(--line);
-      padding: 36px 0;
-      text-align: center;
+      padding: 40px 0;
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.82rem;
       color: var(--ink-soft);
+      background: var(--card);
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
     }
   </style>
 </head>
@@ -540,8 +931,11 @@
   <header class="top-nav">
     <div class="wrap top-inner">
       <div class="brand">
-        <span>Imoh Japhet</span>
-        <span class="role-tag">Automation Engineer</span>
+        <div class="brand-icon">IJ</div>
+        <div>
+          <span class="brand-text">Imoh Japhet</span>
+          <span class="brand-role">AI & Automation Engineer</span>
+        </div>
       </div>
       <nav class="nav-links">
         <a href="#work">Flagship</a>
@@ -561,63 +955,84 @@
 
   <main class="wrap">
     <!-- Hero Section -->
-    <section class="hero">
+    <section class="hero" style="padding-top:40px;">
       <div class="hero-grid">
         <div>
           <div class="status-badge">
             <span class="status-dot"></span>
-            <span>Open to new automation contracts & workflow audits</span>
+            <span>Open to new automation contracts & enterprise audits</span>
           </div>
-          <h1 class="hero-title">Manual work is a bug.<br>I ship the fix.</h1>
-          <span class="hero-role">n8n · Zapier · Airtable · Pinecone · OpenRouter AI</span>
+          <h1 class="hero-title">Manual work is a bug.<br><span style="color:var(--teal)">I ship the fix.</span></h1>
+          <div class="hero-role">
+            <span class="tag">n8n</span>
+            <span class="tag">Zapier</span>
+            <span class="tag">Airtable CRM</span>
+            <span class="tag">Pinecone Vector RAG</span>
+            <span class="tag">OpenRouter AI</span>
+          </div>
           <p class="hero-desc">
             I design automation systems that take a process off someone's plate entirely — wiring up the tools a team already uses, adding AI only where it earns its place, and planning for the step that fails, not just the one that works.
           </p>
           <div class="hero-actions">
             <a href="#work" class="cta-btn">Explore Flagship Build</a>
-            <a href="#contact" class="btn-secondary">Request a Workflow Audit</a>
+            <button onclick="triggerSimZap1()" class="btn-secondary">▶ Try Live Simulator</button>
+            <a href="#contact" class="btn-secondary">Request Workflow Audit</a>
           </div>
         </div>
+
         <div class="bot-container">
+          <div class="bot-tooltip" id="botStatusText">
+            <span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--teal);"></span>
+            <span>Status: 100% Automated</span>
+          </div>
           <!-- Interactive SVG Robot Mascot -->
-          <svg id="heroBotSvg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg">
+          <svg id="heroBotSvg" viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" onclick="cycleBotMode()">
             <defs>
-              <radialGradient id="bgGlow" cx="50%" cy="45%" r="55%">
+              <radialGradient id="botAmbientGlow" cx="50%" cy="45%" r="55%">
                 <stop offset="0%" stop-color="var(--teal)" stop-opacity="0.25"/>
                 <stop offset="100%" stop-color="var(--teal)" stop-opacity="0"/>
               </radialGradient>
             </defs>
-            <circle cx="150" cy="200" r="180" fill="url(#bgGlow)"/>
+            <circle cx="150" cy="200" r="180" fill="url(#botAmbientGlow)"/>
+            <ellipse cx="150" cy="388" rx="100" ry="12" fill="#070A0B" opacity="0.6" />
             <!-- Grounded Feet -->
             <rect x="92" y="372" width="42" height="14" rx="6" fill="var(--line)"/>
             <rect x="166" y="372" width="42" height="14" rx="6" fill="var(--line)"/>
             <rect x="95" y="296" width="30" height="82" rx="10" fill="var(--card)" stroke="var(--line)" stroke-width="2"/>
             <rect x="175" y="296" width="30" height="82" rx="10" fill="var(--card)" stroke="var(--line)" stroke-width="2"/>
-            <!-- Leaning Upper Body -->
+            <!-- Torso & Head -->
             <g id="botUpper">
-              <rect x="35" y="180" width="34" height="106" rx="14" fill="var(--card)" stroke="var(--teal)" stroke-width="3"/>
-              <rect x="231" y="180" width="34" height="106" rx="14" fill="var(--card)" stroke="var(--teal)" stroke-width="3"/>
+              <rect x="34" y="178" width="34" height="108" rx="14" fill="var(--card)" stroke="var(--teal)" stroke-width="2.5"/>
+              <rect x="232" y="178" width="34" height="108" rx="14" fill="var(--card)" stroke="var(--teal)" stroke-width="2.5"/>
               <rect x="70" y="166" width="160" height="130" rx="22" fill="var(--card)" stroke="var(--teal)" stroke-width="3"/>
-              <line x1="150" y1="188" x2="150" y2="268" stroke="var(--line)" stroke-width="2"/>
-              <circle cx="150" cy="200" r="5" fill="var(--signal)"/>
-              <circle cx="150" cy="232" r="5" fill="var(--teal)"/>
-              <circle cx="150" cy="264" r="5" fill="var(--signal)"/>
-              <rect x="138" y="148" width="24" height="20" fill="var(--line)"/>
+              <line x1="150" y1="188" x2="150" y2="268" stroke="var(--line)" stroke-width="2" stroke-dasharray="3 3"/>
+              <circle cx="150" cy="200" r="6" fill="var(--signal)"/>
+              <circle cx="150" cy="232" r="6" fill="var(--teal)"/>
+              <circle cx="150" cy="264" r="6" fill="var(--signal)"/>
+              <rect x="100" y="210" width="34" height="44" rx="6" fill="#0B1012" stroke="var(--line)" stroke-width="1.5"/>
+              <text x="117" y="234" text-anchor="middle" fill="var(--teal)" font-size="9" font-family="IBM Plex Mono">n8n</text>
+              <text x="117" y="246" text-anchor="middle" fill="var(--ink-soft)" font-size="7" font-family="IBM Plex Mono">OK</text>
+              <rect x="166" y="210" width="34" height="44" rx="6" fill="#0B1012" stroke="var(--line)" stroke-width="1.5"/>
+              <text x="183" y="234" text-anchor="middle" fill="var(--signal)" font-size="9" font-family="IBM Plex Mono">ZAP</text>
+              <text x="183" y="246" text-anchor="middle" fill="var(--ink-soft)" font-size="7" font-family="IBM Plex Mono">LIVE</text>
+              <rect x="138" y="148" width="24" height="20" fill="var(--line)" rx="3"/>
               <!-- Antenna -->
-              <line x1="150" y1="60" x2="150" y2="32" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/>
-              <circle cx="150" cy="26" r="7" fill="var(--signal)"/>
+              <line x1="150" y1="60" x2="150" y2="30" stroke="var(--teal)" stroke-width="4" stroke-linecap="round"/>
+              <circle cx="150" cy="24" r="8" fill="var(--signal)"/>
               <!-- Head -->
               <rect x="85" y="48" width="130" height="102" rx="26" fill="var(--card)" stroke="var(--teal)" stroke-width="3"/>
-              <!-- Eyes Outer -->
-              <circle cx="122" cy="96" r="18" fill="var(--paper)" stroke="var(--line)" stroke-width="2"/>
-              <circle cx="178" cy="96" r="18" fill="var(--paper)" stroke="var(--line)" stroke-width="2"/>
-              <!-- Pupils (Interactive) -->
-              <g id="pupilL"><circle cx="122" cy="96" r="8" fill="var(--teal)"/></g>
-              <g id="pupilR"><circle cx="178" cy="96" r="8" fill="var(--teal)"/></g>
-              <!-- Mouth -->
-              <rect x="130" y="128" width="40" height="6" rx="3" fill="var(--line)"/>
+              <rect x="100" y="74" width="100" height="46" rx="14" fill="#090E10" stroke="var(--line)" stroke-width="1.5"/>
+              <circle cx="124" cy="97" r="16" fill="var(--paper)" stroke="var(--line)" stroke-width="2"/>
+              <circle cx="176" cy="97" r="16" fill="var(--paper)" stroke="var(--line)" stroke-width="2"/>
+              <!-- Pupils -->
+              <g id="pupilL"><circle cx="124" cy="97" r="8" fill="var(--teal)"/><circle cx="126" cy="95" r="2.5" fill="#FFFFFF"/></g>
+              <g id="pupilR"><circle cx="176" cy="97" r="8" fill="var(--teal)"/><circle cx="178" cy="95" r="2.5" fill="#FFFFFF"/></g>
+              <rect x="130" y="130" width="40" height="6" rx="3" fill="var(--line)"/>
             </g>
           </svg>
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-soft); margin-top:8px;">
+            Mascot tracks your pointer · Click robot to ping
+          </span>
         </div>
       </div>
 
@@ -625,41 +1040,157 @@
       <div class="marquee-container" aria-hidden="true">
         <div class="marquee-track">
           <span class="m-item highlight">n8n (Self-Hosted)</span>
-          <span class="m-item">Zapier</span>
+          <span class="m-item amber">Zapier Multi-Zaps</span>
           <span class="m-item highlight">Airtable CRM</span>
           <span class="m-item">OpenRouter LLMs</span>
           <span class="m-item highlight">Pinecone Vector DB</span>
           <span class="m-item">Google Workspace</span>
           <span class="m-item">Telegram Bots</span>
-          <span class="m-item highlight">Slack Webhooks</span>
+          <span class="m-item amber">Slack Webhooks</span>
           <span class="m-item">Gmail API</span>
           <span class="m-item">Google Forms</span>
-          <!-- Duplicate for seamless loop -->
+          <!-- Duplicate for continuous stream -->
           <span class="m-item highlight">n8n (Self-Hosted)</span>
-          <span class="m-item">Zapier</span>
+          <span class="m-item amber">Zapier Multi-Zaps</span>
           <span class="m-item highlight">Airtable CRM</span>
           <span class="m-item">OpenRouter LLMs</span>
           <span class="m-item highlight">Pinecone Vector DB</span>
           <span class="m-item">Google Workspace</span>
           <span class="m-item">Telegram Bots</span>
-          <span class="m-item highlight">Slack Webhooks</span>
+          <span class="m-item amber">Slack Webhooks</span>
           <span class="m-item">Gmail API</span>
           <span class="m-item">Google Forms</span>
         </div>
       </div>
     </section>
 
-    <!-- Flagship Work Section -->
+    <!-- Flagship Work Section + Interactive Live Simulator -->
     <section id="work">
       <div class="section-header">
         <span class="kicker">Featured Capstone Build · Zapier + Airtable</span>
         <h2>Ambassador Commission Automation</h2>
       </div>
-      <p style="color:var(--ink-soft); max-width:64ch; font-size:1.05rem;">
+      <p style="color:var(--ink-soft); max-width:68ch; font-size:1.05rem;">
         A capstone build for Cybervast AI Automation's referral program: three connected Zaps that take a referral from a single Google Form submission all the way to a confirmed, correctly-calculated commission — with zero manual steps in between.
       </p>
 
       <div class="flagship-box">
+        <div class="sim-bar">
+          <div>
+            <strong style="font-size:1.1rem; color:var(--ink);">Interactive Production Pipeline Simulator</strong>
+            <p style="font-size:0.8rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft);">Test real events and observe live Airtable state transitions</p>
+          </div>
+          <div class="sim-controls">
+            <button class="sim-btn" onclick="triggerSimZap1()">▶ Test Zap 1: Form Submit</button>
+            <button class="sim-btn" onclick="triggerSimZap2()">▶ Test Zap 2: Fee Paid</button>
+            <button class="sim-btn" onclick="triggerSimZap3()">▶ Test Zap 3: Monthly Cron</button>
+            <button class="sim-btn" onclick="resetSimRecords()" title="Reset records">↺ Reset</button>
+          </div>
+        </div>
+
+        <div class="live-console">
+          <span class="console-dot"></span>
+          <span id="simConsoleLog">Ready. Click any "Test Zap" button above to fire simulated webhooks.</span>
+        </div>
+
+        <!-- Visual SVG Architecture Diagram -->
+        <div class="diagram-container">
+          <svg
+            viewBox="0 0 900 320"
+            class="diagram-svg"
+            id="zapsFlowSvg"
+            role="img"
+            aria-label="3 Zap Workflow Architecture Diagram"
+          >
+            <defs>
+              <marker id="arrowTeal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#4FD1C5" />
+              </marker>
+              <marker id="arrowAmber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#F5A623" />
+              </marker>
+            </defs>
+
+            <!-- Lane 1: Zap 1 Inbound -->
+            <g id="lane1">
+              <text x="20" y="45" fill="#4FD1C5" font-size="13" font-weight="bold">ZAP 1: Webhook</text>
+              <rect x="130" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#4FD1C5" stroke-width="1.5" />
+              <text x="195" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Google Form</text>
+              <text x="195" y="58" text-anchor="middle" fill="#8899A0" font-size="9">Referral Submit</text>
+
+              <line id="zap1Line1" class="diagram-line" x1="260" y1="45" x2="330" y2="45" stroke="#4FD1C5" stroke-width="1.8" marker-end="url(#arrowTeal)" />
+
+              <rect x="330" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#F5A623" stroke-width="1.5" />
+              <text x="395" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Zapier Engine</text>
+              <text x="395" y="58" text-anchor="middle" fill="#F5A623" font-size="9">Validation & Filter</text>
+
+              <line id="zap1Line2" class="diagram-line" x1="460" y1="45" x2="530" y2="45" stroke="#4FD1C5" stroke-width="1.8" marker-end="url(#arrowTeal)" />
+
+              <rect x="530" y="20" width="140" height="50" rx="10" fill="#0E1416" stroke="#4FD1C5" stroke-width="1.5" />
+              <text x="600" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Airtable CRM</text>
+              <text x="600" y="58" text-anchor="middle" fill="#8899A0" font-size="9">Create New Row</text>
+
+              <line id="zap1Line3" class="diagram-line" x1="670" y1="45" x2="740" y2="45" stroke="#4FD1C5" stroke-width="1.8" marker-end="url(#arrowTeal)" />
+
+              <rect x="740" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#4285F4" stroke-width="1.5" />
+              <text x="805" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Gmail Dispatch</text>
+              <text x="805" y="58" text-anchor="middle" fill="#8899A0" font-size="9">Instant Alert</text>
+            </g>
+
+            <!-- Lane 2: Zap 2 Fee Verification -->
+            <g transform="translate(0, 100)" id="lane2">
+              <text x="20" y="45" fill="#F5A623" font-size="13" font-weight="bold">ZAP 2: 2m Poll</text>
+              <rect x="130" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#4FD1C5" stroke-width="1.5" />
+              <text x="195" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Airtable View</text>
+              <text x="195" y="58" text-anchor="middle" fill="#4FD1C5" font-size="9">Status = "Paid"</text>
+
+              <line id="zap2Line1" class="diagram-line" x1="260" y1="45" x2="330" y2="45" stroke="#F5A623" stroke-width="1.8" marker-end="url(#arrowAmber)" />
+
+              <rect x="330" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#F5A623" stroke-width="1.5" />
+              <text x="395" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Zapier Worker</text>
+              <text x="395" y="58" text-anchor="middle" fill="#F5A623" font-size="9">Lock & Deduplicate</text>
+
+              <line id="zap2Line2" class="diagram-line" x1="460" y1="45" x2="530" y2="45" stroke="#F5A623" stroke-width="1.8" marker-end="url(#arrowAmber)" />
+
+              <rect x="530" y="20" width="140" height="50" rx="10" fill="#0E1416" stroke="#4FD1C5" stroke-width="1.5" />
+              <text x="600" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Airtable Formula</text>
+              <text x="600" y="58" text-anchor="middle" fill="#8899A0" font-size="9">20% = ₦4,000</text>
+
+              <line id="zap2Line3" class="diagram-line" x1="670" y1="45" x2="740" y2="45" stroke="#F5A623" stroke-width="1.8" marker-end="url(#arrowAmber)" />
+
+              <rect x="740" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#4285F4" stroke-width="1.5" />
+              <text x="805" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Ambassador Mail</text>
+              <text x="805" y="58" text-anchor="middle" fill="#F5A623" font-size="9">Notice &lt; 2 min</text>
+            </g>
+
+            <!-- Lane 3: Zap 3 Monthly Cron -->
+            <g transform="translate(0, 200)" id="lane3">
+              <text x="20" y="45" fill="#4FD1C5" font-size="13" font-weight="bold">ZAP 3: Cron</text>
+              <rect x="130" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" />
+              <text x="195" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Schedule Trigger</text>
+              <text x="195" y="58" text-anchor="middle" fill="#8899A0" font-size="9">1st @ 08:00 AM</text>
+
+              <line id="zap3Line1" class="diagram-line" x1="260" y1="45" x2="330" y2="45" stroke="#4FD1C5" stroke-width="1.8" marker-end="url(#arrowTeal)" />
+
+              <rect x="330" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#F5A623" stroke-width="1.5" />
+              <text x="395" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Zapier Aggregator</text>
+              <text x="395" y="58" text-anchor="middle" fill="#8899A0" font-size="9">Group by Code</text>
+
+              <line id="zap3Line2" class="diagram-line" x1="460" y1="45" x2="530" y2="45" stroke="#4FD1C5" stroke-width="1.8" marker-end="url(#arrowTeal)" />
+
+              <rect x="530" y="20" width="140" height="50" rx="10" fill="#0E1416" stroke="#4FD1C5" stroke-width="1.5" />
+              <text x="600" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Monthly Statement</text>
+              <text x="600" y="58" text-anchor="middle" fill="#8899A0" font-size="9">Rollup Ledger</text>
+
+              <line id="zap3Line3" class="diagram-line" x1="670" y1="45" x2="740" y2="45" stroke="#4FD1C5" stroke-width="1.8" marker-end="url(#arrowTeal)" />
+
+              <rect x="740" y="20" width="130" height="50" rx="10" fill="#0E1416" stroke="#4285F4" stroke-width="1.5" />
+              <text x="805" y="43" text-anchor="middle" fill="#EAEFEF" font-size="11" font-weight="bold">Statement Report</text>
+              <text x="805" y="58" text-anchor="middle" fill="#4FD1C5" font-size="9">Itemized Payouts</text>
+            </g>
+          </svg>
+        </div>
+
         <div class="flow-steps">
           <div class="flow-step-card">
             <span class="num">ZAP 1 · Instant Webhook</span>
@@ -678,6 +1209,30 @@
           </div>
         </div>
 
+        <!-- Live Airtable Simulator View -->
+        <div class="airtable-card">
+          <div class="airtable-header">
+            <span>Airtable Base (Live Referral Lifecycle Records)</span>
+            <span id="recordCountText" style="color:var(--teal);">3 records in base</span>
+          </div>
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Record ID</th>
+                <th>Lead Name</th>
+                <th>Ambassador Code</th>
+                <th>Acceptance Fee</th>
+                <th>Status</th>
+                <th>20% Commission</th>
+                <th>Ambassador Notice</th>
+              </tr>
+            </thead>
+            <tbody id="airtableBody">
+              <!-- Dynamically populated by JS -->
+            </tbody>
+          </table>
+        </div>
+
         <div class="ba-grid">
           <div class="ba-card before">
             <span class="ba-label">Before Automation</span>
@@ -689,7 +1244,7 @@
           </div>
         </div>
 
-        <div style="background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--signal); border-radius:6px; padding:16px; font-size:0.92rem; margin-top:20px;">
+        <div style="background:var(--paper); border:1px solid var(--line); border-left:4px solid var(--signal); border-radius:8px; padding:16px; font-size:0.92rem; margin-top:20px;">
           <strong>Key Engineering Decision:</strong> The 20% commission formula lives directly inside Airtable, not inside Zapier's transient logic. This means one formula edit updates every record at once, maintaining a single source of truth and supporting tiered rates without altering any Zap.
         </div>
 
@@ -702,123 +1257,35 @@
       </div>
     </section>
 
-    <!-- More Builds Grid -->
+    <!-- More Builds Grid with Live Search & Blueprint Modal -->
     <section id="builds">
       <div class="section-header">
         <span class="kicker">Production Systems</span>
         <h2>Other systems I've put together.</h2>
+        <p style="color:var(--ink-soft); font-size:1.05rem; margin-top:8px;">
+          Each system is engineered around real failure conditions, custom API webhooks, and measurable client outcomes.
+        </p>
       </div>
 
       <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterBuilds('all', this)">All (8)</button>
-        <button class="filter-btn" onclick="filterBuilds('automation', this)">Workflow Automation (2)</button>
-        <button class="filter-btn" onclick="filterBuilds('ai agent', this)">AI Agents (4)</button>
-        <button class="filter-btn" onclick="filterBuilds('content', this)">Content Systems (2)</button>
+        <div class="filter-pills">
+          <button class="filter-btn active" onclick="filterBuilds('all', this)">All (8)</button>
+          <button class="filter-btn" onclick="filterBuilds('automation', this)">Workflow Automation (2)</button>
+          <button class="filter-btn" onclick="filterBuilds('ai agent', this)">AI Agents (4)</button>
+          <button class="filter-btn" onclick="filterBuilds('content', this)">Content Systems (2)</button>
+        </div>
+        <input type="text" id="buildSearch" class="search-input" placeholder="Search by tool or keyword..." oninput="searchBuilds()">
       </div>
 
-      <div class="build-grid" id="buildsGrid">
-        <div class="build-card" data-cat="automation">
-          <span class="build-badge">automation</span>
-          <h3>Email Categorizer, Logger & Urgent Alert</h3>
-          <p>A self-hosted n8n workflow that categorizes inbound email using AI models, logs structured metadata to Google Sheets, and pings urgent triage channels on Slack.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">n8n</span>
-            <span class="stack-tag">OpenRouter</span>
-            <span class="stack-tag">Google Sheets</span>
-            <span class="stack-tag">Slack</span>
-          </div>
-        </div>
-
-        <div class="build-card" data-cat="automation">
-          <span class="build-badge">automation</span>
-          <h3>School Exam Auto-Marking & Results Grading</h3>
-          <p>Marks student exams submitted via Google Forms against multi-dimensional rubrics, compiles scores, and emails custom student feedback reports to parents.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">Zapier</span>
-            <span class="stack-tag">Google Forms</span>
-            <span class="stack-tag">Claude / OpenAI</span>
-            <span class="stack-tag">Gmail</span>
-          </div>
-        </div>
-
-        <div class="build-card" data-cat="ai agent">
-          <span class="build-badge">ai agent</span>
-          <h3>RAG Agent on a Live Knowledge Base</h3>
-          <p>Answers deep technical inquiries by retrieving from a Pinecone vector store that continuously re-indexes company docs as they evolve.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">Pinecone Vector DB</span>
-            <span class="stack-tag">OpenRouter</span>
-            <span class="stack-tag">Embeddings</span>
-            <span class="stack-tag">FastAPI</span>
-          </div>
-        </div>
-
-        <div class="build-card" data-cat="ai agent">
-          <span class="build-badge">ai agent</span>
-          <h3>RAG CX Agent — Telegram Bot</h3>
-          <p>A 24/7 customer experience bot on Telegram that pulls inventory and policy answers live from an Airtable base instead of rigid static scripts.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">Telegram Bot API</span>
-            <span class="stack-tag">Airtable</span>
-            <span class="stack-tag">n8n Webhook</span>
-            <span class="stack-tag">LLM Engine</span>
-          </div>
-        </div>
-
-        <div class="build-card" data-cat="ai agent">
-          <span class="build-badge">ai agent</span>
-          <h3>AI-Powered Customer Feedback System</h3>
-          <p>Collects incoming feedback and surfaces themes and sentiment automatically. Routes staff praise to rewards and negative escalations directly to leadership.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">Typeform</span>
-            <span class="stack-tag">Sentiment Analysis</span>
-            <span class="stack-tag">Slack Escalation</span>
-            <span class="stack-tag">Gmail</span>
-          </div>
-        </div>
-
-        <div class="build-card" data-cat="ai agent">
-          <span class="build-badge">ai agent</span>
-          <h3>AI Lead Qualification Assistant</h3>
-          <p>Built for a high-end real estate brokerage to qualify inbound leads on WhatsApp/SMS regarding budget and timeline before booking a rep's calendar.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">WhatsApp API</span>
-            <span class="stack-tag">Calendly</span>
-            <span class="stack-tag">HubSpot CRM</span>
-            <span class="stack-tag">n8n</span>
-          </div>
-        </div>
-
-        <div class="build-card" data-cat="content">
-          <span class="build-badge">content</span>
-          <h3>Content Request Multi-Agent System</h3>
-          <p>Turns a single content request into a finished blog post plus matching social posts, split across cooperating researcher, writer, and editor agents.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">n8n Multi-Agent</span>
-            <span class="stack-tag">Claude 3.5 Sonnet</span>
-            <span class="stack-tag">Notion API</span>
-            <span class="stack-tag">WordPress</span>
-          </div>
-        </div>
-
-        <div class="build-card" data-cat="content">
-          <span class="build-badge">content</span>
-          <h3>Social Content Repurpose System</h3>
-          <p>Takes one audio/video recording and reshapes it into tailored formats: LinkedIn storytelling, Twitter threads, and newsletter summaries.</p>
-          <div class="stack-tags">
-            <span class="stack-tag">Whisper AI</span>
-            <span class="stack-tag">Airtable</span>
-            <span class="stack-tag">Buffer API</span>
-            <span class="stack-tag">n8n</span>
-          </div>
-        </div>
+      <div class="build-grid" id="buildsContainer">
+        <!-- Rendered by JS -->
       </div>
     </section>
 
     <!-- Services / What I Do -->
     <section id="offer">
       <div class="section-header">
-        <span class="kicker">Core Principles</span>
+        <span class="kicker">What I Do</span>
         <h2>Automation built around your actual tools, not a demo.</h2>
       </div>
 
@@ -827,21 +1294,65 @@
           <h3>n8n workflow builds</h3>
           <span class="highlight">Production logic beyond no-code limits</span>
           <p>Connecting the apps you already use — inbox, spreadsheets, Slack, calendars — into one resilient system that runs without someone babysitting it.</p>
+          <ul>
+            <li>Complex multi-step conditional branching and looping</li>
+            <li>Custom JavaScript/TypeScript function nodes for custom logic</li>
+            <li>Webhook listener architecture with sub-second response times</li>
+          </ul>
         </div>
+
         <div class="service-card">
           <h3>AI inside the workflow</h3>
           <span class="highlight">Pragmatic intelligence where it counts</span>
           <p>Adding a model where it genuinely helps — categorizing, summarizing, drafting a reply — configured through OpenRouter so you're not locked to one provider.</p>
+          <ul>
+            <li>Multi-model routing via OpenRouter (Gemini, Claude, Llama)</li>
+            <li>Deterministic JSON structured outputs with schema enforcement</li>
+            <li>Vector database integration (Pinecone) for grounded retrieval</li>
+          </ul>
         </div>
+
         <div class="service-card">
           <h3>Self-hosted infrastructure</h3>
           <span class="highlight">Total privacy, compliance & zero cloud markup</span>
           <p>Running n8n on your own infrastructure when data control or cost matters more than convenience. Docker, automatic backups, and high uptime.</p>
+          <ul>
+            <li>Complete ownership of customer and business data</li>
+            <li>Zero per-workflow or per-execution markup fees</li>
+            <li>Automated daily backups and SSL security management</li>
+          </ul>
         </div>
+
         <div class="service-card">
           <h3>Failure-aware design</h3>
           <span class="highlight">Graceful degradation under edge cases</span>
           <p>Thinking through what happens when an API is down or a model returns nonsense, so the workflow degrades safely instead of silently dropping work.</p>
+          <ul>
+            <li>Automatic exponential backoff retries on network drops</li>
+            <li>Dead-letter queues and error routing triggers</li>
+            <li>Instant Slack/Email alerts with execution error traces</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="background:var(--card); border:1px solid var(--line); border-radius:14px; padding:28px;">
+        <h3 style="font-size:1.25rem; color:var(--ink); margin-bottom:6px;">Tested Enterprise Tool Stack</h3>
+        <p style="font-size:0.84rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft); margin-bottom:16px;">
+          Production-tested integrations deployed in high-throughput environments
+        </p>
+        <div class="tool-grid">
+          <div class="tool-pill"><strong>n8n</strong><span>Core Engine (Self-Hosted)</span></div>
+          <div class="tool-pill"><strong>Zapier</strong><span>Integration Gateway</span></div>
+          <div class="tool-pill"><strong>Airtable</strong><span>Relational CRM Schema</span></div>
+          <div class="tool-pill"><strong>Pinecone</strong><span>Vector Embeddings (RAG)</span></div>
+          <div class="tool-pill"><strong>OpenRouter</strong><span>Multi-LLM Gateway</span></div>
+          <div class="tool-pill"><strong>Google Sheets</strong><span>Operational Ledgers</span></div>
+          <div class="tool-pill"><strong>Slack API</strong><span>Urgent Alert Triage</span></div>
+          <div class="tool-pill"><strong>Telegram Bot API</strong><span>Customer CX Bots</span></div>
+          <div class="tool-pill"><strong>Gmail API</strong><span>Automated Dispatch</span></div>
+          <div class="tool-pill"><strong>Google Forms</strong><span>Lead Webhooks</span></div>
+          <div class="tool-pill"><strong>Docker / VPS</strong><span>Private Cloud Infra</span></div>
+          <div class="tool-pill"><strong>TypeScript</strong><span>Custom Scripting</span></div>
         </div>
       </div>
     </section>
@@ -851,34 +1362,39 @@
       <div class="section-header">
         <span class="kicker">Impact Estimator</span>
         <h2>Calculate Your Monthly Automation ROI</h2>
+        <p style="color:var(--ink-soft); font-size:1.05rem; margin-top:8px;">
+          See the exact hours and capital your team can reclaim by automating routine data entry, email routing, and document processing.
+        </p>
       </div>
 
       <div class="calc-card">
         <div class="calc-grid">
           <div>
             <div class="calc-input-group">
-              <label><span>Team Members with Repetitive Tasks</span><strong id="valTeam">5 people</strong></label>
-              <input type="range" id="inputTeam" min="1" max="50" value="5" oninput="updateCalc()">
+              <label><span>Team Members with Repetitive Tasks</span><strong id="valTeam" style="color:var(--teal);">6 people</strong></label>
+              <input type="range" id="inputTeam" min="1" max="40" value="6" oninput="updateCalc()">
             </div>
             <div class="calc-input-group">
-              <label><span>Manual Hours per Person / Week</span><strong id="valHours">8 hrs/wk</strong></label>
+              <label><span>Manual Hours per Person / Week</span><strong id="valHours" style="color:var(--signal);">8 hrs/wk</strong></label>
               <input type="range" id="inputHours" min="2" max="25" value="8" oninput="updateCalc()">
             </div>
             <div class="calc-input-group">
-              <label><span>Average Hourly Cost ($)</span><strong id="valRate">$35/hr</strong></label>
-              <input type="range" id="inputRate" min="15" max="150" step="5" value="35" oninput="updateCalc()">
+              <label><span>Average Hourly Cost ($)</span><strong id="valRate" style="color:var(--teal);">$40/hr</strong></label>
+              <input type="range" id="inputRate" min="15" max="150" step="5" value="40" oninput="updateCalc()">
             </div>
           </div>
           <div class="calc-output-box">
             <div class="calc-metric">
-              <span class="metric-val" id="calcHoursSaved">160 hrs</span>
-              <span class="metric-lbl">ESTIMATED HOURS RECLAIMED / MONTH</span>
+              <span class="metric-val" id="calcHoursSaved">154 hrs</span>
+              <span class="metric-lbl">HOURS RECLAIMED / MONTH</span>
             </div>
             <div class="calc-metric">
-              <span class="metric-val" id="calcDollarsSaved">$5,600</span>
+              <span class="metric-val" id="calcDollarsSaved" style="color:var(--signal);">$6,160</span>
               <span class="metric-lbl">ESTIMATED PRODUCTIVITY SAVINGS / MONTH</span>
             </div>
-            <a href="#contact" class="cta-btn" style="width:100%; justify-content:center; margin-top:10px;">Claim These Hours</a>
+            <button onclick="applyCalcToContact()" class="cta-btn" style="width:100%; justify-content:center; margin-top:10px;">
+              Automate This Workload
+            </button>
           </div>
         </div>
       </div>
@@ -890,25 +1406,28 @@
         <span class="kicker">About Imoh Japhet</span>
         <h2>I like systems that keep working when nobody's watching.</h2>
       </div>
-      <p style="color:var(--ink-soft); font-size:1.05rem; line-height:1.7; margin-bottom:18px;">
+      <p style="color:var(--ink-soft); font-size:1.05rem; line-height:1.75; margin-bottom:18px;">
         I build automation on n8n because it handles real branching logic and custom code where the no-code nodes run out. I'm currently running it self-hosted, with an AI assistant wired in through OpenRouter for the steps that benefit from a model's judgment.
       </p>
-      <p style="color:var(--ink-soft); font-size:1.05rem; line-height:1.7; margin-bottom:28px;">
+      <p style="color:var(--ink-soft); font-size:1.05rem; line-height:1.75; margin-bottom:28px;">
         I care less about a workflow looking impressive on a good day, and more about what it does on a bad one — a failed API call, a malformed input, a message that doesn't fit the expected shape.
       </p>
 
-      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:16px;">
-        <div style="background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:4px;">Automation Core</span>
-          <strong>n8n (Self-Hosted), Zapier</strong>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:18px;">
+        <div style="background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:6px;">Automation Core</span>
+          <strong style="color:var(--ink); font-size:0.95rem;">n8n (Self-Hosted), Zapier</strong>
+          <span style="display:block; font-size:0.8rem; color:var(--ink-soft); margin-top:4px;">Custom webhooks, cron timers, data transformation</span>
         </div>
-        <div style="background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:4px;">AI & Knowledge</span>
-          <strong>OpenRouter, Pinecone RAG, Prompt Engineering</strong>
+        <div style="background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--signal); text-transform:uppercase; display:block; margin-bottom:6px;">AI & Knowledge</span>
+          <strong style="color:var(--ink); font-size:0.95rem;">OpenRouter, Pinecone RAG</strong>
+          <span style="display:block; font-size:0.8rem; color:var(--ink-soft); margin-top:4px;">Structured JSON outputs, vector embeddings</span>
         </div>
-        <div style="background:var(--card); border:1px solid var(--line); border-radius:8px; padding:18px;">
-          <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:4px;">Databases & Comms</span>
-          <strong>Airtable CRM, Sheets, Slack, Telegram, Gmail</strong>
+        <div style="background:var(--card); border:1px solid var(--line); border-radius:10px; padding:20px;">
+          <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); text-transform:uppercase; display:block; margin-bottom:6px;">Databases & Comms</span>
+          <strong style="color:var(--ink); font-size:0.95rem;">Airtable CRM, Sheets, Slack</strong>
+          <span style="display:block; font-size:0.8rem; color:var(--ink-soft); margin-top:4px;">Single source of truth with atomic row locks</span>
         </div>
       </div>
     </section>
@@ -916,55 +1435,375 @@
     <!-- Contact Section -->
     <section id="contact">
       <div class="section-header">
-        <span class="kicker">Get In Touch</span>
+        <span class="kicker">Direct Contact & Social Handles</span>
         <h2>Have a manual process worth automating?</h2>
       </div>
-      <p style="color:var(--ink-soft); max-width:58ch; font-size:1.05rem;">
-        Tell me what you're doing by hand right now — sorting emails, chasing leads, updating a spreadsheet — and I'll tell you what a workflow for it would look like.
+      <p style="color:var(--ink-soft); max-width:68ch; font-size:1.05rem; margin-bottom:20px;">
+        Tell me what you're doing by hand right now — sorting emails, chasing leads, updating a spreadsheet — and I'll outline what a reliable workflow looks like. Connect directly through any of my official handles below:
       </p>
 
       <div class="contact-card">
-        <ul class="contact-list">
-          <li>
-            <span class="c-label">Email</span>
-            <a href="mailto:contact.imohjaphet@gmail.com" style="font-weight:600;">contact.imohjaphet@gmail.com</a>
-          </li>
-          <li>
-            <span class="c-label">Phone</span>
-            <a href="tel:+234730367349">+234 730 367 349</a>
-          </li>
-          <li>
-            <span class="c-label">LinkedIn</span>
-            <a href="https://www.linkedin.com/in/bitcoindon" target="_blank" rel="noopener">linkedin.com/in/bitcoindon</a>
-          </li>
-        </ul>
+        <div class="contact-grid">
+          <div>
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; color:var(--ink-muted); font-weight:600; display:block; margin-bottom:12px; letter-spacing:0.06em;">
+              Official Social Channels
+            </span>
+
+            <div class="social-btn-grid">
+              <!-- LinkedIn -->
+              <a href="https://linkedin.com/in/bitcoindon" target="_blank" rel="noopener noreferrer" class="social-btn linkedin">
+                <div class="social-btn-top">
+                  <div class="social-btn-brand" style="color:#0A66C2;">
+                    <svg viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 8.76a1.65 1.65 0 0 0 0-3.3 1.65 1.65 0 0 0 0 3.3m1.4 9.74v-8.37H5.06v8.37h2.8z"/></svg>
+                    <span>LinkedIn</span>
+                  </div>
+                  <span style="font-size:0.8rem; color:var(--ink-muted);">↗</span>
+                </div>
+                <span class="handle">bitcoindon</span>
+              </a>
+
+              <!-- WhatsApp -->
+              <a href="https://wa.me/2349028861046" target="_blank" rel="noopener noreferrer" class="social-btn whatsapp">
+                <div class="social-btn-top">
+                  <div class="social-btn-brand" style="color:#25D366;">
+                    <svg viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2m.01 1.67c2.2 0 4.26.86 5.82 2.42a8.225 8.225 0 0 1 2.41 5.83c0 4.54-3.7 8.24-8.24 8.24-1.48 0-2.93-.4-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.32a8.188 8.188 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24m4.52 11.66c-.25-.13-1.47-.72-1.7-.81-.23-.08-.39-.13-.56.13-.17.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.37-.44.12-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.35-.77-1.85-.2-.49-.41-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.44 1.03 2.61.12.17 1.77 2.71 4.3 3.79.6.26 1.07.41 1.44.53.61.19 1.16.17 1.6.1.49-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.11-.22-.18-.47-.31z"/></svg>
+                    <span>WhatsApp</span>
+                  </div>
+                  <span style="font-size:0.8rem; color:var(--ink-muted);">↗</span>
+                </div>
+                <span class="handle">+234 902 886 1046</span>
+              </a>
+
+              <!-- Facebook -->
+              <a href="https://facebook.com/JzoneDigitalLink" target="_blank" rel="noopener noreferrer" class="social-btn facebook">
+                <div class="social-btn-top">
+                  <div class="social-btn-brand" style="color:#1877F2;">
+                    <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+                    <span>Facebook</span>
+                  </div>
+                  <span style="font-size:0.8rem; color:var(--ink-muted);">↗</span>
+                </div>
+                <span class="handle">JzoneDigitalLink</span>
+              </a>
+
+              <!-- Instagram -->
+              <a href="https://www.instagram.com/imoh_japhet/" target="_blank" rel="noopener noreferrer" class="social-btn instagram">
+                <div class="social-btn-top">
+                  <div class="social-btn-brand" style="color:#E1306C;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a3.999 3.999 0 1 1 0-7.998 3.999 3.999 0 0 1 0 7.998zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                    <span>Instagram</span>
+                  </div>
+                  <span style="font-size:0.8rem; color:var(--ink-muted);">↗</span>
+                </div>
+                <span class="handle">@imoh_japhet</span>
+              </a>
+            </div>
+
+            <!-- Direct Contact List -->
+            <ul class="contact-list">
+              <li>
+                <div>
+                  <span class="c-label">Direct Email</span>
+                  <a href="mailto:contact.imohjaphet@gmail.com" style="font-weight:600; color:var(--ink);">contact.imohjaphet@gmail.com</a>
+                </div>
+                <button class="copy-pill" onclick="copyToClipboard('contact.imohjaphet@gmail.com', this)">Copy</button>
+              </li>
+              <li>
+                <div>
+                  <span class="c-label">Direct Phone / Call</span>
+                  <a href="tel:+2349028861046" style="font-weight:600; color:var(--ink);">+234 902 886 1046</a>
+                </div>
+                <button class="copy-pill" onclick="copyToClipboard('+234 902 886 1046', this)">Copy</button>
+              </li>
+            </ul>
+          </div>
+
+          <form onsubmit="handleContactSubmit(event)">
+            <div class="form-group">
+              <label>Your Name</label>
+              <input type="text" id="contactName" required class="form-control" placeholder="e.g. Kolawole Adeleke">
+            </div>
+            <div class="form-group">
+              <label>Your Email</label>
+              <input type="email" id="contactEmail" required class="form-control" placeholder="kola@company.com">
+            </div>
+            <div class="form-group">
+              <label>Current Tools & Stack</label>
+              <input type="text" id="contactTools" class="form-control" placeholder="e.g. Gmail, Google Sheets, Slack, Airtable">
+            </div>
+            <div class="form-group">
+              <label>Manual Process to Automate</label>
+              <textarea id="contactMessage" required class="form-control" placeholder="Describe the workflow: where does the data start, who touches it, and where does it need to end up?"></textarea>
+            </div>
+            <button type="submit" class="cta-btn" style="width:100%; justify-content:center;">
+              Send Automation Brief to Imoh
+            </button>
+          </form>
+        </div>
       </div>
     </section>
   </main>
 
+  <!-- Architecture Inspection Modal -->
+  <div id="archModal" class="modal-backdrop" onclick="closeModalOnBackdrop(event)">
+    <div class="modal-box">
+      <span class="modal-close" onclick="closeArchModal()">&times;</span>
+      <div id="modalContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
   <footer>
-    <div class="wrap">
-      <p>© 2026 Imoh Japhet · AI & Automation Engineer · Built for resilience & precision.</p>
+    <div class="wrap footer-inner">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-weight:700; color:var(--ink);">Imoh Japhet</span>
+        <span>·</span>
+        <span>AI & Automation Engineer</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <a href="https://linkedin.com/in/bitcoindon" target="_blank" rel="noopener noreferrer" style="color:#0A66C2;" title="LinkedIn">LinkedIn</a>
+        <a href="https://wa.me/2349028861046" target="_blank" rel="noopener noreferrer" style="color:#25D366;" title="WhatsApp">WhatsApp</a>
+        <a href="https://facebook.com/JzoneDigitalLink" target="_blank" rel="noopener noreferrer" style="color:#1877F2;" title="Facebook">Facebook</a>
+        <a href="https://www.instagram.com/imoh_japhet/" target="_blank" rel="noopener noreferrer" style="color:#E1306C;" title="Instagram">Instagram</a>
+        <a href="mailto:contact.imohjaphet@gmail.com" style="color:var(--teal);">Email</a>
+      </div>
     </div>
   </footer>
 
   <script>
-    // Theme toggle
-    const themeToggleBtn = document.getElementById('themeToggle');
-    const themeIcon = document.getElementById('themeIcon');
-    let isLight = false;
+    // System builds database
+    const buildsData = [{"id":"email-categorizer","category":"automation","title":"Email Categorizer, Logger & Urgent Alert","tagline":"Self-hosted n8n workflow for inbound email triage & immediate Slack escalation","description":"A robust, self-hosted n8n system that ingests unread inbound corporate emails, evaluates tone, urgency, and categorization using an OpenRouter-connected LLM, stores structured logs in Google Sheets, and pings priority Slack channels when urgent intervention is demanded.","stack":["n8n (Self-hosted)","OpenRouter","Google Sheets","Slack Webhooks","IMAP / Gmail API"],"keyOutcome":"Eliminated manual email inbox triage, slashing urgent ticket response times from 3 hours to under 90 seconds.","metrics":[{"label":"Triage Latency","value":"< 90 sec"},{"label":"Classification Accuracy","value":"98.4%"},{"label":"Weekly Hours Saved","value":"14 hrs"}],"architecture":{"trigger":"IMAP Inbound Email Webhook on new message arrival","processing":["Sanitizes HTML body and extracts attachments metadata","Calls OpenRouter AI with low-temperature prompt for JSON categorization (Billing, Urgent Bug, Sales, General)","Appends row to Google Sheets master operational ledger with sentiment rating"],"output":"Color-coded Slack message with direct action links + updated Google Sheets ledger","failSafe":"Fallbacks to \"Uncategorized Urgent\" if model timeout occurs, ensuring zero dropped messages."},"samplePayload":{"input":{"from":"ceo@partnercorp.com","subject":"URGENT: Production API authentication failing across region","timestamp":"2026-09-23T14:12:00Z"},"output":{"category":"Critical Infrastructure / Bug","urgencyScore":"5/5","sentiment":"High Distress","slackAlertSent":true,"channel":"#ops-fire-drill","autoAssignedTo":"On-Call Lead Engineer"}}},{"id":"school-exam-grading","category":"automation","title":"School Exam Auto-Marking & Results Grading","tagline":"Automated student evaluation system inspired by MarkSmart AI","description":"Processes student examinations submitted via Google Forms in real-time. Zapier and n8n capture answers, normalize inputs, apply AI evaluation against teacher-provided answer rubrics, generate personalized constructive feedback per student, and dispatch report cards to parents.","stack":["Google Forms","Zapier / n8n","OpenAI / Claude Rubrics","PostgreSQL / Airtable","Gmail API"],"keyOutcome":"Teachers reclaimed 20+ hours per exam week while students received immediate, detailed qualitative guidance.","metrics":[{"label":"Grading Speed","value":"45 sec / student"},{"label":"Grading Consistency","value":"100% Rubric Match"},{"label":"Parent Delivery","value":"Instant via Gmail"}],"architecture":{"trigger":"Student submits exam via Google Form","processing":["Zapier pulls submission, validates student matriculation number against student register","AI evaluation model assesses free-form answers against multi-tier grading rubric","Generates numerical score and 3 personalized strengths and areas for improvement","Updates student master gradebook in database"],"output":"Itemized PDF/HTML report emailed to parents + teacher summary table in Slack","failSafe":"Submissions with confidence score under 85% flagged for teacher 1-click manual review."},"samplePayload":{"input":{"studentId":"STU-8821","studentName":"Amina Adeleke","examTitle":"AP Environmental Science Midterm","essayAnswer":"Photosynthesis converts solar photons into chemical glucose..."},"output":{"score":"94/100","grade":"A","rubricBreakdown":{"clarity":19,"factualAccuracy":25,"synthesis":25,"vocabulary":25},"feedback":"Superb explanation of light-dependent reactions in chloroplast stroma.","parentEmailed":true}}},{"id":"rag-live-knowledge-base","category":"ai agent","title":"RAG Agent on a Live Knowledge Base","tagline":"Autonomous information retrieval system powered by Pinecone Vector Store","description":"An enterprise knowledge engine that reads company documentation, Notion bases, and product manuals, chunks text into vector embeddings, and stores them in Pinecone. The agent continuously answers complex team inquiries grounded in real-time verified data with zero hallucinations.","stack":["Pinecone Vector DB","OpenRouter Embeddings","Python / n8n","FastAPI","Slack / Web Bot"],"keyOutcome":"Reduced internal technical support questions by 72% across distributed teams.","metrics":[{"label":"Retrieval Latency","value":"420 ms"},{"label":"Hallucination Rate","value":"< 0.2%"},{"label":"Knowledge Base Size","value":"14,000+ chunks"}],"architecture":{"trigger":"Employee asks natural language question in Slack or Web Interface","processing":["Converts query to vector embeddings via text-embedding-3","Performs cosine similarity search against Pinecone vector index (top_k=5)","Filters chunks matching relevance threshold (>0.82)","Prompts LLM with retrieved context using strict citation instructions"],"output":"Precise answer with source document titles, section anchors, and last-updated timestamps","failSafe":"Explicitly replies \"Not found in verified company docs\" if top similarity is below confidence cutoff."}},{"id":"rag-telegram-cx-agent","category":"ai agent","title":"RAG CX Agent — Telegram Bot","tagline":"24/7 autonomous Telegram customer service pulling live from Airtable","description":"Customer experience bot deployed on Telegram that handles customer inquiries, pricing, availability, and onboarding FAQs. Unlike brittle static chatbots, it retrieves live inventory, business policies, and pricing tables from an Airtable base on every question.","stack":["Telegram Bot API","Airtable REST API","n8n Webhook Node","OpenRouter (Llama 3.3 / Claude)"],"keyOutcome":"Achieved 24/7 response capability with 0 human intervention on 85% of customer questions.","metrics":[{"label":"Uptime","value":"99.98%"},{"label":"Response Time","value":"< 1.8 sec"},{"label":"Resolution Rate","value":"88%"}],"architecture":{"trigger":"Customer sends message or command to official Telegram handle","processing":["n8n catches Telegram webhook with message and sender identity","Extracts customer intent and retrieves relevant live data rows from Airtable CRM","AI formulates friendly, on-brand response adhering to brand guidelines","Logs customer query and resolution status to conversation history"],"output":"Instant rich Telegram message response + admin escalation trigger if requested","failSafe":"Customer can type /human or express frustration to trigger immediate human rep ping."}},{"id":"customer-feedback-sentiment","category":"ai agent","title":"AI-Powered Customer Feedback System","tagline":"Multi-tier sentiment detection, automated appreciation & leadership alert router","description":"Captures incoming customer reviews and survey responses. An AI pipeline evaluates sentiment, themes, and staff references. Positive reviews trigger automated reward & thank-you notes; negative feedback generates personalized apologies and instantly pings CX; staff-specific complaints alert business owners directly.","stack":["Typeform / Webhook","n8n","Sentiment Analysis LLM","Gmail API","Slack Team Router"],"keyOutcome":"Saved 10+ hours per week of manual reading while catching churn risks in under 5 minutes.","metrics":[{"label":"Sentiment Precision","value":"96.8%"},{"label":"Escalation Time","value":"< 2 min"},{"label":"Customer Retention Lift","value":"+18%"}],"architecture":{"trigger":"Survey submission or review received via webhook","processing":["Analyzes sentiment score (-1.0 to +1.0) and detects named staff entities","Branch 1 (Positive): Sends warm appreciation email with referral perk coupon","Branch 2 (Negative - General): Sends apology email, files ticket, alerts CX channel","Branch 3 (Negative - Staff Mention): Dispatches urgent private alert to Business Owner"],"output":"Targeted stakeholder action based on nuanced emotional & operational content","failSafe":"Stores raw JSON in secondary database before branching to guarantee complete auditability."}},{"id":"ai-lead-qualification","category":"ai agent","title":"AI Lead Qualification Assistant","tagline":"Conversational lead screening and calendar booking for real estate & high-ticket services","description":"Engineered for a high-end real estate brokerage to qualify inbound leads before scheduling reps. Interactively engages prospective buyers via WhatsApp/SMS to verify budget, buying timeline, financing pre-approval, and neighborhood preference.","stack":["Twilio / WhatsApp API","n8n Flow","Calendly API","HubSpot / Airtable","AI Agent Loop"],"keyOutcome":"Sales team conversion rates doubled because reps only hopped on calls with verified, high-budget buyers.","metrics":[{"label":"Lead Response Time","value":"< 30 sec"},{"label":"Booking Rate","value":"34% of qualified"},{"label":"Rep Time Saved","value":"25 hrs / week"}],"architecture":{"trigger":"Inbound lead submits interest on listing or ad landing page","processing":["AI assistant sends immediate greeting via WhatsApp/SMS","Asks 3 conversational qualifying questions in natural tone","Evaluates answers against qualifying criteria (Budget >= $500k, timeline <= 90 days)","If qualified: provides rep calendar booking link and prepares briefing doc"],"output":"Qualified lead synced to HubSpot with summary notes + booked calendar event","failSafe":"Unqualified leads gently routed to automated email nurture sequence."}},{"id":"content-request-multi-agent","category":"content","title":"Content Request Multi-Agent System","tagline":"Collaborative autonomous agent pipeline for long-form & multi-channel publishing","description":"Turns a single raw content brief into a publication-ready SEO blog post, LinkedIn carousel script, and Twitter thread. Operates via cooperating specialized agents (Researcher, Structural Architect, Prose Writer, Brand Editor, and Social Repurposer).","stack":["n8n Multi-Agent Node","OpenRouter (Claude 3.5 Sonnet + Gemini)","Notion API","WordPress REST API"],"keyOutcome":"Reduced content production turnaround from 3 days to 12 minutes per asset.","metrics":[{"label":"Turnaround Time","value":"12 min"},{"label":"Asset Outputs","value":"5 formats / brief"},{"label":"SEO Optimization","value":"92+ Content Score"}],"architecture":{"trigger":"Card moved to \"Ready to Generate\" in Notion Content Board","processing":["Agent 1 (Researcher): Gathers facts, statistics, and keyword clusters","Agent 2 (Drafter): Generates comprehensive 1,500-word markdown draft","Agent 3 (Critic / Editor): Edits for clarity, brand voice, and removes fluff","Agent 4 (Social Formatter): Extracts Twitter thread & LinkedIn carousel bullets"],"output":"Notion draft page populated with all assets ready for human 1-click signoff","failSafe":"Strict token limits and validation schemas prevent truncated or malformed outputs."}},{"id":"social-repurpose-system","category":"content","title":"Social Content Repurpose System","tagline":"Multi-platform transformation engine reshaping long-form audio/video into viral formats","description":"Ingests podcast episodes, YouTube links, or webinar transcripts. Cleans speech filler, extracts compelling quotes, generates punchy Twitter threads, LinkedIn thought-leadership essays, and newsletter summaries formatted specifically for each platform’s algorithm.","stack":["Whisper API / AssemblyAI","n8n Orchestrator","OpenRouter LLMs","Airtable Content Hub","Buffer API"],"keyOutcome":"One weekly founder recording fuels an entire week of omnipresent social media content.","metrics":[{"label":"Assets per Audio","value":"7 Assets"},{"label":"Weekly Reach","value":"3.4x Increase"},{"label":"Repurposing Labor","value":"0 hrs manual"}],"architecture":{"trigger":"New video URL or MP3 file uploaded to Google Drive folder","processing":["Transcribes audio with speaker diarization and timestamping","Identifies top 3 high-impact narrative hooks and soundbites","Tailors tone for LinkedIn (professional storytelling) vs X/Twitter (sharp, punchy)","Schedules drafts into Buffer queue for final creator approval"],"output":"Full weekly social calendar pre-populated in Airtable & Buffer","failSafe":"Drafts held in review state; never auto-publishes without explicit user approval toggle."}}];
 
-    themeToggleBtn.addEventListener('click', () => {
-      isLight = !isLight;
-      document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
-      themeIcon.textContent = isLight ? '🌙 Dark' : '☀️ Light';
-    });
+    // Live Simulator Records
+    let simRecords = [
+      { id: 'REC-001', leadName: 'Ngozi Adebayo', ambassadorCode: 'AMB-772 (Kolawole)', fee: 20000, status: 'Paid', commission: 4000, notice: '2026-09-21 11:22 AM' },
+      { id: 'REC-002', leadName: 'Tunde Bakare', ambassadorCode: 'AMB-310 (Fatima)', fee: 20000, status: 'Paid', commission: 4000, notice: '2026-09-22 03:15 PM' },
+      { id: 'REC-003', leadName: 'Chidi Okafor', ambassadorCode: 'AMB-409 (Emeka)', fee: 20000, status: 'Pending', commission: 0, notice: 'Awaiting Fee' }
+    ];
 
-    // Robot cursor eye tracker
+    function renderAirtable() {
+      const tbody = document.getElementById('airtableBody');
+      if (!tbody) return;
+      tbody.innerHTML = simRecords.map(r => `
+        <tr>
+          <td style="font-weight:600; color:var(--teal);">${r.id}</td>
+          <td>${r.leadName}</td>
+          <td style="color:var(--ink-soft);">${r.ambassadorCode}</td>
+          <td style="font-weight:600;">₦${r.fee.toLocaleString()}</td>
+          <td>
+            <span class="status-tag ${r.status === 'Paid' ? 'paid' : 'pending'}">
+              ● ${r.status}
+            </span>
+          </td>
+          <td style="font-weight:600; color:var(--signal);">${r.commission > 0 ? '₦' + r.commission.toLocaleString() : '— (Pending)'}</td>
+          <td style="color:var(--ink-soft);">${r.notice}</td>
+        </tr>
+      `).join('');
+
+      const countElem = document.getElementById('recordCountText');
+      if (countElem) countElem.textContent = simRecords.length + ' records in base';
+    }
+
+    function pulseLane(lineIds, duration) {
+      lineIds.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('pulse-line');
+      });
+      setTimeout(() => {
+        lineIds.forEach(id => {
+          const el = document.getElementById(id);
+          if (el) el.classList.remove('pulse-line');
+        });
+      }, duration);
+    }
+
+    function triggerSimZap1() {
+      const log = document.getElementById('simConsoleLog');
+      log.textContent = '🚀 [Zap 1] Form submission received for "Folake Balogun" (Ambassador: AMB-409)...';
+      pulseLane(['zap1Line1', 'zap1Line2', 'zap1Line3'], 1200);
+      setTimeout(() => {
+        const newId = 'REC-00' + (simRecords.length + 1);
+        simRecords.unshift({
+          id: newId,
+          leadName: 'Folake Balogun',
+          ambassadorCode: 'AMB-409 (Emeka)',
+          fee: 20000,
+          status: 'Pending',
+          commission: 0,
+          notice: 'Awaiting Fee'
+        });
+        renderAirtable();
+        log.textContent = '✉️ [Zap 1 Completed] Record created in Airtable CRM + tracking confirmation emailed to lead & ambassador!';
+      }, 700);
+    }
+
+    function triggerSimZap2() {
+      const log = document.getElementById('simConsoleLog');
+      const pendingIdx = simRecords.findIndex(r => r.status === 'Pending');
+      if (pendingIdx === -1) {
+        log.textContent = 'ℹ️ All records are already "Paid". Run Zap 1 to create a new pending referral!';
+        return;
+      }
+      const target = simRecords[pendingIdx];
+      log.textContent = '💳 [Zap 2] 2-minute poll detected fee marked "Paid" (₦20,000) for ' + target.leadName + '...';
+      pulseLane(['zap2Line1', 'zap2Line2', 'zap2Line3'], 1200);
+      setTimeout(() => {
+        target.status = 'Paid';
+        target.commission = 4000;
+        target.notice = 'Just now (Instant)';
+        renderAirtable();
+        log.textContent = '✅ [Zap 2 Completed] 20% commission (₦4,000) computed by Airtable formula. Email sent to ' + target.ambassadorCode + ' within 88s!';
+      }, 700);
+    }
+
+    function triggerSimZap3() {
+      const log = document.getElementById('simConsoleLog');
+      log.textContent = '📅 [Zap 3] 1st of Month 08:00 AM Cron fired. Aggregating prior month commissions...';
+      pulseLane(['zap3Line1', 'zap3Line2', 'zap3Line3'], 1200);
+      setTimeout(() => {
+        const paidCount = simRecords.filter(r => r.status === 'Paid').length;
+        const totalPayout = paidCount * 4000;
+        log.textContent = '📊 [Zap 3 Completed] ' + paidCount + ' referrals processed (₦' + totalPayout.toLocaleString() + ' commission). Itemized statement dispatched via Gmail!';
+      }, 700);
+    }
+
+    function resetSimRecords() {
+      simRecords = [
+        { id: 'REC-001', leadName: 'Ngozi Adebayo', ambassadorCode: 'AMB-772 (Kolawole)', fee: 20000, status: 'Paid', commission: 4000, notice: '2026-09-21 11:22 AM' },
+        { id: 'REC-002', leadName: 'Tunde Bakare', ambassadorCode: 'AMB-310 (Fatima)', fee: 20000, status: 'Paid', commission: 4000, notice: '2026-09-22 03:15 PM' },
+        { id: 'REC-003', leadName: 'Chidi Okafor', ambassadorCode: 'AMB-409 (Emeka)', fee: 20000, status: 'Pending', commission: 0, notice: 'Awaiting Fee' }
+      ];
+      renderAirtable();
+      document.getElementById('simConsoleLog').textContent = 'Simulation state reset.';
+    }
+
+    // Render Builds Grid
+    function renderBuilds(list) {
+      const container = document.getElementById('buildsContainer');
+      if (!container) return;
+      if (list.length === 0) {
+        container.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding:40px; color:var(--ink-soft); font-family:IBM Plex Mono;">No systems match your search query.</div>';
+        return;
+      }
+      container.innerHTML = list.map(b => `
+        <div class="build-card" data-cat="${b.category}">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span class="build-badge ${b.category === 'automation' ? 'automation' : b.category === 'content' ? 'content' : ''}">${b.category}</span>
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-muted);">${b.metrics && b.metrics[0] ? b.metrics[0].value : ''}</span>
+            </div>
+            <h3>${b.title}</h3>
+            <p>${b.description}</p>
+          </div>
+          <div>
+            <div class="stack-tags">
+              ${b.stack.slice(0, 3).map(s => `<span class="stack-tag">${s}</span>`).join('')}
+              ${b.stack.length > 3 ? `<span class="stack-tag">+${b.stack.length - 3}</span>` : ''}
+            </div>
+            <button class="inspect-btn" onclick="openArchModal('${b.id}')">
+              <span>⚡ Inspect Blueprint</span>
+              <span>→</span>
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    let currentCategory = 'all';
+    function filterBuilds(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+      searchBuilds();
+    }
+
+    function searchBuilds() {
+      const query = (document.getElementById('buildSearch')?.value || '').toLowerCase();
+      const filtered = buildsData.filter(b => {
+        const matchesCat = currentCategory === 'all' || b.category === currentCategory;
+        const matchesQuery = b.title.toLowerCase().includes(query) ||
+          b.description.toLowerCase().includes(query) ||
+          b.stack.some(s => s.toLowerCase().includes(query));
+        return matchesCat && matchesQuery;
+      });
+      renderBuilds(filtered);
+    }
+
+    // Architecture Modal
+    function openArchModal(id) {
+      const project = buildsData.find(b => b.id === id);
+      if (!project) return;
+      const modal = document.getElementById('archModal');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = `
+        <span class="build-badge ${project.category}">${project.category} · Blueprint Inspection</span>
+        <h2 style="font-size:1.8rem; margin:8px 0 4px; color:#fff;">${project.title}</h2>
+        <p style="color:var(--ink-soft); font-size:0.9rem; margin-bottom:16px;">${project.tagline}</p>
+
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1);">
+          ${project.stack.map(s => `<span class="stack-tag">${s}</span>`).join('')}
+        </div>
+
+        <h4 style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--teal); text-transform:uppercase; margin-bottom:10px;">Execution Flow</h4>
+        <div class="node-box" style="border-color:rgba(79, 209, 197, 0.4);">
+          <strong style="color:var(--teal);">TRIGGER:</strong> ${project.architecture.trigger}
+        </div>
+        <div class="node-box" style="border-color:rgba(245, 166, 35, 0.4);">
+          <strong style="color:var(--signal);">PROCESSING STEPS:</strong>
+          <ul style="margin-top:6px; padding-left:16px; color:var(--ink-soft);">
+            ${project.architecture.processing.map(p => `<li style="margin-bottom:4px;">${p}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="node-box" style="border-color:rgba(66, 133, 244, 0.4);">
+          <strong style="color:#60A5FA;">DISPATCH / OUTCOME:</strong> ${project.architecture.output}
+        </div>
+
+        <div style="background:rgba(245, 166, 35, 0.08); border:1px solid rgba(245, 166, 35, 0.3); border-radius:10px; padding:14px; margin:16px 0; font-size:0.8rem; font-family:'IBM Plex Mono', monospace; color:var(--signal);">
+          <strong>SAFEGUARD / FAILURE HANDLING:</strong> ${project.architecture.failSafe}
+        </div>
+
+        ${project.samplePayload ? `
+          <h4 style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--ink-soft); text-transform:uppercase; margin-top:20px; margin-bottom:8px;">Sample Payload Trace</h4>
+          <pre style="background:#080D0E; border:1px solid var(--line); border-radius:8px; padding:14px; font-size:0.75rem; color:var(--teal); overflow-x:auto;">${JSON.stringify(project.samplePayload, null, 2)}</pre>
+        ` : ''}
+
+        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.1); text-align:center;">
+          ${project.metrics.map(m => `
+            <div style="background:rgba(255,255,255,0.03); padding:10px; border-radius:8px;">
+              <strong style="font-size:1.2rem; color:var(--teal); display:block;">${m.value}</strong>
+              <span style="font-size:0.7rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft);">${m.label}</span>
+            </div>
+          `).join('')}
+        </div>
+      `;
+      modal.classList.add('open');
+    }
+
+    function closeArchModal() {
+      const modal = document.getElementById('archModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeModalOnBackdrop(e) {
+      if (e.target.id === 'archModal') closeArchModal();
+    }
+
+    // Mascot Tracking & Cycling
     const botSvg = document.getElementById('heroBotSvg');
     const pupilL = document.getElementById('pupilL');
     const pupilR = document.getElementById('pupilR');
     const botUpper = document.getElementById('botUpper');
+    let botModes = ['Status: 100% Automated', 'Status: Scanning Events...', 'Status: Idle & Listening'];
+    let botModeIdx = 0;
+
+    function cycleBotMode() {
+      botModeIdx = (botModeIdx + 1) % botModes.length;
+      const textElem = document.getElementById('botStatusText');
+      if (textElem) {
+        textElem.innerHTML = `<span style="display:inline-block; width:6px; height:6px; border-radius:50%; background:${botModeIdx === 0 ? 'var(--teal)' : botModeIdx === 1 ? 'var(--signal)' : 'gray'};"></span> ${botModes[botModeIdx]}`;
+      }
+    }
 
     window.addEventListener('mousemove', (e) => {
       if (!botSvg) return;
@@ -975,30 +1814,26 @@
       const deltaX = (e.clientX - centerX) / (window.innerWidth / 2);
       const deltaY = (e.clientY - centerY) / (window.innerHeight / 2);
 
-      const eyeX = Math.max(-6, Math.min(6, deltaX * 8));
-      const eyeY = Math.max(-5, Math.min(5, deltaY * 7));
+      const eyeX = Math.max(-7, Math.min(7, deltaX * 8));
+      const eyeY = Math.max(-6, Math.min(6, deltaY * 7));
 
       if (pupilL) pupilL.setAttribute('transform', `translate(${eyeX}, ${eyeY})`);
       if (pupilR) pupilR.setAttribute('transform', `translate(${eyeX}, ${eyeY})`);
 
-      const leanX = Math.max(-8, Math.min(8, deltaX * 10));
-      const leanRot = Math.max(-3, Math.min(3, deltaX * 4));
-      if (botUpper) botUpper.setAttribute('transform', `translate(${leanX}, ${eyeY * 0.4}) rotate(${leanRot} 150 200)`);
+      const leanX = Math.max(-9, Math.min(9, deltaX * 11));
+      const leanRot = Math.max(-3.5, Math.min(3.5, deltaX * 4));
+      if (botUpper) botUpper.setAttribute('transform', `translate(${leanX}, ${Math.abs(leanX) * 0.2}) rotate(${leanRot} 150 200)`);
     });
 
-    // Build filter
-    function filterBuilds(cat, btn) {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const cards = document.querySelectorAll('.build-card');
-      cards.forEach(card => {
-        if (cat === 'all' || card.getAttribute('data-cat') === cat) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
+    // Theme Toggle
+    const themeBtn = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    let isLight = false;
+    themeBtn.addEventListener('click', () => {
+      isLight = !isLight;
+      document.documentElement.setAttribute('data-theme', isLight ? 'light' : 'dark');
+      themeIcon.textContent = isLight ? '🌙 Dark' : '☀️ Light';
+    });
 
     // ROI Calculator
     function updateCalc() {
@@ -1010,13 +1845,50 @@
       document.getElementById('valHours').textContent = hours + ' hrs/wk';
       document.getElementById('valRate').textContent = '$' + rate + '/hr';
 
-      // 4 weeks per month, assuming 80% manual time automated
       const monthlyHours = Math.round(team * hours * 4 * 0.8);
       const monthlySavings = Math.round(monthlyHours * rate);
 
       document.getElementById('calcHoursSaved').textContent = monthlyHours.toLocaleString() + ' hrs';
       document.getElementById('calcDollarsSaved').textContent = '$' + monthlySavings.toLocaleString();
     }
+
+    function applyCalcToContact() {
+      const team = document.getElementById('inputTeam').value;
+      const hours = document.getElementById('inputHours').value;
+      const rate = document.getElementById('inputRate').value;
+      const msg = document.getElementById('contactMessage');
+      if (msg) {
+        msg.value = `Estimated ROI: Team of ${team} spending ${hours} hrs/wk at $${rate}/hr on manual routines. Target savings: ~80% reclaimed.`;
+      }
+      document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // Copy Helper
+    function copyToClipboard(text, btn) {
+      navigator.clipboard.writeText(text).then(() => {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied!';
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      });
+    }
+
+    // Contact Form Mailto
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('contactName').value;
+      const email = document.getElementById('contactEmail').value;
+      const tools = document.getElementById('contactTools').value;
+      const message = document.getElementById('contactMessage').value;
+
+      const subject = encodeURIComponent('Automation Project Inquiry - ' + name);
+      const body = encodeURIComponent(`Hello Imoh,\n\nName: ${name}\nEmail: ${email}\nTools: ${tools}\n\nProcess to automate:\n${message}`);
+      window.location.href = `mailto:contact.imohjaphet@gmail.com?subject=${subject}&body=${body}`;
+    }
+
+    // Init
+    renderAirtable();
+    renderBuilds(buildsData);
+    updateCalc();
   </script>
 </body>
 </html>
