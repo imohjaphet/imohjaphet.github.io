@@ -611,6 +611,7 @@
     }
     .build-badge.automation { background: rgba(245, 166, 35, 0.12); color: var(--signal); }
     .build-badge.content { background: rgba(168, 85, 247, 0.12); color: #C084FC; }
+    .build-badge.ai-agent, .build-badge[data-cat="ai agent"] { background: rgba(79, 209, 197, 0.12); color: var(--teal); }
 
     .build-card h3 { font-size: 1.25rem; margin-bottom: 10px; color: var(--ink); }
     .build-card p { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 20px; line-height: 1.6; }
@@ -746,6 +747,77 @@
       border-radius: 16px;
       padding: 36px;
       margin-top: 24px;
+    }
+    .calc-currency-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding: 10px 16px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .curr-tabs {
+      display: inline-flex;
+      gap: 4px;
+      background: var(--card);
+      padding: 4px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+    }
+    .curr-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+    }
+    .curr-btn:hover {
+      color: var(--ink);
+    }
+    .curr-btn.active {
+      background: var(--teal);
+      color: #0E1416;
+      border-color: var(--teal);
+      box-shadow: 0 2px 6px rgba(79, 209, 197, 0.25);
+    }
+    .curr-presets {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .curr-preset-btn {
+      padding: 3px 8px;
+      font-size: 0.72rem;
+      font-family: 'IBM Plex Mono', monospace;
+      border-radius: 4px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .curr-preset-btn:hover {
+      color: var(--ink);
+      border-color: var(--teal);
+    }
+    .curr-preset-btn.active {
+      background: rgba(79, 209, 197, 0.15);
+      color: var(--teal);
+      border-color: var(--teal);
+      font-weight: 600;
     }
     .calc-grid {
       display: grid;
@@ -1272,21 +1344,26 @@
     <!-- More Builds Grid with Live Search & Blueprint Modal -->
     <section id="builds">
       <div class="section-header">
-        <span class="kicker">Production Systems</span>
-        <h2>Other systems I've put together.</h2>
+        <span class="kicker">Technical Systems & Blueprint Directory</span>
+        <h2>Production Architectures & Execution Flows</h2>
         <p style="color:var(--ink-soft); font-size:1.05rem; margin-top:8px;">
-          Each system is engineered around real failure conditions, custom API webhooks, and measurable client outcomes.
+          Inspect the end-to-end technical blueprints for all 8 systems below. Each drawer details Before & After transformations, live demos, repository code, step-by-step pipeline execution, and JSON payload traces.
         </p>
       </div>
 
-      <div class="filter-bar">
-        <div class="filter-pills">
-          <button class="filter-btn active" onclick="filterBuilds('all', this)">All (8)</button>
-          <button class="filter-btn" onclick="filterBuilds('automation', this)">Workflow Automation (2)</button>
-          <button class="filter-btn" onclick="filterBuilds('ai agent', this)">AI Agents (4)</button>
-          <button class="filter-btn" onclick="filterBuilds('content', this)">Content Systems (2)</button>
+      <div class="filter-bar" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:12px; margin-bottom:24px;">
+        <div class="filter-pills" id="categoryPillContainer">
+          <button class="filter-btn active" onclick="filterBuilds('all', this)">All Systems (8)</button>
+          <button class="filter-btn" onclick="filterBuilds('automation', this)">Workflow Automation (4)</button>
+          <button class="filter-btn" onclick="filterBuilds('ai agent', this)">AI Agents (2)</button>
+          <button class="filter-btn" onclick="filterBuilds('content', this)">Content Operations (2)</button>
         </div>
-        <input type="text" id="buildSearch" class="search-input" placeholder="Search by tool or keyword..." oninput="searchBuilds()">
+        <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+          <button type="button" id="toggleAllDrawersBtn" onclick="toggleAllStandaloneDrawers()" style="padding:8px 14px; border-radius:8px; background:var(--card); border:1px solid var(--line); color:var(--teal); font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px;">
+            <span>⚡ Expand All Blueprints</span>
+          </button>
+          <input type="text" id="buildSearch" class="search-input" placeholder="Search by tool or keyword..." oninput="searchBuilds()" style="margin:0; min-width:240px;">
+        </div>
       </div>
 
       <div class="build-grid" id="buildsContainer">
@@ -1372,40 +1449,127 @@
     <!-- ROI Calculator -->
     <section id="calculator">
       <div class="section-header">
-        <span class="kicker">Impact Estimator</span>
+        <span class="kicker">Impact Estimator · Multi-Currency</span>
         <h2>Calculate Your Monthly Automation ROI</h2>
         <p style="color:var(--ink-soft); font-size:1.05rem; margin-top:8px;">
-          See the exact hours and capital your team can reclaim by automating routine data entry, email routing, and document processing.
+          See the exact hours and capital your team can reclaim by automating routine data entry, email routing, and document processing. Supports global and regional currencies (USD, NGN, GBP, EUR).
         </p>
       </div>
 
       <div class="calc-card">
+        <!-- Currency Switcher Bar -->
+        <div class="calc-currency-bar">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; text-transform:uppercase; color:var(--ink-soft); letter-spacing:0.05em;">
+              Currency:
+            </span>
+            <span id="activeCurrencyLabel" style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; font-weight:600; color:var(--ink);">
+              🇺🇸 US Dollar ($)
+            </span>
+          </div>
+          <div class="curr-tabs">
+            <button type="button" class="curr-btn active" data-curr="USD" onclick="setCurrency('USD')">
+              <span>🇺🇸</span><span>USD</span><span style="opacity:0.75; font-size:0.7rem;">($)</span>
+            </button>
+            <button type="button" class="curr-btn" data-curr="NGN" onclick="setCurrency('NGN')">
+              <span>🇳🇬</span><span>NGN</span><span style="opacity:0.75; font-size:0.7rem;">(₦)</span>
+            </button>
+            <button type="button" class="curr-btn" data-curr="GBP" onclick="setCurrency('GBP')">
+              <span>🇬🇧</span><span>GBP</span><span style="opacity:0.75; font-size:0.7rem;">(£)</span>
+            </button>
+            <button type="button" class="curr-btn" data-curr="EUR" onclick="setCurrency('EUR')">
+              <span>🇪🇺</span><span>EUR</span><span style="opacity:0.75; font-size:0.7rem;">(€)</span>
+            </button>
+          </div>
+        </div>
+
         <div class="calc-grid">
+          <!-- Inputs Column -->
           <div>
+            <!-- Active Currency Context Banner -->
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:var(--paper); border:1px solid var(--line); border-radius:10px; margin-bottom:18px; font-family:'IBM Plex Mono', monospace; font-size:0.75rem;">
+              <span style="color:var(--ink-soft); display:flex; align-items:center; gap:8px;">
+                <span id="activeCurrencyFlag" style="font-size:1rem;">🇺🇸</span>
+                <span>Active Currency: <strong id="activeCurrencyName" style="color:var(--ink);">US Dollar</strong> (<span id="activeCurrencySub" style="color:var(--ink-muted);">North America / Global</span>)</span>
+              </span>
+              <span style="color:var(--teal); font-weight:700;">Symbol: <span id="activeCurrencySymbol">$</span></span>
+            </div>
+
+            <!-- Slider 1: Team Members -->
             <div class="calc-input-group">
               <label><span>Team Members with Repetitive Tasks</span><strong id="valTeam" style="color:var(--teal);">6 people</strong></label>
               <input type="range" id="inputTeam" min="1" max="40" value="6" oninput="updateCalc()">
+              <div style="display:flex; justify-content:space-between; font-size:10px; font-family:'IBM Plex Mono', monospace; color:var(--ink-muted); margin-top:4px;">
+                <span>1 person (Solo)</span><span>10</span><span>20</span><span>40+ team</span>
+              </div>
             </div>
+
+            <!-- Slider 2: Hours/Week -->
             <div class="calc-input-group">
               <label><span>Manual Hours per Person / Week</span><strong id="valHours" style="color:var(--signal);">8 hrs/wk</strong></label>
               <input type="range" id="inputHours" min="2" max="25" value="8" oninput="updateCalc()">
+              <div style="display:flex; justify-content:space-between; font-size:10px; font-family:'IBM Plex Mono', monospace; color:var(--ink-muted); margin-top:4px;">
+                <span>2 hrs (Light triage)</span><span>12 hrs</span><span>25 hrs (Heavy ops)</span>
+              </div>
             </div>
+
+            <!-- Slider 3: Hourly Rate -->
             <div class="calc-input-group">
-              <label><span>Average Hourly Cost ($)</span><strong id="valRate" style="color:var(--teal);">$40/hr</strong></label>
-              <input type="range" id="inputRate" min="15" max="150" step="5" value="40" oninput="updateCalc()">
+              <label><span>Estimated Hourly Cost (<span id="rateCurrCode">USD</span>)</span><strong id="valRate" style="color:var(--teal);">$40/hr</strong></label>
+              <input type="range" id="inputRate" min="15" max="250" step="5" value="40" oninput="updateCalc()">
+              <div style="display:flex; justify-content:space-between; font-size:10px; font-family:'IBM Plex Mono', monospace; color:var(--ink-muted); margin-top:4px;">
+                <span id="rateMinTick">$15/hr</span><span id="rateMidTick">$132/hr</span><span id="rateMaxTick">$250/hr</span>
+              </div>
+              <div class="curr-presets" style="margin-top:10px; padding-top:8px; border-top:1px solid var(--line);">
+                <span style="font-size:0.72rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-muted);">Quick Presets:</span>
+                <div id="ratePresetsContainer" style="display:inline-flex; gap:6px; flex-wrap:wrap;"></div>
+              </div>
             </div>
           </div>
+
+          <!-- Outputs Column -->
           <div class="calc-output-box">
+            <!-- Header Reclaimable Bandwidth -->
+            <div style="display:flex; justify-content:space-between; align-items:center; padding-bottom:12px; margin-bottom:16px; border-bottom:1px solid var(--line);">
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--ink-soft); text-transform:uppercase; letter-spacing:0.05em;">Reclaimable Bandwidth</span>
+              <span style="display:flex; align-items:center; gap:6px; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); font-weight:600;">
+                ⏱ 80% Automation Factor
+              </span>
+            </div>
+
             <div class="calc-metric">
               <span class="metric-val" id="calcHoursSaved">154 hrs</span>
               <span class="metric-lbl">HOURS RECLAIMED / MONTH</span>
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft); display:block; margin-top:4px;">Productive hours returned to your core team every month</span>
             </div>
-            <div class="calc-metric">
-              <span class="metric-val" id="calcDollarsSaved" style="color:var(--signal);">$6,160</span>
-              <span class="metric-lbl">ESTIMATED PRODUCTIVITY SAVINGS / MONTH</span>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:16px; padding-top:14px; border-top:1px solid var(--line);">
+              <div style="text-align:left;">
+                <span style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--ink-soft); text-transform:uppercase; display:block; margin-bottom:2px;">Monthly Savings (<span class="calcCurrLbl">USD</span>)</span>
+                <strong class="metric-val" id="calcDollarsSaved" style="font-size:1.6rem; color:var(--signal); display:block; line-height:1.2;">$6,160</strong>
+                <span style="font-size:0.68rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-muted); display:block; margin-top:2px;">Recaptured budget / mo</span>
+              </div>
+              <div style="text-align:left;">
+                <span style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--ink-soft); text-transform:uppercase; display:block; margin-bottom:2px;">Annual Savings (<span class="calcCurrLbl">USD</span>)</span>
+                <strong class="metric-val" id="calcAnnualSaved" style="font-size:1.6rem; color:var(--ink); display:block; line-height:1.2;">$73,920</strong>
+                <span style="font-size:0.68rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-muted); display:block; margin-top:2px;">Annualized bottom-line impact</span>
+              </div>
             </div>
-            <button onclick="applyCalcToContact()" class="cta-btn" style="width:100%; justify-content:center; margin-top:10px;">
-              Automate This Workload
+
+            <!-- ROI Calculation Context Box -->
+            <div id="calcContextBox" style="background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px; margin-top:16px; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--ink-soft); line-height:1.45; text-align:left;">
+              <div style="display:flex; align-items:center; gap:6px; color:var(--signal); font-weight:700; margin-bottom:4px;">
+                <span>✦</span>
+                <span>ROI Calculation Context:</span>
+              </div>
+              <span id="calcContextText">
+                Based on 6 team members reallocating 8 hrs/wk at $40/hr. Eliminating high-friction manual data steps pays for itself in less than 3 weeks.
+              </span>
+            </div>
+
+            <button onclick="applyCalcToContact()" class="cta-btn" id="calcCtaBtn" style="width:100%; justify-content:center; margin-top:16px;">
+              <span>Automate This Workload in USD</span>
+              <span>→</span>
             </button>
           </div>
         </div>
@@ -1566,6 +1730,16 @@
     </div>
   </div>
 
+  <!-- Interactive Workflow Demo Simulation Modal -->
+  <div id="demoModal" class="modal-backdrop" onclick="closeDemoModalOnBackdrop(event)">
+    <div class="modal-box" style="max-width: 820px; padding: 28px;">
+      <span class="modal-close" onclick="closeDemoModal()">&times;</span>
+      <div id="demoModalContent">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
   <footer>
     <div class="wrap footer-inner">
       <div style="display:flex; align-items:center; gap:12px;">
@@ -1585,7 +1759,7 @@
 
   <script>
     // System builds database
-    const buildsData = [{"id":"email-categorizer","category":"automation","title":"Email Categorizer, Logger & Urgent Alert","tagline":"Self-hosted n8n workflow for inbound email triage & immediate Slack escalation","description":"A robust, self-hosted n8n system that ingests unread inbound corporate emails, evaluates tone, urgency, and categorization using an OpenRouter-connected LLM, stores structured logs in Google Sheets, and pings priority Slack channels when urgent intervention is demanded.","stack":["n8n (Self-hosted)","OpenRouter","Google Sheets","Slack Webhooks","IMAP / Gmail API"],"keyOutcome":"Eliminated manual email inbox triage, slashing urgent ticket response times from 3 hours to under 90 seconds.","metrics":[{"label":"Triage Latency","value":"< 90 sec"},{"label":"Classification Accuracy","value":"98.4%"},{"label":"Weekly Hours Saved","value":"14 hrs"}],"architecture":{"trigger":"IMAP Inbound Email Webhook on new message arrival","processing":["Sanitizes HTML body and extracts attachments metadata","Calls OpenRouter AI with low-temperature prompt for JSON categorization (Billing, Urgent Bug, Sales, General)","Appends row to Google Sheets master operational ledger with sentiment rating"],"output":"Color-coded Slack message with direct action links + updated Google Sheets ledger","failSafe":"Fallbacks to \"Uncategorized Urgent\" if model timeout occurs, ensuring zero dropped messages."},"samplePayload":{"input":{"from":"ceo@partnercorp.com","subject":"URGENT: Production API authentication failing across region","timestamp":"2026-09-23T14:12:00Z"},"output":{"category":"Critical Infrastructure / Bug","urgencyScore":"5/5","sentiment":"High Distress","slackAlertSent":true,"channel":"#ops-fire-drill","autoAssignedTo":"On-Call Lead Engineer"}}},{"id":"school-exam-grading","category":"automation","title":"School Exam Auto-Marking & Results Grading","tagline":"Automated student evaluation system inspired by MarkSmart AI","description":"Processes student examinations submitted via Google Forms in real-time. Zapier and n8n capture answers, normalize inputs, apply AI evaluation against teacher-provided answer rubrics, generate personalized constructive feedback per student, and dispatch report cards to parents.","stack":["Google Forms","Zapier / n8n","OpenAI / Claude Rubrics","PostgreSQL / Airtable","Gmail API"],"keyOutcome":"Teachers reclaimed 20+ hours per exam week while students received immediate, detailed qualitative guidance.","metrics":[{"label":"Grading Speed","value":"45 sec / student"},{"label":"Grading Consistency","value":"100% Rubric Match"},{"label":"Parent Delivery","value":"Instant via Gmail"}],"architecture":{"trigger":"Student submits exam via Google Form","processing":["Zapier pulls submission, validates student matriculation number against student register","AI evaluation model assesses free-form answers against multi-tier grading rubric","Generates numerical score and 3 personalized strengths and areas for improvement","Updates student master gradebook in database"],"output":"Itemized PDF/HTML report emailed to parents + teacher summary table in Slack","failSafe":"Submissions with confidence score under 85% flagged for teacher 1-click manual review."},"samplePayload":{"input":{"studentId":"STU-8821","studentName":"Amina Adeleke","examTitle":"AP Environmental Science Midterm","essayAnswer":"Photosynthesis converts solar photons into chemical glucose..."},"output":{"score":"94/100","grade":"A","rubricBreakdown":{"clarity":19,"factualAccuracy":25,"synthesis":25,"vocabulary":25},"feedback":"Superb explanation of light-dependent reactions in chloroplast stroma.","parentEmailed":true}}},{"id":"rag-live-knowledge-base","category":"ai agent","title":"RAG Agent on a Live Knowledge Base","tagline":"Autonomous information retrieval system powered by Pinecone Vector Store","description":"An enterprise knowledge engine that reads company documentation, Notion bases, and product manuals, chunks text into vector embeddings, and stores them in Pinecone. The agent continuously answers complex team inquiries grounded in real-time verified data with zero hallucinations.","stack":["Pinecone Vector DB","OpenRouter Embeddings","Python / n8n","FastAPI","Slack / Web Bot"],"keyOutcome":"Reduced internal technical support questions by 72% across distributed teams.","metrics":[{"label":"Retrieval Latency","value":"420 ms"},{"label":"Hallucination Rate","value":"< 0.2%"},{"label":"Knowledge Base Size","value":"14,000+ chunks"}],"architecture":{"trigger":"Employee asks natural language question in Slack or Web Interface","processing":["Converts query to vector embeddings via text-embedding-3","Performs cosine similarity search against Pinecone vector index (top_k=5)","Filters chunks matching relevance threshold (>0.82)","Prompts LLM with retrieved context using strict citation instructions"],"output":"Precise answer with source document titles, section anchors, and last-updated timestamps","failSafe":"Explicitly replies \"Not found in verified company docs\" if top similarity is below confidence cutoff."}},{"id":"rag-telegram-cx-agent","category":"ai agent","title":"RAG CX Agent — Telegram Bot","tagline":"24/7 autonomous Telegram customer service pulling live from Airtable","description":"Customer experience bot deployed on Telegram that handles customer inquiries, pricing, availability, and onboarding FAQs. Unlike brittle static chatbots, it retrieves live inventory, business policies, and pricing tables from an Airtable base on every question.","stack":["Telegram Bot API","Airtable REST API","n8n Webhook Node","OpenRouter (Llama 3.3 / Claude)"],"keyOutcome":"Achieved 24/7 response capability with 0 human intervention on 85% of customer questions.","metrics":[{"label":"Uptime","value":"99.98%"},{"label":"Response Time","value":"< 1.8 sec"},{"label":"Resolution Rate","value":"88%"}],"architecture":{"trigger":"Customer sends message or command to official Telegram handle","processing":["n8n catches Telegram webhook with message and sender identity","Extracts customer intent and retrieves relevant live data rows from Airtable CRM","AI formulates friendly, on-brand response adhering to brand guidelines","Logs customer query and resolution status to conversation history"],"output":"Instant rich Telegram message response + admin escalation trigger if requested","failSafe":"Customer can type /human or express frustration to trigger immediate human rep ping."}},{"id":"customer-feedback-sentiment","category":"ai agent","title":"AI-Powered Customer Feedback System","tagline":"Multi-tier sentiment detection, automated appreciation & leadership alert router","description":"Captures incoming customer reviews and survey responses. An AI pipeline evaluates sentiment, themes, and staff references. Positive reviews trigger automated reward & thank-you notes; negative feedback generates personalized apologies and instantly pings CX; staff-specific complaints alert business owners directly.","stack":["Typeform / Webhook","n8n","Sentiment Analysis LLM","Gmail API","Slack Team Router"],"keyOutcome":"Saved 10+ hours per week of manual reading while catching churn risks in under 5 minutes.","metrics":[{"label":"Sentiment Precision","value":"96.8%"},{"label":"Escalation Time","value":"< 2 min"},{"label":"Customer Retention Lift","value":"+18%"}],"architecture":{"trigger":"Survey submission or review received via webhook","processing":["Analyzes sentiment score (-1.0 to +1.0) and detects named staff entities","Branch 1 (Positive): Sends warm appreciation email with referral perk coupon","Branch 2 (Negative - General): Sends apology email, files ticket, alerts CX channel","Branch 3 (Negative - Staff Mention): Dispatches urgent private alert to Business Owner"],"output":"Targeted stakeholder action based on nuanced emotional & operational content","failSafe":"Stores raw JSON in secondary database before branching to guarantee complete auditability."}},{"id":"ai-lead-qualification","category":"ai agent","title":"AI Lead Qualification Assistant","tagline":"Conversational lead screening and calendar booking for real estate & high-ticket services","description":"Engineered for a high-end real estate brokerage to qualify inbound leads before scheduling reps. Interactively engages prospective buyers via WhatsApp/SMS to verify budget, buying timeline, financing pre-approval, and neighborhood preference.","stack":["Twilio / WhatsApp API","n8n Flow","Calendly API","HubSpot / Airtable","AI Agent Loop"],"keyOutcome":"Sales team conversion rates doubled because reps only hopped on calls with verified, high-budget buyers.","metrics":[{"label":"Lead Response Time","value":"< 30 sec"},{"label":"Booking Rate","value":"34% of qualified"},{"label":"Rep Time Saved","value":"25 hrs / week"}],"architecture":{"trigger":"Inbound lead submits interest on listing or ad landing page","processing":["AI assistant sends immediate greeting via WhatsApp/SMS","Asks 3 conversational qualifying questions in natural tone","Evaluates answers against qualifying criteria (Budget >= $500k, timeline <= 90 days)","If qualified: provides rep calendar booking link and prepares briefing doc"],"output":"Qualified lead synced to HubSpot with summary notes + booked calendar event","failSafe":"Unqualified leads gently routed to automated email nurture sequence."}},{"id":"content-request-multi-agent","category":"content","title":"Content Request Multi-Agent System","tagline":"Collaborative autonomous agent pipeline for long-form & multi-channel publishing","description":"Turns a single raw content brief into a publication-ready SEO blog post, LinkedIn carousel script, and Twitter thread. Operates via cooperating specialized agents (Researcher, Structural Architect, Prose Writer, Brand Editor, and Social Repurposer).","stack":["n8n Multi-Agent Node","OpenRouter (Claude 3.5 Sonnet + Gemini)","Notion API","WordPress REST API"],"keyOutcome":"Reduced content production turnaround from 3 days to 12 minutes per asset.","metrics":[{"label":"Turnaround Time","value":"12 min"},{"label":"Asset Outputs","value":"5 formats / brief"},{"label":"SEO Optimization","value":"92+ Content Score"}],"architecture":{"trigger":"Card moved to \"Ready to Generate\" in Notion Content Board","processing":["Agent 1 (Researcher): Gathers facts, statistics, and keyword clusters","Agent 2 (Drafter): Generates comprehensive 1,500-word markdown draft","Agent 3 (Critic / Editor): Edits for clarity, brand voice, and removes fluff","Agent 4 (Social Formatter): Extracts Twitter thread & LinkedIn carousel bullets"],"output":"Notion draft page populated with all assets ready for human 1-click signoff","failSafe":"Strict token limits and validation schemas prevent truncated or malformed outputs."}},{"id":"social-repurpose-system","category":"content","title":"Social Content Repurpose System","tagline":"Multi-platform transformation engine reshaping long-form audio/video into viral formats","description":"Ingests podcast episodes, YouTube links, or webinar transcripts. Cleans speech filler, extracts compelling quotes, generates punchy Twitter threads, LinkedIn thought-leadership essays, and newsletter summaries formatted specifically for each platform’s algorithm.","stack":["Whisper API / AssemblyAI","n8n Orchestrator","OpenRouter LLMs","Airtable Content Hub","Buffer API"],"keyOutcome":"One weekly founder recording fuels an entire week of omnipresent social media content.","metrics":[{"label":"Assets per Audio","value":"7 Assets"},{"label":"Weekly Reach","value":"3.4x Increase"},{"label":"Repurposing Labor","value":"0 hrs manual"}],"architecture":{"trigger":"New video URL or MP3 file uploaded to Google Drive folder","processing":["Transcribes audio with speaker diarization and timestamping","Identifies top 3 high-impact narrative hooks and soundbites","Tailors tone for LinkedIn (professional storytelling) vs X/Twitter (sharp, punchy)","Schedules drafts into Buffer queue for final creator approval"],"output":"Full weekly social calendar pre-populated in Airtable & Buffer","failSafe":"Drafts held in review state; never auto-publishes without explicit user approval toggle."}}];
+    const buildsData = [{"id":"email-categorizer","category":"automation","title":"Email Categorizer, Logger & Urgent Alert","tagline":"Self-hosted n8n workflow for inbound email triage & immediate Slack escalation","description":"A robust, self-hosted n8n system that ingests unread inbound corporate emails, evaluates tone, urgency, and categorization using an OpenRouter-connected LLM, stores structured logs in Google Sheets, and pings priority Slack channels when urgent intervention is demanded.","stack":["n8n (Self-hosted)","OpenRouter","Google Sheets","Slack Webhooks","IMAP / Gmail API"],"keyOutcome":"Eliminated manual email inbox triage, slashing urgent ticket response times from 3 hours to under 90 seconds.","metrics":[{"label":"Triage Latency","value":"< 90 sec"},{"label":"Classification Accuracy","value":"98.4%"},{"label":"Weekly Hours Saved","value":"14 hrs"}],"demoUrl":"https://github.com/imoh-japhet/n8n-email-categorizer#live-demo","repoUrl":"https://github.com/imoh-japhet/n8n-email-categorizer","beforeAfter":{"before":{"summary":"Support reps manually combed through overflowing shared inboxes, copy-pasting customer details into spreadsheets with frequent missed outages.","painPoints":["3.5 hours wasted daily on manual inbox skimming","Urgent bug reports sat unnoticed for 3-4 hours","Inconsistent ticket tags across team shifts"],"timeSpent":"18 hrs/week per rep"},"after":{"summary":"Autonomous n8n workflow ingests unread emails, parses urgency using low-temp LLM JSON schemas, and pings #ops-fire-drill in seconds.","improvements":["Urgent escalations delivered to on-call engineers in < 90 seconds","Zero dropped messages via fallback fail-safe routing","Automated Google Sheets master operational ledger"],"efficiencyGain":"98.4% Classification Accuracy"},"delta":"Latency reduced from 3 hours to < 90 seconds · 14 hrs/wk saved"},"architecture":{"blueprintId":"BLPR-01 // N8N-EMAIL-TRIAGE","trigger":"IMAP Inbound Email Webhook on new message arrival","processing":["Sanitizes HTML body and extracts attachments metadata","Calls OpenRouter AI with low-temperature prompt for JSON categorization (Billing, Urgent Bug, Sales, General)","Appends row to Google Sheets master operational ledger with sentiment rating"],"output":"Color-coded Slack message with direct action links + updated Google Sheets ledger","failSafe":"Fallbacks to \"Uncategorized Urgent\" if model timeout occurs, ensuring zero dropped messages.","diagramSteps":[{"step":1,"name":"IMAP Webhook Ingest","type":"trigger","detail":"Catches unread message event via n8n email trigger node"},{"step":2,"name":"Sanitization & Header Parser","type":"process","detail":"Strips tracking pixels, extracts sender auth & attachments"},{"step":3,"name":"OpenRouter AI JSON Classifier","type":"ai","detail":"Low-temp schema extraction: category, urgency (1-5), and sentiment"},{"step":4,"name":"Google Sheets Audit Ledger","type":"database","detail":"Appends structured row to master operations audit sheet"},{"step":5,"name":"Slack Priority Dispatch","type":"dispatch","detail":"Pings #ops-urgent or team queue based on urgency score"}]},"samplePayload":{"input":{"from":"ceo@partnercorp.com","subject":"URGENT: Production API authentication failing across region","timestamp":"2026-09-23T14:12:00Z"},"output":{"category":"Critical Infrastructure / Bug","urgencyScore":"5/5","sentiment":"High Distress","slackAlertSent":true,"channel":"#ops-fire-drill","autoAssignedTo":"On-Call Lead Engineer"}}},{"id":"school-exam-grading","category":"automation","title":"School Exam Auto-Marking & Results Grading","tagline":"Automated student evaluation system inspired by MarkSmart AI","description":"Processes student examinations submitted via Google Forms in real-time. Zapier and n8n capture answers, normalize inputs, apply AI evaluation against teacher-provided answer rubrics, generate personalized constructive feedback per student, and dispatch report cards to parents.","stack":["Google Forms","Zapier / n8n","OpenAI / Claude Rubrics","PostgreSQL / Airtable","Gmail API"],"keyOutcome":"Teachers reclaimed 20+ hours per exam week while students received immediate, detailed qualitative guidance.","metrics":[{"label":"Grading Speed","value":"45 sec / student"},{"label":"Grading Consistency","value":"100% Rubric Match"},{"label":"Parent Delivery","value":"Instant via Gmail"}],"demoUrl":"https://github.com/imoh-japhet/exam-grading-pipeline#live-demo","repoUrl":"https://github.com/imoh-japhet/exam-grading-pipeline","beforeAfter":{"before":{"summary":"Teachers spent entire weekends manually grading student essays with red pens, struggling with grader fatigue and delayed feedback cycles.","painPoints":["20+ hours per teacher spent marking exam papers each exam cycle","2-week lag before parents received qualitative performance reports","Inconsistent grading standards between multiple teaching staff"],"timeSpent":"20+ hrs/week per teacher"},"after":{"summary":"Students submit exams via Google Forms; n8n/Zapier and AI evaluate free-form answers against multi-tier rubrics in 45 seconds.","improvements":["Objective, 100% consistent rubric scoring across all students","Automated qualitative strengths & improvement feedback generation","Instant personalized PDF report cards delivered to parents via Gmail"],"efficiencyGain":"100% Rubric Consistency"},"delta":"Grading turnaround reduced from 14 days to 45 seconds per student"},"architecture":{"blueprintId":"BLPR-02 // AUTO-EXAM-GRADING","trigger":"Student submits exam via Google Form","processing":["Zapier pulls submission, validates student matriculation number against student register","AI evaluation model assesses free-form answers against multi-tier grading rubric","Generates numerical score and 3 personalized strengths and areas for improvement","Updates student master gradebook in database"],"output":"Itemized PDF/HTML report emailed to parents + teacher summary table in Slack","failSafe":"Submissions with confidence score under 85% flagged for teacher 1-click manual review.","diagramSteps":[{"step":1,"name":"Google Forms Webhook Ingestion","type":"trigger","detail":"Instant capture of submitted candidate answers & timestamp"},{"step":2,"name":"Student Identity Verification","type":"database","detail":"Validates matriculation number against school registry roster"},{"step":3,"name":"Rubric Evaluation Engine","type":"ai","detail":"Evaluates free-form responses against 4 criteria with strict scoring"},{"step":4,"name":"Gradebook Database Update","type":"database","detail":"Persists itemized scores & constructive feedback to gradebook"},{"step":5,"name":"Parent Report Card Dispatch","type":"dispatch","detail":"Sends individualized HTML report card via Gmail API"}]},"samplePayload":{"input":{"studentId":"STU-8821","studentName":"Amina Adeleke","examTitle":"AP Environmental Science Midterm","essayAnswer":"Photosynthesis converts solar photons into chemical glucose through light-dependent reactions in the thylakoid membrane..."},"output":{"score":"94/100","grade":"A","rubricBreakdown":{"clarity":19,"factualAccuracy":25,"synthesis":25,"vocabulary":25},"feedback":"Superb explanation of light-dependent reactions in chloroplast stroma.","parentEmailed":true,"reportCardId":"RPT-2026-8821"}}},{"id":"rag-live-knowledge-base","category":"ai agent","title":"RAG Agent on a Live Knowledge Base","tagline":"Autonomous information retrieval system powered by Pinecone Vector Store","description":"An enterprise knowledge engine that reads company documentation, Notion bases, and product manuals, chunks text into vector embeddings, and stores them in Pinecone. The agent continuously answers complex team inquiries grounded in real-time verified data with zero hallucinations.","stack":["Pinecone Vector DB","OpenRouter Embeddings","Python / n8n","FastAPI","Slack / Web Bot"],"keyOutcome":"Reduced internal technical support questions by 72% across distributed teams.","metrics":[{"label":"Retrieval Latency","value":"420 ms"},{"label":"Hallucination Rate","value":"< 0.2%"},{"label":"Knowledge Base Size","value":"14,000+ chunks"}],"demoUrl":"https://github.com/imoh-japhet/pinecone-rag-agent#live-demo","repoUrl":"https://github.com/imoh-japhet/pinecone-rag-agent","beforeAfter":{"before":{"summary":"Engineers and customer reps constantly interrupted senior staff on Slack to locate current SLA policies, contract clauses, and internal specs.","painPoints":["Company documentation scattered across Notion, Google Drive, and PDFs","Senior team members lost 10+ hours weekly answering repeat questions","Hallucinated or outdated pricing information shared with clients"],"timeSpent":"45 min per query search"},"after":{"summary":"Pinecone vector store paired with Claude/Llama answers questions inside Slack within 420ms, backed by strict source document citations.","improvements":["Sub-second retrieval grounded in 14,000+ indexed documentation chunks","Verified URL anchors to exact Notion pages and PDF paragraphs","Automatic \"Not found\" fallback with 0.0% hallucination rate"],"efficiencyGain":"72% reduction in internal support tickets"},"delta":"Resolution time reduced from 45 minutes to 420 ms"},"architecture":{"blueprintId":"BLPR-03 // PINECONE-RAG-AGENT","trigger":"Employee asks natural language question in Slack or Web Interface","processing":["Converts query to vector embeddings via text-embedding-3","Performs cosine similarity search against Pinecone vector index (top_k=5)","Filters chunks matching relevance threshold (>0.82)","Prompts LLM with retrieved context using strict citation instructions"],"output":"Precise answer with source document titles, section anchors, and last-updated timestamps","failSafe":"Explicitly replies \"Not found in verified company docs\" if top similarity is below confidence cutoff.","diagramSteps":[{"step":1,"name":"Slack Mention / Webhook Trigger","type":"trigger","detail":"Catches incoming team question event and user permission scope"},{"step":2,"name":"Embedding Vectorization","type":"ai","detail":"Generates 1536-dim vector embedding via OpenAI text-embedding-3"},{"step":3,"name":"Pinecone Cosine Retrieval","type":"database","detail":"Queries Pinecone index top_k=5 with cosine similarity threshold >0.82"},{"step":4,"name":"Context Re-ranking & Prompt Assembly","type":"process","detail":"Filters irrelevant chunks & synthesizes grounded prompt with citation anchors"},{"step":5,"name":"Grounded Answer Generation & Dispatch","type":"dispatch","detail":"Outputs verified response with exact Notion/PDF links in Slack"}]},"samplePayload":{"input":{"channel":"#internal-ops","user":"alex.chen@company.com","query":"What is our customer refund turnaround policy for enterprise subscriptions after SLA breach?","timestamp":"2026-09-24T10:15:22Z"},"output":{"queryEmbeddingDims":1536,"pineconeMatches":[{"id":"kb_doc_legal_sla_v4","score":0.942,"section":"Section 4.2 - Credit Invoicing"},{"id":"kb_doc_billing_faq_2026","score":0.887,"section":"Enterprise SLA Guarantees"}],"retrievalLatencyMs":384,"verifiedAnswer":"Per Section 4.2 of our Enterprise Service Level Agreement, billing credit requests resulting from SLA breaches must be processed and refunded within 5 business days upon Tier-2 Ops confirmation.","citations":["Legal_SLA_Master_2026.pdf#sec-4.2","Billing_Guidelines_Ops.notion"],"confidence":"HIGH (0.94)"}}},{"id":"rag-telegram-cx-agent","category":"ai agent","title":"RAG CX Agent — Telegram Bot","tagline":"24/7 autonomous Telegram customer service pulling live from Airtable","description":"Customer experience bot deployed on Telegram that handles customer inquiries, pricing, availability, and onboarding FAQs. Unlike brittle static chatbots, it retrieves live inventory, business policies, and pricing tables from an Airtable base on every question.","stack":["Telegram Bot API","Airtable REST API","n8n Webhook Node","OpenRouter (Llama 3.3 / Claude)"],"keyOutcome":"Achieved 24/7 response capability with 0 human intervention on 85% of customer questions.","metrics":[{"label":"Uptime","value":"99.98%"},{"label":"Response Time","value":"< 1.8 sec"},{"label":"Resolution Rate","value":"88%"}],"demoUrl":"https://github.com/imoh-japhet/telegram-airtable-cx-agent#live-demo","repoUrl":"https://github.com/imoh-japhet/telegram-airtable-cx-agent","beforeAfter":{"before":{"summary":"Prospects messaging late at night or on weekends received no response until office hours, losing high-intent hardware sales to competitors.","painPoints":["14-hour overnight response blackout windows in emerging markets","Static bot trees frustrated customers seeking specific model specifications","Sales reps manually checking stock sheets before giving price quotes"],"timeSpent":"14 hrs overnight lag"},"after":{"summary":"Telegram bot queries active Airtable inventory in real-time, delivering stock status, pricing, and installation times in under 1.8 seconds.","improvements":["24/7 autonomous customer inquiries handled with zero human latency","Live inventory queries directly against warehouse stock databases","1-click human agent escalation command whenever human touch is desired"],"efficiencyGain":"88% autonomous resolution rate"},"delta":"Response time cut from 14 hours to < 1.8 seconds 24/7"},"architecture":{"blueprintId":"BLPR-04 // TELEGRAM-AIRTABLE-CX","trigger":"Customer sends message or command to official Telegram handle","processing":["n8n catches Telegram webhook with message and sender identity","Extracts customer intent and retrieves relevant live data rows from Airtable CRM","AI formulates friendly, on-brand response adhering to brand guidelines","Logs customer query and resolution status to conversation history"],"output":"Instant rich Telegram message response + admin escalation trigger if requested","failSafe":"Customer can type /human or express frustration to trigger immediate human rep ping.","diagramSteps":[{"step":1,"name":"Telegram Webhook Listener","type":"trigger","detail":"Catches incoming message, chat ID, and user payload in real-time"},{"step":2,"name":"Intent Classifier Node","type":"ai","detail":"Detects intent: Pricing, Inventory Availability, Warranty, or Escalation"},{"step":3,"name":"Live Airtable Record Lookup","type":"database","detail":"Fetches real-time stock levels, pricing formulas, and specifications"},{"step":4,"name":"Guardrail & Tone Synthesizer","type":"ai","detail":"Constructs concise, helpful answer strictly adhering to store policy"},{"step":5,"name":"Telegram Bot Dispatch & Audit Log","type":"dispatch","detail":"Sends formatted markdown reply & logs conversation turn in CRM"}]},"samplePayload":{"input":{"update_id":89410294,"message":{"from":{"id":489218201,"username":"tunde_ventures","first_name":"Tunde"},"chat":{"id":489218201,"type":"private"},"text":"Do you still have the 500kVA hybrid industrial inverters in stock in Lagos, and what is the current installation lead time?","date":1790281200}},"output":{"intent":"INVENTORY_AND_LEAD_TIME","airtableQuery":"AND({Category}='Inverters', {Model}='500kVA Hybrid', {Lagos_Stock}>0)","matchedProduct":{"sku":"INV-HYB-500K","unitsInStock":4,"location":"Ikeja Distribution Hub, Lagos","basePrice":"₦18,500,000","leadTimeDays":"2-3 business days"},"agentResponse":"Hello Tunde! Yes, we have 4 units of the 500kVA Hybrid Industrial Inverter available at our Ikeja distribution center. Current Lagos installation lead time is 2-3 business days with full warranty inspection.","sessionLogged":true,"escalationRequired":false}}},{"id":"customer-feedback-sentiment","category":"ai agent","title":"AI-Powered Customer Feedback System","tagline":"Multi-tier sentiment detection, automated appreciation & leadership alert router","description":"Captures incoming customer reviews and survey responses. An AI pipeline evaluates sentiment, themes, and staff references. Positive reviews trigger automated reward & thank-you notes; negative feedback generates personalized apologies and instantly pings CX; staff-specific complaints alert business owners directly.","stack":["Typeform / Webhook","n8n","Sentiment Analysis LLM","Gmail API","Slack Team Router"],"keyOutcome":"Saved 10+ hours per week of manual reading while catching churn risks in under 5 minutes.","metrics":[{"label":"Sentiment Precision","value":"96.8%"},{"label":"Escalation Time","value":"< 2 min"},{"label":"Customer Retention Lift","value":"+18%"}],"demoUrl":"https://github.com/imoh-japhet/customer-sentiment-router#live-demo","repoUrl":"https://github.com/imoh-japhet/customer-sentiment-router","beforeAfter":{"before":{"summary":"Survey feedback was downloaded to CSV once a week. Critical complaints and churn risks were discovered days after the customer had already left.","painPoints":["7-day lag between customer complaint and support discovery","Unhappy customers received generic automated replies or total silence","Business owners blind to recurring staff performance bottlenecks"],"timeSpent":"5-7 days discovery delay"},"after":{"summary":"Real-time AI pipeline analyzes sentiment polarity (-1.0 to +1.0), detects mentioned staff, and alerts the founder phone in under 2 minutes.","improvements":["Instant VIP appreciation & promo coupons sent to satisfied customers","Automated empathetic apologies & Zendesk ticket creation for general issues","Direct SMS/Slack dispatch to leadership for named staff complaints"],"efficiencyGain":"+18% Customer Retention Lift"},"delta":"Churn intervention time accelerated from 7 days to < 2 minutes"},"architecture":{"blueprintId":"BLPR-05 // SENTIMENT-ROUTER-CX","trigger":"Survey submission or review received via webhook","processing":["Analyzes sentiment score (-1.0 to +1.0) and detects named staff entities","Branch 1 (Positive): Sends warm appreciation email with referral perk coupon","Branch 2 (Negative - General): Sends apology email, files ticket, alerts CX channel","Branch 3 (Negative - Staff Mention): Dispatches urgent private alert to Business Owner"],"output":"Targeted stakeholder action based on nuanced emotional & operational content","failSafe":"Stores raw JSON in secondary database before branching to guarantee complete auditability.","diagramSteps":[{"step":1,"name":"Survey Webhook Ingestion","type":"trigger","detail":"Catches submission from Typeform / Google Review webhook"},{"step":2,"name":"Sentiment Polarity Scorer","type":"ai","detail":"Calculates polarity (-1.0 to +1.0) & extracts named staff/department entities"},{"step":3,"name":"Conditional Branch Router","type":"router","detail":"Routes to: Promo Reward (>0.6), Ticket Triage (<-0.3), or VIP Alert"},{"step":4,"name":"Personalized Email Generation","type":"dispatch","detail":"Tailors context-aware apology or appreciation email to customer"},{"step":5,"name":"Executive Alert & Database Log","type":"database","detail":"Pings #leadership-urgent and logs enriched audit record"}]},"samplePayload":{"input":{"submissionId":"RESP-90412","customerName":"Fatima Bello","channel":"Post-Onboarding Survey","reviewText":"The automation setup was fantastic, but during the handoff session Michael seemed rushed and did not answer our billing team security questions.","rating":2},"output":{"sentimentScore":-0.68,"sentimentCategory":"CRITICAL_STAFF_FEEDBACK","detectedStaff":["Michael"],"detectedIssues":["Handoff quality","Security explanation omission"],"routedActions":[{"action":"ALERT_FOUNDER_DIRECT","target":"#leadership-urgent","status":"SENT"},{"action":"GENERATE_PERSONAL_APOLOGY","recipient":"fatima.bello@client.org","status":"QUEUED_FOR_APPROVAL"},{"action":"CRM_TAGGING","tag":"ChurnRisk_HighPriority"}],"auditId":"SENT-AUDIT-4491"}}},{"id":"ai-lead-qualification","category":"ai agent","title":"AI Lead Qualification Assistant","tagline":"Conversational lead screening and calendar booking for real estate & high-ticket services","description":"Engineered for a high-end real estate brokerage to qualify inbound leads before scheduling reps. Interactively engages prospective buyers via WhatsApp/SMS to verify budget, buying timeline, financing pre-approval, and neighborhood preference.","stack":["Twilio / WhatsApp API","n8n Flow","Calendly API","HubSpot / Airtable","AI Agent Loop"],"keyOutcome":"Sales team conversion rates doubled because reps only hopped on calls with verified, high-budget buyers.","metrics":[{"label":"Lead Response Time","value":"< 30 sec"},{"label":"Booking Rate","value":"34% of qualified"},{"label":"Rep Time Saved","value":"25 hrs / week"}],"demoUrl":"https://github.com/imoh-japhet/whatsapp-lead-qualification#live-demo","repoUrl":"https://github.com/imoh-japhet/whatsapp-lead-qualification","beforeAfter":{"before":{"summary":"High-commission property brokers spent half their week dialing cold ad submissions, only to discover leads had no budget or pre-approval.","painPoints":["Brokers wasted 25 hours weekly on unqualified calls with tire-kickers","Average lead response latency exceeded 4 hours, lowering conversion","Messy CRM records with missing budget and property preference data"],"timeSpent":"25 hrs/week per broker"},"after":{"summary":"WhatsApp assistant initiates warm conversational screening in < 30 seconds, qualifying budget and timeline before booking broker calendars.","improvements":["Instant engagement via WhatsApp with natural conversational flow","Strict qualification filter: Budget >= $500k and timeline <= 90 days","Automated Calendly scheduling + executive briefing doc synced to HubSpot"],"efficiencyGain":"34% qualified booking rate"},"delta":"Lead contact time cut from 4 hours to 30s · Broker conversion doubled"},"architecture":{"blueprintId":"BLPR-06 // WHATSAPP-LEAD-QUAL","trigger":"Inbound lead submits interest on listing or ad landing page","processing":["AI assistant sends immediate greeting via WhatsApp/SMS","Asks 3 conversational qualifying questions in natural tone","Evaluates answers against qualifying criteria (Budget >= $500k, timeline <= 90 days)","If qualified: provides rep calendar booking link and prepares briefing doc"],"output":"Qualified lead synced to HubSpot with summary notes + booked calendar event","failSafe":"Unqualified leads gently routed to automated email nurture sequence.","diagramSteps":[{"step":1,"name":"Lead Form Inbound Webhook","type":"trigger","detail":"Instant webhook ingestion from Meta Lead Ad or luxury landing page"},{"step":2,"name":"Conversational Outreach Bot","type":"ai","detail":"Engages buyer via WhatsApp with 3 natural qualification questions"},{"step":3,"name":"Lead Scoring Engine","type":"process","detail":"Computes index (0-100) based on budget, timeline, and financing status"},{"step":4,"name":"Calendar Booking Dispatch","type":"dispatch","detail":"Sends dynamic Calendly invite to tier-1 qualified prospects"},{"step":5,"name":"HubSpot CRM Sync & Briefing Doc","type":"database","detail":"Creates deal record and briefs broker with AI-generated summary"}]},"samplePayload":{"input":{"leadId":"LEAD-78219","phone":"+44 7700 900142","name":"Marcus Sterling","inquirySource":"Luxury Commercial Portfolio Page","chatHistory":[{"role":"lead","text":"We need a 20,000 sq ft logistics warehouse lease in Manchester within the next 45 days. Budget is £450k/year."}]},"output":{"qualificationScore":96,"verdict":"QUALIFIED_VIP","criteriaMatched":{"budgetTier":"£450k/yr (Exceeds £250k threshold)","timelineDays":"45 days (Urgent priority)","assetClass":"Industrial / Logistics Warehouse","location":"Manchester Metro"},"actionsExecuted":{"hubspotDealCreated":"DEAL-MAN-09941","calendlyBookingDispatched":true,"assignedBroker":"Sarah Jenkins (Senior Partner)","executiveBriefGenerated":true}}}},{"id":"content-request-multi-agent","category":"content","title":"Content Request Multi-Agent System","tagline":"Collaborative autonomous agent pipeline for long-form & multi-channel publishing","description":"Turns a single raw content brief into a publication-ready SEO blog post, LinkedIn carousel script, and Twitter thread. Operates via cooperating specialized agents (Researcher, Structural Architect, Prose Writer, Brand Editor, and Social Repurposer).","stack":["n8n Multi-Agent Node","OpenRouter (Claude 3.5 Sonnet + Gemini)","Notion API","WordPress REST API"],"keyOutcome":"Reduced content production turnaround from 3 days to 12 minutes per asset.","metrics":[{"label":"Turnaround Time","value":"12 min"},{"label":"Asset Outputs","value":"5 formats / brief"},{"label":"SEO Optimization","value":"92+ Content Score"}],"demoUrl":"https://github.com/imoh-japhet/notion-multiagent-content-pipeline#live-demo","repoUrl":"https://github.com/imoh-japhet/notion-multiagent-content-pipeline","beforeAfter":{"before":{"summary":"Producing a research-backed 1,500-word SEO post, LinkedIn carousel script, and Twitter thread required 3-4 days of coordination across freelance contractors.","painPoints":["$600+ cost per editorial package across multiple external contractors","Bottlenecks waiting on drafts, revision rounds, and social repurposing","Inconsistent brand voice and weak search engine keyword optimization"],"timeSpent":"3-4 days per piece"},"after":{"summary":"Single Notion brief initiates a 4-agent pipeline (Researcher, Drafter, Editor, Repurposer) that generates 5 publication-ready assets in 12 minutes.","improvements":["1,500-word comprehensive SEO Markdown article drafted and edited","Twitter thread, LinkedIn carousel, and newsletter snippet generated in parallel","Staged directly back into Notion for 1-click human editorial approval"],"efficiencyGain":"92+ Content SEO Score"},"delta":"Production cycle reduced from 4 days to 12 minutes per package"},"architecture":{"blueprintId":"BLPR-07 // MULTI-AGENT-CONTENT","trigger":"Card moved to \"Ready to Generate\" in Notion Content Board","processing":["Agent 1 (Researcher): Gathers facts, statistics, and keyword clusters","Agent 2 (Drafter): Generates comprehensive 1,500-word markdown draft","Agent 3 (Critic / Editor): Edits for clarity, brand voice, and removes fluff","Agent 4 (Social Formatter): Extracts Twitter thread & LinkedIn carousel bullets"],"output":"Notion draft page populated with all assets ready for human 1-click signoff","failSafe":"Strict token limits and validation schemas prevent truncated or malformed outputs.","diagramSteps":[{"step":1,"name":"Notion State Webhook Trigger","type":"trigger","detail":"Fires when editorial brief status changes to \"Ready to Generate\""},{"step":2,"name":"Agent 1 — Deep Research & Facts","type":"ai","detail":"Synthesizes market data, statistical benchmarks, and keyword clusters"},{"step":3,"name":"Agent 2 — Long-Form Article Drafter","type":"ai","detail":"Constructs 1,500-word Markdown article matching company voice"},{"step":4,"name":"Agent 3 — Editorial Critic & Polish","type":"ai","detail":"Scans for fluff, enforces reading grade level, and injects SEO links"},{"step":5,"name":"Agent 4 — Multi-Format Repurposer","type":"dispatch","detail":"Extracts 7-tweet thread & LinkedIn carousel, staging in Notion"}]},"samplePayload":{"input":{"cardId":"notion-block-8821a","topic":"Why Self-Hosted n8n beats Cloud iPaaS for Data Privacy in 2026","targetAudience":"CTOs & Head of Operations","primaryKeywords":["self-hosted n8n","enterprise automation","data residency compliance"],"desiredFormats":["Long-form SEO Post","LinkedIn Thought Leadership","Twitter Thread"]},"output":{"pipelineExecutionTimeSec":68,"researchFindings":["42% reduction in per-execution API overhead","GDPR/NDPR data sovereignty compliance"],"longFormArticle":{"wordCount":1640,"readingLevel":"Grade 10 (Clear Executive Prose)","seoOptimizationScore":94},"repurposedAssets":{"twitterThread":"7-tweet narrative hook thread ready","linkedInCarousel":"6-slide PDF slide script ready","newsletterSnippet":"280-word executive takeaway prepared"},"notionPageUpdated":"https://notion.so/workspace/content-8821a","humanSignoffStatus":"PENDING_ONE_CLICK_APPROVAL"}}},{"id":"social-repurpose-system","category":"content","title":"Social Content Repurpose System","tagline":"Multi-platform transformation engine reshaping long-form audio/video into viral formats","description":"Ingests podcast episodes, YouTube links, or webinar transcripts. Cleans speech filler, extracts compelling quotes, generates punchy Twitter threads, LinkedIn thought-leadership essays, and newsletter summaries formatted specifically for each platform’s algorithm.","stack":["Whisper API / AssemblyAI","n8n Orchestrator","OpenRouter LLMs","Airtable Content Hub","Buffer API"],"keyOutcome":"One weekly founder recording fuels an entire week of omnipresent social media content.","metrics":[{"label":"Assets per Audio","value":"7 Assets"},{"label":"Weekly Reach","value":"3.4x Increase"},{"label":"Repurposing Labor","value":"0 hrs manual"}],"demoUrl":"https://github.com/imoh-japhet/social-content-repurposer#live-demo","repoUrl":"https://github.com/imoh-japhet/social-content-repurposer","beforeAfter":{"before":{"summary":"Founder spent 5+ hours weekly re-listening to recorded podcast interviews, extracting timestamps, and manually formatting tweets and LinkedIn posts.","painPoints":["Valuable audio insights locked in long-form files with zero distribution","5+ hours of tedious manual scrubbing for soundbites every week","Sporadic social presence with weeks of silence between episodes"],"timeSpent":"5 hrs/week manual labor"},"after":{"summary":"Uploading an MP3 to Google Drive triggers Whisper diarization and LLM hook extraction, scheduling a full week social calendar automatically.","improvements":["High-impact conversational soundbites mined with exact timestamps","Platform-native formats: X viral thread, LinkedIn story, newsletter digest","Staged into Airtable content calendar and Buffer queue with human approval locks"],"efficiencyGain":"3.4x Weekly Reach Increase"},"delta":"Repurposing effort slashed from 5 hours to 0 hours manual effort"},"architecture":{"blueprintId":"BLPR-08 // MEDIA-REPURPOSE-ENGINE","trigger":"New video URL or MP3 file uploaded to Google Drive folder","processing":["Transcribes audio with speaker diarization and timestamping","Identifies top 3 high-impact narrative hooks and soundbites","Tailors tone for LinkedIn (professional storytelling) vs X/Twitter (sharp, punchy)","Schedules drafts into Buffer queue for final creator approval"],"output":"Full weekly social calendar pre-populated in Airtable & Buffer","failSafe":"Drafts held in review state; never auto-publishes without explicit user approval toggle.","diagramSteps":[{"step":1,"name":"Drive Audio/Video Ingest","type":"trigger","detail":"Webhook detects newly uploaded episode in master media folder"},{"step":2,"name":"Whisper Transcription & Diarization","type":"ai","detail":"Transcribes audio into clean timestamped text with speaker tracking"},{"step":3,"name":"Viral Hook Extractor","type":"ai","detail":"Extracts 3 highest-retention conversational hooks and key quotes"},{"step":4,"name":"Channel-Specific Content Generator","type":"ai","detail":"Builds tailored formats: X thread, LinkedIn story, newsletter digest"},{"step":5,"name":"Airtable & Buffer Staging Queue","type":"database","detail":"Pre-populates content hub; stages drafts awaiting 1-click publishing"}]},"samplePayload":{"input":{"mediaFile":"Founder_Interview_Ep42.mp3","durationMinutes":48.5,"guest":"Dr. Chidi Okafor","episodeTheme":"Bootstrapping B2B Automation Engines in Emerging Markets"},"output":{"transcriptionLatencySec":42,"extractedKeyHooks":["Minute 14:20: 'Stop automating broken processes—fix the schema first.'","Minute 31:05: 'How one simple Airtable formula saved 40 engineering hours a month.'"],"deliverablesGenerated":{"linkedInPost":"Story-driven 3-act framework highlighting Founder lesson","xThread":"10-tweet viral breakdown with quote cards","weeklyNewsletterIssue":"600-word digest for subscriber list","videoClipTimestamps":["14:20 - 15:15","31:05 - 32:00"]},"stagedInAirtable":"Content_Pipeline_Base_v2","bufferScheduled":false,"requiresManualApproval":true}}}];
 
     // Live Simulator Records
     let simRecords = [
@@ -1705,7 +1879,7 @@
       document.getElementById('simConsoleLog').textContent = 'Simulation state reset.';
     }
 
-    // Render Builds Grid
+    // Render Builds Grid with Inline Expandable Blueprint Drawers
     function renderBuilds(list) {
       const container = document.getElementById('buildsContainer');
       if (!container) return;
@@ -1716,11 +1890,15 @@
       container.innerHTML = list.map(b => `
         <div class="build-card" data-cat="${b.category}">
           <div>
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-              <span class="build-badge ${b.category === 'automation' ? 'automation' : b.category === 'content' ? 'content' : ''}">${b.category}</span>
-              <span style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-muted);">${b.metrics && b.metrics[0] ? b.metrics[0].value : ''}</span>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span class="build-badge ${b.category === 'automation' ? 'automation' : b.category === 'content' ? 'content' : 'ai-agent'}">${b.category}</span>
+                ${b.architecture && b.architecture.blueprintId ? `<span style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-muted); background:var(--paper); padding:2px 6px; border-radius:4px; border:1px solid var(--line);">${b.architecture.blueprintId.split(' // ')[0]}</span>` : ''}
+              </div>
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--teal); font-weight:600;">${b.metrics && b.metrics[0] ? b.metrics[0].value : ''}</span>
             </div>
             <h3>${b.title}</h3>
+            <p style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); margin-bottom:6px;">${b.tagline}</p>
             <p>${b.description}</p>
           </div>
           <div>
@@ -1728,13 +1906,446 @@
               ${b.stack.slice(0, 3).map(s => `<span class="stack-tag">${s}</span>`).join('')}
               ${b.stack.length > 3 ? `<span class="stack-tag">+${b.stack.length - 3}</span>` : ''}
             </div>
-            <button class="inspect-btn" onclick="openArchModal('${b.id}')">
-              <span>⚡ Inspect Blueprint</span>
-              <span>→</span>
-            </button>
+            <div style="display:flex; gap:8px;">
+              <button class="inspect-btn" onclick="toggleStandaloneDrawer('${b.id}')" style="flex:1;">
+                <span>⚡ Technical Blueprint</span>
+                <span id="drawer-arrow-${b.id}">▼</span>
+              </button>
+              <button onclick="openArchModal('${b.id}')" style="padding:8px 12px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:var(--ink-soft); cursor:pointer; font-family:'IBM Plex Mono';" title="Fullscreen Modal">
+                ↗
+              </button>
+            </div>
+
+            <!-- Inline Expandable Drawer -->
+            <div id="drawer-${b.id}" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--line); text-align:left;">
+              <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--line);">
+                <div style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); font-weight:700;">
+                  ● ${b.architecture && b.architecture.blueprintId ? b.architecture.blueprintId : 'PIPELINE ARCHITECTURE'}
+                </div>
+                <div style="display:flex; gap:6px;">
+                  <button type="button" onclick="openStandaloneDemo('${b.id}')" style="padding:5px 10px; border-radius:6px; background:var(--teal); color:#0E1416; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:700; border:none; cursor:pointer;">
+                    ▶ Watch Demo
+                  </button>
+                  <a href="${b.repoUrl || 'https://github.com/imoh-japhet'}" target="_blank" rel="noopener noreferrer" style="padding:5px 10px; border-radius:6px; background:var(--paper); color:var(--ink); font-family:'IBM Plex Mono', monospace; font-size:0.72rem; border:1px solid var(--line); text-decoration:none;">
+                    View Repo ↗
+                  </a>
+                </div>
+              </div>
+
+              ${b.beforeAfter ? `
+                <!-- BEFORE AND AFTER SECTION -->
+                <div style="background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:12px;">
+                  <div style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--signal); font-weight:700; margin-bottom:8px;">
+                    ⚡ TRANSFORMATION DELTA: ${b.beforeAfter.delta}
+                  </div>
+                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                    <div style="background:rgba(239, 68, 68, 0.08); border:1px solid rgba(239, 68, 68, 0.25); border-radius:8px; padding:8px 10px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                        <strong style="color:#F87171; font-family:'IBM Plex Mono', monospace; font-size:0.68rem;">🔴 BEFORE: MANUAL BOTTLENECK</strong>
+                        <span style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#FCA5A5;">${b.beforeAfter.before ? b.beforeAfter.before.timeSpent : ''}</span>
+                      </div>
+                      <p style="font-size:0.72rem; color:var(--ink-soft); line-height:1.35; margin-bottom:6px;">${b.beforeAfter.before ? b.beforeAfter.before.summary : ''}</p>
+                      ${b.beforeAfter.before && b.beforeAfter.before.painPoints ? `
+                        <div style="border-top:1px solid rgba(239,68,68,0.15); padding-top:4px;">
+                          ${b.beforeAfter.before.painPoints.map(p => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#FCA5A5; margin-bottom:2px;">✕ ${p}</div>`).join('')}
+                        </div>
+                      ` : ''}
+                    </div>
+                    <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.25); border-radius:8px; padding:8px 10px;">
+                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                        <strong style="color:#34D399; font-family:'IBM Plex Mono', monospace; font-size:0.68rem;">🟢 AFTER: AUTOMATED PIPELINE</strong>
+                        <span style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#6EE7B7;">${b.beforeAfter.after ? b.beforeAfter.after.efficiencyGain : ''}</span>
+                      </div>
+                      <p style="font-size:0.72rem; color:var(--ink-soft); line-height:1.35; margin-bottom:6px;">${b.beforeAfter.after ? b.beforeAfter.after.summary : ''}</p>
+                      ${b.beforeAfter.after && b.beforeAfter.after.improvements ? `
+                        <div style="border-top:1px solid rgba(16,185,129,0.15); padding-top:4px;">
+                          ${b.beforeAfter.after.improvements.map(im => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#6EE7B7; margin-bottom:2px;">✓ ${im}</div>`).join('')}
+                        </div>
+                      ` : ''}
+                    </div>
+                  </div>
+                </div>
+              ` : ''}
+              
+              <div style="background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:10px; margin-bottom:10px; font-size:0.78rem; font-family:'IBM Plex Mono', monospace;">
+                <div style="color:var(--ink); margin-bottom:4px;"><strong>TRIGGER:</strong> ${b.architecture.trigger}</div>
+                <div style="color:var(--ink-soft);"><strong>DISPATCH:</strong> ${b.architecture.output}</div>
+              </div>
+
+              ${b.architecture.diagramSteps ? `
+                <div style="margin-bottom:10px;">
+                  <div style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--ink-muted); text-transform:uppercase; margin-bottom:6px;">Pipeline Step Sequence:</div>
+                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:6px;">
+                    ${b.architecture.diagramSteps.map(s => {
+                      let tagBg = 'rgba(255, 255, 255, 0.08)';
+                      let tagColor = 'var(--ink-soft)';
+                      let tagLabel = 'PROCESS';
+                      if (s.type === 'trigger') { tagBg = 'rgba(16, 185, 129, 0.15)'; tagColor = '#34D399'; tagLabel = 'TRIGGER'; }
+                      else if (s.type === 'ai') { tagBg = 'rgba(79, 209, 197, 0.15)'; tagColor = 'var(--teal)'; tagLabel = 'AI / LLM'; }
+                      else if (s.type === 'database') { tagBg = 'rgba(59, 130, 246, 0.15)'; tagColor = '#60A5FA'; tagLabel = 'DATA / DB'; }
+                      else if (s.type === 'router') { tagBg = 'rgba(168, 85, 247, 0.15)'; tagColor = '#C084FC'; tagLabel = 'ROUTER'; }
+                      else if (s.type === 'dispatch') { tagBg = 'rgba(245, 166, 35, 0.15)'; tagColor = '#FBBF24'; tagLabel = 'DISPATCH'; }
+                      return `
+                        <div style="background:rgba(255,255,255,0.02); padding:8px 10px; border-radius:8px; border:1px solid var(--line); font-family:'IBM Plex Mono', monospace;">
+                          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                            <span style="font-size:0.65rem; color:var(--ink-muted);">STEP 0${s.step}</span>
+                            <span style="background:${tagBg}; color:${tagColor}; font-size:0.62rem; font-weight:700; padding:1px 5px; border-radius:3px; text-transform:uppercase;">${tagLabel}</span>
+                          </div>
+                          <strong style="color:var(--ink); font-size:0.75rem; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</strong>
+                          <span style="font-size:0.68rem; color:var(--ink-soft); display:block; line-height:1.25; margin-top:2px;">${s.detail}</span>
+                        </div>
+                      `;
+                    }).join('')}
+                  </div>
+                </div>
+              ` : ''}
+
+              <div style="background:rgba(245, 166, 35, 0.08); border:1px solid rgba(245, 166, 35, 0.3); border-radius:8px; padding:8px 10px; margin-bottom:10px; font-size:0.74rem; font-family:'IBM Plex Mono', monospace; color:var(--signal);">
+                <strong>FAIL-SAFE:</strong> ${b.architecture.failSafe}
+              </div>
+
+              ${b.samplePayload ? `
+                <div style="margin-bottom:10px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <div style="display:flex; align-items:center; gap:6px;">
+                      <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--ink-muted); text-transform:uppercase; font-weight:700;">PAYLOAD INSPECTOR</span>
+                      <div style="display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--card);">
+                        <button id="tab-output-${b.id}" onclick="switchPayloadTab('${b.id}', 'output')" style="padding:2px 8px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:700; background:var(--teal); color:#0E1416; border:none; cursor:pointer;">
+                          Resolved Output
+                        </button>
+                        <button id="tab-input-${b.id}" onclick="switchPayloadTab('${b.id}', 'input')" style="padding:2px 8px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:500; background:transparent; color:var(--ink-soft); border:none; cursor:pointer;">
+                          Inbound Payload
+                        </button>
+                      </div>
+                    </div>
+                    <button onclick="copyCurrentPayload('${b.id}', this)" style="font-size:0.7rem; font-family:'IBM Plex Mono', monospace; color:var(--teal); border:none; background:none; cursor:pointer; font-weight:600;">
+                      Copy JSON
+                    </button>
+                  </div>
+                  <pre id="payloadCode-${b.id}" style="background:#070B0D; border:1px solid var(--line); border-radius:6px; padding:10px; font-size:0.7rem; font-family:'IBM Plex Mono', monospace; color:var(--teal); max-height:150px; overflow:auto; line-height:1.4;">${JSON.stringify(b.samplePayload.output, null, 2)}</pre>
+                </div>
+              ` : ''}
+
+              <button onclick="inquireProjectScope('${b.id}')" style="display:block; width:100%; text-align:center; padding:9px; border-radius:8px; background:var(--signal); color:#0E1416; font-size:0.8rem; font-weight:700; border:none; cursor:pointer;">
+                Inquire to Deploy Similar System →
+              </button>
+            </div>
           </div>
         </div>
       `).join('');
+    }
+
+    function toggleStandaloneDrawer(id) {
+      const drawer = document.getElementById('drawer-' + id);
+      const arrow = document.getElementById('drawer-arrow-' + id);
+      if (!drawer) return;
+      const isOpen = drawer.style.display !== 'none';
+      drawer.style.display = isOpen ? 'none' : 'block';
+      if (arrow) arrow.textContent = isOpen ? '▼' : '▲';
+    }
+
+    function toggleAllStandaloneDrawers() {
+      const btn = document.getElementById('toggleAllDrawersBtn');
+      const allDrawers = document.querySelectorAll('[id^="drawer-"]');
+      const anyClosed = Array.from(allDrawers).some(d => d.style.display === 'none' || !d.style.display);
+      allDrawers.forEach(d => {
+        d.style.display = anyClosed ? 'block' : 'none';
+      });
+      document.querySelectorAll('[id^="drawer-arrow-"]').forEach(a => {
+        a.textContent = anyClosed ? '▲' : '▼';
+      });
+      if (btn) {
+        btn.innerHTML = anyClosed ? '<span>⚡ Collapse All Drawers</span>' : '<span>⚡ Expand All Blueprints</span>';
+      }
+    }
+
+    function switchPayloadTab(buildId, tab) {
+      const codeElem = document.getElementById('payloadCode-' + buildId);
+      const outBtn = document.getElementById('tab-output-' + buildId);
+      const inBtn = document.getElementById('tab-input-' + buildId);
+      const project = buildsData.find(x => x.id === buildId);
+      if (!project || !project.samplePayload || !codeElem) return;
+      
+      if (tab === 'input') {
+        codeElem.textContent = JSON.stringify(project.samplePayload.input, null, 2);
+        if (inBtn) { inBtn.style.background = 'var(--teal)'; inBtn.style.color = '#0E1416'; inBtn.style.fontWeight = '700'; }
+        if (outBtn) { outBtn.style.background = 'transparent'; outBtn.style.color = 'var(--ink-soft)'; outBtn.style.fontWeight = '500'; }
+      } else {
+        codeElem.textContent = JSON.stringify(project.samplePayload.output, null, 2);
+        if (outBtn) { outBtn.style.background = 'var(--teal)'; outBtn.style.color = '#0E1416'; outBtn.style.fontWeight = '700'; }
+        if (inBtn) { inBtn.style.background = 'transparent'; inBtn.style.color = 'var(--ink-soft)'; inBtn.style.fontWeight = '500'; }
+      }
+    }
+
+    function copyCurrentPayload(buildId, btn) {
+      const codeElem = document.getElementById('payloadCode-' + buildId);
+      if (!codeElem) return;
+      copyToClipboard(codeElem.textContent, btn);
+    }
+
+    function inquireProjectScope(id) {
+      const project = buildsData.find(b => b.id === id);
+      if (!project) return;
+      const bId = project.architecture && project.architecture.blueprintId ? project.architecture.blueprintId : project.id;
+      const msg = document.getElementById('contactMessage');
+      if (msg) {
+        msg.value = `Inquiry regarding ${project.title} (${bId}): We want to implement a similar ${project.category} pipeline using ${project.stack.slice(0, 3).join(', ')}.`;
+      }
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // Interactive Workflow Demo Simulation Runner (100% parity with React WorkflowDemoModal)
+    let demoActiveProject = null;
+    let demoInterval = null;
+    let demoCurrentStep = 0;
+    let demoIsRunning = false;
+    let demoConsoleLogs = [];
+
+    function openStandaloneDemo(id) {
+      demoActiveProject = buildsData.find(b => b.id === id);
+      if (!demoActiveProject) return;
+      if (demoInterval) clearInterval(demoInterval);
+      demoIsRunning = false;
+      demoCurrentStep = 0;
+      const now = new Date().toLocaleTimeString();
+      demoConsoleLogs = [
+        `[${now}] Pipeline initialized for ${demoActiveProject.title}`,
+        `[${now}] Blueprint: ${demoActiveProject.architecture && demoActiveProject.architecture.blueprintId ? demoActiveProject.architecture.blueprintId : demoActiveProject.id}`,
+        `[${now}] Ready. Click 'Start Live Execution Demo' to simulate real-time execution flow.`
+      ];
+      renderDemoModalView();
+      const modal = document.getElementById('demoModal');
+      if (modal) modal.classList.add('open');
+    }
+
+    function closeDemoModal() {
+      if (demoInterval) clearInterval(demoInterval);
+      demoIsRunning = false;
+      const modal = document.getElementById('demoModal');
+      if (modal) modal.classList.remove('open');
+    }
+
+    function closeDemoModalOnBackdrop(e) {
+      if (e.target.id === 'demoModal') closeDemoModal();
+    }
+
+    function renderDemoModalView() {
+      const container = document.getElementById('demoModalContent');
+      if (!container || !demoActiveProject) return;
+      const project = demoActiveProject;
+      const steps = (project.architecture && project.architecture.diagramSteps) || [];
+      const progressPercent = steps.length > 0 ? Math.round((demoCurrentStep / steps.length) * 100) : 100;
+      const isCompleted = demoCurrentStep >= steps.length && steps.length > 0;
+
+      container.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:700; text-transform:uppercase; color:var(--teal); background:rgba(79, 209, 197, 0.15); border:1px solid rgba(79, 209, 197, 0.35); padding:3px 8px; border-radius:4px;">
+              ▶ Interactive Workflow Demo
+            </span>
+            ${project.architecture && project.architecture.blueprintId ? `
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-soft); background:var(--paper); padding:3px 8px; border-radius:4px; border:1px solid var(--line);">
+                ${project.architecture.blueprintId}
+              </span>
+            ` : ''}
+          </div>
+        </div>
+
+        <h3 style="font-size:1.6rem; color:#fff; margin:6px 0 2px;">${project.title}</h3>
+        <p style="color:var(--ink-soft); font-size:0.85rem; margin-bottom:18px;">${project.tagline}</p>
+
+        <!-- Simulated Execution Stage -->
+        <div style="background:#090D0F; border:1px solid var(--line); border-radius:12px; overflow:hidden; margin-bottom:18px; box-shadow:inset 0 2px 8px rgba(0,0,0,0.6);">
+          <!-- Top Window Bar -->
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 14px; background:#141C1F; border-bottom:1px solid var(--line);">
+            <div style="display:flex; align-items:center; gap:6px;">
+              <span style="width:10px; height:10px; border-radius:50%; background:#EF4444; display:inline-block;"></span>
+              <span style="width:10px; height:10px; border-radius:50%; background:#F59E0B; display:inline-block;"></span>
+              <span style="width:10px; height:10px; border-radius:50%; background:#10B981; display:inline-block;"></span>
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--ink-muted); margin-left:6px;">
+                simulator://${project.id}/pipeline-runner
+              </span>
+            </div>
+            <div>
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; padding:3px 8px; border-radius:4px; ${
+                demoIsRunning
+                  ? 'background:rgba(245, 166, 35, 0.2); color:#FBBF24; font-weight:700;'
+                  : isCompleted
+                  ? 'background:rgba(16, 185, 129, 0.2); color:#34D399; font-weight:700;'
+                  : 'background:rgba(255,255,255,0.08); color:var(--ink-soft);'
+              }">
+                ${demoIsRunning ? '● SIMULATING EXECUTION...' : isCompleted ? '✓ COMPLETED (200 OK)' : 'IDLE'}
+              </span>
+            </div>
+          </div>
+
+          <!-- Progress Bar -->
+          <div style="width:100%; height:3px; background:rgba(0,0,0,0.6);">
+            <div style="height:100%; background:var(--teal); transition:width 0.3s ease; width:${progressPercent}%;"></div>
+          </div>
+
+          <!-- Step Cards Grid -->
+          <div style="padding:16px; background:linear-gradient(180deg, #090D0F 0%, #0D1316 100%);">
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(120px, 1fr)); gap:8px; margin-bottom:14px;">
+              ${steps.map((s, idx) => {
+                const isPassed = demoCurrentStep > idx;
+                const isCurrent = demoCurrentStep === idx && demoIsRunning;
+                let bg = 'rgba(0,0,0,0.3)';
+                let border = '1px solid rgba(255,255,255,0.1)';
+                let textColor = 'var(--ink-muted)';
+                if (isPassed) {
+                  bg = 'rgba(16, 185, 129, 0.12)';
+                  border = '1px solid rgba(16, 185, 129, 0.5)';
+                  textColor = '#34D399';
+                } else if (isCurrent) {
+                  bg = 'rgba(79, 209, 197, 0.2)';
+                  border = '1px solid var(--teal)';
+                  textColor = '#fff';
+                }
+                return `
+                  <div style="background:${bg}; border:${border}; border-radius:8px; padding:8px 10px; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; transition:all 0.2s ease;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                      <span style="font-size:0.65rem; font-weight:700; color:var(--teal);">0${s.step}</span>
+                      ${isPassed ? '<span style="color:#10B981; font-size:0.75rem;">✓</span>' : ''}
+                    </div>
+                    <strong style="display:block; font-size:0.72rem; color:${textColor}; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</strong>
+                    <span style="font-size:0.65rem; color:var(--ink-muted); display:block; text-transform:uppercase;">${s.type}</span>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- Terminal Output Window -->
+            <div id="demoTerminalOutput" style="background:#050809; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:12px; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--teal); max-height:160px; overflow-y:auto; line-height:1.5;">
+              <div style="color:var(--ink-muted); font-size:0.65rem; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:4px; margin-bottom:6px;">
+                >_ LIVE EXECUTION TRACE
+              </div>
+              ${demoConsoleLogs.map(l => `<div style="margin-bottom:2px;">${l}</div>`).join('')}
+            </div>
+          </div>
+
+          <!-- Controls Footer -->
+          <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; padding:12px 16px; background:#141C1F; border-top:1px solid var(--line);">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <button onclick="startDemoPlayback()" ${demoIsRunning ? 'disabled' : ''} style="padding:7px 14px; border-radius:6px; background:var(--teal); color:#0E1416; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:700; border:none; cursor:pointer; opacity:${demoIsRunning ? '0.5' : '1'};">
+                ${demoCurrentStep > 0 && !demoIsRunning ? '↻ Re-run Demo' : '▶ Run Live Execution Demo'}
+              </button>
+              <button onclick="resetDemoPlayback()" style="padding:7px 12px; border-radius:6px; background:rgba(255,255,255,0.05); color:var(--ink-soft); font-family:'IBM Plex Mono', monospace; font-size:0.75rem; border:1px solid var(--line); cursor:pointer;">
+                ↺ Reset
+              </button>
+            </div>
+            ${project.repoUrl ? `
+              <a href="${project.repoUrl}" target="_blank" rel="noopener noreferrer" style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--ink-soft); text-decoration:none;">
+                View Source Repository ↗
+              </a>
+            ` : ''}
+          </div>
+        </div>
+
+        <!-- Before & After Comparison -->
+        ${project.beforeAfter ? `
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+            <div style="background:rgba(239, 68, 68, 0.06); border:1px solid rgba(239, 68, 68, 0.3); border-radius:8px; padding:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <div style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; font-weight:700; color:#F87171;">
+                  🔴 BEFORE: MANUAL BOTTLENECK
+                </div>
+                <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#FCA5A5;">${project.beforeAfter.before ? project.beforeAfter.before.timeSpent : ''}</span>
+              </div>
+              <p style="font-size:0.75rem; color:var(--ink-soft); margin-bottom:6px; line-height:1.4;">${project.beforeAfter.before ? project.beforeAfter.before.summary : ''}</p>
+              ${project.beforeAfter.before && project.beforeAfter.before.painPoints ? `
+                <div style="border-top:1px solid rgba(239,68,68,0.2); padding-top:4px;">
+                  ${project.beforeAfter.before.painPoints.map(p => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#FCA5A5; margin-bottom:2px;">✕ ${p}</div>`).join('')}
+                </div>
+              ` : ''}
+            </div>
+            <div style="background:rgba(16, 185, 129, 0.06); border:1px solid rgba(16, 185, 129, 0.3); border-radius:8px; padding:12px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                <div style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; font-weight:700; color:#34D399;">
+                  🟢 AFTER: AUTOMATED PIPELINE
+                </div>
+                <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#6EE7B7;">${project.beforeAfter.after ? project.beforeAfter.after.efficiencyGain : ''}</span>
+              </div>
+              <p style="font-size:0.75rem; color:var(--ink-soft); margin-bottom:6px; line-height:1.4;">${project.beforeAfter.after ? project.beforeAfter.after.summary : ''}</p>
+              ${project.beforeAfter.after && project.beforeAfter.after.improvements ? `
+                <div style="border-top:1px solid rgba(16,185,129,0.2); padding-top:4px;">
+                  ${project.beforeAfter.after.improvements.map(im => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#6EE7B7; margin-bottom:2px;">✓ ${im}</div>`).join('')}
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        ` : ''}
+
+        <button onclick="inquireDemoScope()" style="width:100%; padding:10px; border-radius:8px; background:var(--signal); color:#0E1416; font-weight:700; font-size:0.85rem; border:none; cursor:pointer; text-align:center;">
+          Inquire to Deploy Similar System for Your Team →
+        </button>
+      `;
+
+      // Auto-scroll terminal output to bottom
+      const term = document.getElementById('demoTerminalOutput');
+      if (term) term.scrollTop = term.scrollHeight;
+    }
+
+    function startDemoPlayback() {
+      if (!demoActiveProject || demoIsRunning) return;
+      const steps = (demoActiveProject.architecture && demoActiveProject.architecture.diagramSteps) || [];
+      if (steps.length === 0) return;
+      demoIsRunning = true;
+      demoCurrentStep = 0;
+      const now = new Date().toLocaleTimeString();
+      demoConsoleLogs = [
+        `[${now}] [TRIGGER INGESTION]: ${demoActiveProject.architecture.trigger}`
+      ];
+      renderDemoModalView();
+
+      demoInterval = setInterval(() => {
+        if (demoCurrentStep < steps.length) {
+          const activeStep = steps[demoCurrentStep];
+          const t = new Date().toLocaleTimeString();
+          demoConsoleLogs.push(`[${t}] Step 0${activeStep.step} [${activeStep.type.toUpperCase()}]: ${activeStep.name}`);
+          demoConsoleLogs.push(`[${t}] -> ${activeStep.detail}`);
+          demoCurrentStep++;
+          renderDemoModalView();
+        } else {
+          clearInterval(demoInterval);
+          demoIsRunning = false;
+          const t = new Date().toLocaleTimeString();
+          const latency = demoActiveProject.metrics && demoActiveProject.metrics[0] ? demoActiveProject.metrics[0].value : 'sub-second latency';
+          demoConsoleLogs.push(`[${t}] SUCCESS: Pipeline executed in ${latency} with 0 dropped events.`);
+          demoConsoleLogs.push(`[${t}] Resolved State: ${demoActiveProject.architecture.output}`);
+          renderDemoModalView();
+        }
+      }, 1100);
+    }
+
+    function resetDemoPlayback() {
+      if (demoInterval) clearInterval(demoInterval);
+      demoIsRunning = false;
+      demoCurrentStep = 0;
+      const now = new Date().toLocaleTimeString();
+      demoConsoleLogs = [
+        `[${now}] Demo state reset.`,
+        `[${now}] Blueprint: ${demoActiveProject.architecture && demoActiveProject.architecture.blueprintId ? demoActiveProject.architecture.blueprintId : demoActiveProject.id}`
+      ];
+      renderDemoModalView();
+    }
+
+    function inquireDemoScope() {
+      if (!demoActiveProject) return;
+      const title = demoActiveProject.title;
+      const bId = demoActiveProject.architecture && demoActiveProject.architecture.blueprintId ? demoActiveProject.architecture.blueprintId : demoActiveProject.id;
+      closeDemoModal();
+      const msg = document.getElementById('contactMessage');
+      if (msg) {
+        msg.value = `Demo Inquiry regarding ${title} (${bId}): We would like to implement a resilient automated pipeline similar to this system.`;
+      }
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
     }
 
     let currentCategory = 'all';
@@ -1758,19 +2369,125 @@
     }
 
     // Architecture Modal
+    let currentArchPayloadProject = null;
+
+    function switchArchPayloadTab(tab) {
+      if (!currentArchPayloadProject || !currentArchPayloadProject.samplePayload) return;
+      const codeElem = document.getElementById('archPayloadCode');
+      const outBtn = document.getElementById('arch-tab-out');
+      const inBtn = document.getElementById('arch-tab-in');
+      if (!codeElem) return;
+      if (tab === 'input') {
+        codeElem.textContent = JSON.stringify(currentArchPayloadProject.samplePayload.input, null, 2);
+        if (inBtn) { inBtn.style.background = 'var(--teal)'; inBtn.style.color = '#0E1416'; inBtn.style.fontWeight = '700'; }
+        if (outBtn) { outBtn.style.background = 'transparent'; outBtn.style.color = 'var(--ink-soft)'; outBtn.style.fontWeight = '500'; }
+      } else {
+        codeElem.textContent = JSON.stringify(currentArchPayloadProject.samplePayload.output, null, 2);
+        if (outBtn) { outBtn.style.background = 'var(--teal)'; outBtn.style.color = '#0E1416'; outBtn.style.fontWeight = '700'; }
+        if (inBtn) { inBtn.style.background = 'transparent'; inBtn.style.color = 'var(--ink-soft)'; inBtn.style.fontWeight = '500'; }
+      }
+    }
+
+    function copyArchPayload(btn) {
+      const codeElem = document.getElementById('archPayloadCode');
+      if (!codeElem) return;
+      copyToClipboard(codeElem.textContent, btn);
+    }
+
     function openArchModal(id) {
       const project = buildsData.find(b => b.id === id);
       if (!project) return;
+      currentArchPayloadProject = project;
       const modal = document.getElementById('archModal');
       const content = document.getElementById('modalContent');
       content.innerHTML = `
-        <span class="build-badge ${project.category}">${project.category} · Blueprint Inspection</span>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span class="build-badge ${project.category}">${project.category} · Blueprint Inspection</span>
+          ${project.architecture && project.architecture.blueprintId ? `<span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); background:var(--paper); padding:3px 8px; border-radius:4px; border:1px solid var(--line);">${project.architecture.blueprintId}</span>` : ''}
+        </div>
         <h2 style="font-size:1.8rem; margin:8px 0 4px; color:#fff;">${project.title}</h2>
         <p style="color:var(--ink-soft); font-size:0.9rem; margin-bottom:16px;">${project.tagline}</p>
 
-        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1);">
-          ${project.stack.map(s => `<span class="stack-tag">${s}</span>`).join('')}
+        <!-- Tech Stack & Action Buttons -->
+        <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; margin-bottom:20px; padding-bottom:16px; border-bottom:1px solid rgba(255,255,255,0.1);">
+          <div style="display:flex; flex-wrap:wrap; gap:6px;">
+            ${project.stack.map(s => `<span class="stack-tag">${s}</span>`).join('')}
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button onclick="closeArchModal(); openStandaloneDemo('${project.id}');" style="padding:6px 12px; border-radius:6px; background:var(--teal); color:#0E1416; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:700; border:none; cursor:pointer;">
+              ▶ Watch Demo
+            </button>
+            <a href="${project.repoUrl || 'https://github.com/imoh-japhet'}" target="_blank" rel="noopener noreferrer" style="padding:6px 12px; border-radius:6px; background:var(--paper); color:var(--ink); font-family:'IBM Plex Mono', monospace; font-size:0.75rem; border:1px solid var(--line); text-decoration:none;">
+              View Repo ↗
+            </a>
+          </div>
         </div>
+
+        <!-- Before & After Transformation Section -->
+        ${project.beforeAfter ? `
+          <div style="background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:14px; margin-bottom:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--line);">
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--teal); font-weight:700; text-transform:uppercase;">
+                ⚡ Operational Transformation
+              </span>
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--signal); font-weight:700;">
+                ${project.beforeAfter.delta}
+              </span>
+            </div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+              <div style="background:rgba(239, 68, 68, 0.08); border:1px solid rgba(239, 68, 68, 0.25); border-radius:8px; padding:10px 12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <strong style="color:#F87171; font-family:'IBM Plex Mono', monospace; font-size:0.7rem;">🔴 BEFORE: MANUAL BOTTLENECK</strong>
+                  <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#FCA5A5;">${project.beforeAfter.before ? project.beforeAfter.before.timeSpent : ''}</span>
+                </div>
+                <p style="font-size:0.75rem; color:var(--ink-soft); line-height:1.35; margin-bottom:6px;">${project.beforeAfter.before ? project.beforeAfter.before.summary : ''}</p>
+                ${project.beforeAfter.before && project.beforeAfter.before.painPoints ? `
+                  <div style="border-top:1px solid rgba(239,68,68,0.2); padding-top:4px;">
+                    ${project.beforeAfter.before.painPoints.map(p => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#FCA5A5; margin-bottom:2px;">✕ ${p}</div>`).join('')}
+                  </div>
+                ` : ''}
+              </div>
+              <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.25); border-radius:8px; padding:10px 12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                  <strong style="color:#34D399; font-family:'IBM Plex Mono', monospace; font-size:0.7rem;">🟢 AFTER: AUTOMATED PIPELINE</strong>
+                  <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#6EE7B7;">${project.beforeAfter.after ? project.beforeAfter.after.efficiencyGain : ''}</span>
+                </div>
+                <p style="font-size:0.75rem; color:var(--ink-soft); line-height:1.35; margin-bottom:6px;">${project.beforeAfter.after ? project.beforeAfter.after.summary : ''}</p>
+                ${project.beforeAfter.after && project.beforeAfter.after.improvements ? `
+                  <div style="border-top:1px solid rgba(16,185,129,0.2); padding-top:4px;">
+                    ${project.beforeAfter.after.improvements.map(im => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#6EE7B7; margin-bottom:2px;">✓ ${im}</div>`).join('')}
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        ` : ''}
+
+        ${project.architecture && project.architecture.diagramSteps ? `
+          <h4 style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--teal); text-transform:uppercase; margin-bottom:10px;">Pipeline Step Sequence</h4>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:8px; margin-bottom:18px;">
+            ${project.architecture.diagramSteps.map(s => {
+              let tagBg = 'rgba(255, 255, 255, 0.08)';
+              let tagColor = 'var(--ink-soft)';
+              let tagLabel = 'PROCESS';
+              if (s.type === 'trigger') { tagBg = 'rgba(16, 185, 129, 0.15)'; tagColor = '#34D399'; tagLabel = 'TRIGGER'; }
+              else if (s.type === 'ai') { tagBg = 'rgba(79, 209, 197, 0.15)'; tagColor = 'var(--teal)'; tagLabel = 'AI / LLM'; }
+              else if (s.type === 'database') { tagBg = 'rgba(59, 130, 246, 0.15)'; tagColor = '#60A5FA'; tagLabel = 'DATA / DB'; }
+              else if (s.type === 'router') { tagBg = 'rgba(168, 85, 247, 0.15)'; tagColor = '#C084FC'; tagLabel = 'ROUTER'; }
+              else if (s.type === 'dispatch') { tagBg = 'rgba(245, 166, 35, 0.15)'; tagColor = '#FBBF24'; tagLabel = 'DISPATCH'; }
+              return `
+                <div style="background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:8px 10px;">
+                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                    <span style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--ink-muted);">STEP 0${s.step}</span>
+                    <span style="background:${tagBg}; color:${tagColor}; font-size:0.62rem; font-weight:700; padding:1px 5px; border-radius:3px; text-transform:uppercase;">${tagLabel}</span>
+                  </div>
+                  <strong style="font-size:0.78rem; color:var(--ink); display:block; margin-bottom:2px;">${s.name}</strong>
+                  <span style="font-size:0.7rem; font-family:'IBM Plex Mono', monospace; color:var(--ink-soft); display:block; line-height:1.3;">${s.detail}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        ` : ''}
 
         <h4 style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--teal); text-transform:uppercase; margin-bottom:10px;">Execution Flow</h4>
         <div class="node-box" style="border-color:rgba(79, 209, 197, 0.4);">
@@ -1791,8 +2508,23 @@
         </div>
 
         ${project.samplePayload ? `
-          <h4 style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--ink-soft); text-transform:uppercase; margin-top:20px; margin-bottom:8px;">Sample Payload Trace</h4>
-          <pre style="background:#080D0E; border:1px solid var(--line); border-radius:8px; padding:14px; font-size:0.75rem; color:var(--teal); overflow-x:auto;">${JSON.stringify(project.samplePayload, null, 2)}</pre>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; margin-bottom:8px;">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <h4 style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--ink-soft); text-transform:uppercase; margin:0;">Sample Payload Trace</h4>
+              <div style="display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--paper);">
+                <button id="arch-tab-out" onclick="switchArchPayloadTab('output')" style="padding:2px 8px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:700; background:var(--teal); color:#0E1416; border:none; cursor:pointer;">
+                  Resolved Output
+                </button>
+                <button id="arch-tab-in" onclick="switchArchPayloadTab('input')" style="padding:2px 8px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:500; background:transparent; color:var(--ink-soft); border:none; cursor:pointer;">
+                  Inbound Payload
+                </button>
+              </div>
+            </div>
+            <button onclick="copyArchPayload(this)" style="font-size:0.75rem; font-family:'IBM Plex Mono', monospace; color:var(--teal); border:none; background:none; cursor:pointer; font-weight:600;">
+              Copy JSON
+            </button>
+          </div>
+          <pre id="archPayloadCode" style="background:#080D0E; border:1px solid var(--line); border-radius:8px; padding:14px; font-size:0.75rem; color:var(--teal); overflow-x:auto; max-height:220px; line-height:1.4;">${JSON.stringify(project.samplePayload.output, null, 2)}</pre>
         ` : ''}
 
         <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin-top:20px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.1); text-align:center;">
@@ -1803,6 +2535,10 @@
             </div>
           `).join('')}
         </div>
+
+        <button onclick="closeArchModal(); inquireProjectScope('${project.id}');" style="width:100%; margin-top:20px; padding:12px; border-radius:8px; background:var(--signal); color:#0E1416; font-weight:700; font-size:0.88rem; border:none; cursor:pointer; text-align:center;">
+          Inquire to Deploy Similar System for Your Team →
+        </button>
       `;
       modal.classList.add('open');
     }
@@ -1862,30 +2598,167 @@
       themeIcon.textContent = isLight ? '🌙 Dark' : '☀️ Light';
     });
 
-    // ROI Calculator
+    // ROI Calculator with Multi-Currency Switcher (USD, NGN, GBP, EUR)
+    const CURRENCY_CONFIG = {
+      USD: { code: 'USD', symbol: '$', name: 'US Dollar', flag: '🇺🇸', subtitle: 'North America / Global', toUsd: 1, min: 15, max: 250, step: 5, defaultRate: 40, presets: [25, 45, 75, 125] },
+      NGN: { code: 'NGN', symbol: '₦', name: 'Nigerian Naira', flag: '🇳🇬', subtitle: 'Nigeria / West Africa', toUsd: 1500, min: 5000, max: 250000, step: 2500, defaultRate: 50000, presets: [20000, 50000, 100000, 175000] },
+      GBP: { code: 'GBP', symbol: '£', name: 'British Pound', flag: '🇬🇧', subtitle: 'United Kingdom', toUsd: 0.78, min: 12, max: 200, step: 2, defaultRate: 32, presets: [20, 35, 60, 100] },
+      EUR: { code: 'EUR', symbol: '€', name: 'Euro', flag: '🇪🇺', subtitle: 'European Union', toUsd: 0.92, min: 15, max: 220, step: 5, defaultRate: 38, presets: [25, 40, 70, 110] }
+    };
+    let activeCurr = 'USD';
+
+    function formatCompactCurrency(val, conf) {
+      if (conf.code === 'NGN' && val >= 1000) {
+        return conf.symbol + (val / 1000).toFixed(0) + 'k/hr';
+      }
+      return conf.symbol + val.toLocaleString() + '/hr';
+    }
+
+    function setCurrency(newCode) {
+      if (newCode === activeCurr) return;
+      const prev = CURRENCY_CONFIG[activeCurr];
+      const next = CURRENCY_CONFIG[newCode];
+      const slider = document.getElementById('inputRate');
+      const currentRate = parseInt(slider.value) || prev.defaultRate;
+
+      // Convert proportionally
+      const inUsd = currentRate / prev.toUsd;
+      const rawNext = inUsd * next.toUsd;
+      const snapped = Math.round(rawNext / next.step) * next.step;
+      const clamped = Math.max(next.min, Math.min(next.max, snapped)) || next.defaultRate;
+
+      activeCurr = newCode;
+      slider.min = next.min;
+      slider.max = next.max;
+      slider.step = next.step;
+      slider.value = clamped;
+
+      // Update switcher active tab
+      document.querySelectorAll('.curr-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.curr === newCode);
+      });
+
+      // Update banner label & details
+      const activeLabel = document.getElementById('activeCurrencyLabel');
+      if (activeLabel) {
+        activeLabel.textContent = next.flag + ' ' + next.name + ' (' + next.symbol + ')';
+      }
+      const flagEl = document.getElementById('activeCurrencyFlag');
+      const nameEl = document.getElementById('activeCurrencyName');
+      const subEl = document.getElementById('activeCurrencySub');
+      const symEl = document.getElementById('activeCurrencySymbol');
+      if (flagEl) flagEl.textContent = next.flag;
+      if (nameEl) nameEl.textContent = next.name;
+      if (subEl) subEl.textContent = next.subtitle;
+      if (symEl) symEl.textContent = next.symbol;
+
+      // Update rate label currency
+      const rateCurrCode = document.getElementById('rateCurrCode');
+      if (rateCurrCode) rateCurrCode.textContent = next.code;
+
+      // Update slider tick labels
+      const minTick = document.getElementById('rateMinTick');
+      const midTick = document.getElementById('rateMidTick');
+      const maxTick = document.getElementById('rateMaxTick');
+      if (minTick) minTick.textContent = formatCompactCurrency(next.min, next);
+      if (midTick) midTick.textContent = formatCompactCurrency(Math.round((next.min + next.max) / 2), next);
+      if (maxTick) maxTick.textContent = formatCompactCurrency(next.max, next);
+
+      document.querySelectorAll('.calcCurrLbl').forEach(el => {
+        el.textContent = next.code;
+      });
+
+      const ctaBtn = document.getElementById('calcCtaBtn');
+      if (ctaBtn) {
+        ctaBtn.innerHTML = '<span>Automate This Workload in ' + next.code + '</span> <span>→</span>';
+      }
+
+      renderRatePresets();
+      updateCalc();
+    }
+
+    function renderRatePresets() {
+      const container = document.getElementById('ratePresetsContainer');
+      if (!container) return;
+      const conf = CURRENCY_CONFIG[activeCurr];
+      const currentVal = parseInt(document.getElementById('inputRate').value);
+
+      container.innerHTML = '';
+      conf.presets.forEach(p => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'curr-preset-btn' + (p === currentVal ? ' active' : '');
+        let display = conf.symbol + p.toLocaleString();
+        if (conf.code === 'NGN' && p >= 1000) {
+          display = conf.symbol + (p / 1000) + 'k';
+        }
+        btn.textContent = display;
+        btn.onclick = () => {
+          document.getElementById('inputRate').value = p;
+          updateCalc();
+          renderRatePresets();
+        };
+        container.appendChild(btn);
+      });
+    }
+
     function updateCalc() {
-      const team = parseInt(document.getElementById('inputTeam').value);
-      const hours = parseInt(document.getElementById('inputHours').value);
-      const rate = parseInt(document.getElementById('inputRate').value);
+      const team = parseInt(document.getElementById('inputTeam').value) || 1;
+      const hours = parseInt(document.getElementById('inputHours').value) || 2;
+      const rate = parseInt(document.getElementById('inputRate').value) || CURRENCY_CONFIG[activeCurr].defaultRate;
+      const conf = CURRENCY_CONFIG[activeCurr];
 
       document.getElementById('valTeam').textContent = team + (team === 1 ? ' person' : ' people');
       document.getElementById('valHours').textContent = hours + ' hrs/wk';
-      document.getElementById('valRate').textContent = '$' + rate + '/hr';
+      document.getElementById('valRate').textContent = conf.symbol + rate.toLocaleString() + '/hr';
 
       const monthlyHours = Math.round(team * hours * 4 * 0.8);
       const monthlySavings = Math.round(monthlyHours * rate);
+      const annualSavings = monthlySavings * 12;
 
       document.getElementById('calcHoursSaved').textContent = monthlyHours.toLocaleString() + ' hrs';
-      document.getElementById('calcDollarsSaved').textContent = '$' + monthlySavings.toLocaleString();
+      document.getElementById('calcDollarsSaved').textContent = conf.symbol + monthlySavings.toLocaleString();
+      const annualEl = document.getElementById('calcAnnualSaved');
+      if (annualEl) {
+        annualEl.textContent = conf.symbol + annualSavings.toLocaleString();
+      }
+
+      // Update slider tick labels for currency
+      const minTick = document.getElementById('rateMinTick');
+      const midTick = document.getElementById('rateMidTick');
+      const maxTick = document.getElementById('rateMaxTick');
+      if (minTick) minTick.textContent = formatCompactCurrency(conf.min, conf);
+      if (midTick) midTick.textContent = formatCompactCurrency(Math.round((conf.min + conf.max) / 2), conf);
+      if (maxTick) maxTick.textContent = formatCompactCurrency(conf.max, conf);
+
+      // Update dynamic calculation context box
+      const contextEl = document.getElementById('calcContextText');
+      if (contextEl) {
+        contextEl.textContent = `Based on ${team} team ${team === 1 ? 'member' : 'members'} reallocating ${hours} hrs/wk at ${conf.symbol}${rate.toLocaleString()}/hr. Eliminating high-friction manual data steps pays for itself in less than 3 weeks.`;
+      }
+
+      // Sync active state on preset chips
+      document.querySelectorAll('.curr-preset-btn').forEach(btn => {
+        let display = conf.symbol + rate.toLocaleString();
+        if (conf.code === 'NGN' && rate >= 1000) {
+          display = conf.symbol + (rate / 1000) + 'k';
+        }
+        btn.classList.toggle('active', btn.textContent === display);
+      });
     }
 
     function applyCalcToContact() {
       const team = document.getElementById('inputTeam').value;
       const hours = document.getElementById('inputHours').value;
       const rate = document.getElementById('inputRate').value;
+      const conf = CURRENCY_CONFIG[activeCurr];
+      const monthlyHours = Math.round(team * hours * 4 * 0.8);
+      const monthlySavings = Math.round(monthlyHours * rate);
+      const annualSavings = monthlySavings * 12;
+
       const msg = document.getElementById('contactMessage');
       if (msg) {
-        msg.value = `Estimated ROI: Team of ${team} spending ${hours} hrs/wk at $${rate}/hr on manual routines. Target savings: ~80% reclaimed.`;
+        msg.value = `Estimated ROI (${conf.code}): Team of ${team} wasting ${hours} hrs/wk at ${conf.symbol}${Number(rate).toLocaleString()}/hr. Target savings: ~${monthlyHours} hrs/mo (${conf.symbol}${monthlySavings.toLocaleString()}/mo or ${conf.symbol}${annualSavings.toLocaleString()}/yr).`;
       }
       document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
     }
@@ -1915,6 +2788,7 @@
     // Init
     renderAirtable();
     renderBuilds(buildsData);
+    renderRatePresets();
     updateCalc();
   </script>
 </body>
