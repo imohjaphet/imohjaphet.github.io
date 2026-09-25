@@ -577,24 +577,58 @@
     .search-input:focus { border-color: var(--teal); }
 
     .build-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-      gap: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
     }
     .build-card {
       background: var(--card);
       border: 1px solid var(--card-border);
-      border-radius: 14px;
-      padding: 26px;
+      border-radius: 16px;
+      transition: all 0.25s ease;
+      width: 100%;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: all 0.25s ease;
     }
     .build-card:hover {
-      border-color: var(--teal);
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.3);
+      border-color: rgba(79, 209, 197, 0.4);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.25);
+    }
+    .build-card-header {
+      padding: 24px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 24px;
+    }
+    @media (max-width: 860px) {
+      .build-card-header {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+    .build-card-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .build-card-actions {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+    @media (max-width: 860px) {
+      .build-card-actions {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 14px;
+        border-top: 1px solid var(--line);
+        width: 100%;
+      }
     }
     .build-badge {
       display: inline-block;
@@ -606,16 +640,15 @@
       border-radius: 4px;
       background: var(--teal-soft);
       color: var(--teal);
-      margin-bottom: 14px;
       font-weight: 600;
     }
     .build-badge.automation { background: rgba(245, 166, 35, 0.12); color: var(--signal); }
     .build-badge.content { background: rgba(168, 85, 247, 0.12); color: #C084FC; }
     .build-badge.ai-agent, .build-badge[data-cat="ai agent"] { background: rgba(79, 209, 197, 0.12); color: var(--teal); }
 
-    .build-card h3 { font-size: 1.25rem; margin-bottom: 10px; color: var(--ink); }
-    .build-card p { font-size: 0.92rem; color: var(--ink-soft); margin-bottom: 20px; line-height: 1.6; }
-    .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+    .build-card h3 { font-size: 1.35rem; margin-bottom: 6px; color: var(--ink); font-weight: 700; }
+    .build-card p { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 14px; line-height: 1.6; }
+    .stack-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
     .stack-tag {
       font-size: 0.74rem;
       font-family: 'IBM Plex Mono', monospace;
@@ -626,17 +659,17 @@
       color: var(--ink-soft);
     }
     .inspect-btn {
-      width: 100%;
-      padding: 8px 14px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.03);
+      padding: 9px 16px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
       border: 1px solid var(--line);
       color: var(--ink);
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.78rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      gap: 8px;
       cursor: pointer;
       transition: all 0.2s;
     }
@@ -1879,7 +1912,7 @@
       document.getElementById('simConsoleLog').textContent = 'Simulation state reset.';
     }
 
-    // Render Builds Grid with Inline Expandable Blueprint Drawers
+    // Render Builds Grid with Horizontal 1-Per-Line Cards and Expandable Blueprint Drawers
     function renderBuilds(list) {
       const container = document.getElementById('buildsContainer');
       if (!container) return;
@@ -1888,148 +1921,158 @@
         return;
       }
       container.innerHTML = list.map(b => `
-        <div class="build-card" data-cat="${b.category}">
-          <div>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-              <div style="display:flex; align-items:center; gap:6px;">
+        <div class="build-card" id="build-card-${b.id}" data-cat="${b.category}">
+          <div class="build-card-header">
+            <div class="build-card-content">
+              <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; margin-bottom:8px;">
                 <span class="build-badge ${b.category === 'automation' ? 'automation' : b.category === 'content' ? 'content' : 'ai-agent'}">${b.category}</span>
-                ${b.architecture && b.architecture.blueprintId ? `<span style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--ink-muted); background:var(--paper); padding:2px 6px; border-radius:4px; border:1px solid var(--line);">${b.architecture.blueprintId.split(' // ')[0]}</span>` : ''}
+                ${b.architecture && b.architecture.blueprintId ? `<span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--ink-muted); background:var(--paper); padding:2px 8px; border-radius:4px; border:1px solid var(--line);">${b.architecture.blueprintId.split(' // ')[0]}</span>` : ''}
+                <span style="font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--teal); font-weight:600; margin-left:auto;">${b.metrics && b.metrics[0] ? `${b.metrics[0].value} (${b.metrics[0].label})` : ''}</span>
               </div>
-              <span style="font-family:'IBM Plex Mono', monospace; font-size:10px; color:var(--teal); font-weight:600;">${b.metrics && b.metrics[0] ? b.metrics[0].value : ''}</span>
+              <h3 style="font-size:1.45rem; font-weight:700; color:var(--ink); margin-bottom:4px;">${b.title}</h3>
+              <p style="font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--teal); margin-bottom:8px; font-weight:500;">${b.tagline}</p>
+              <p style="font-size:0.9rem; color:var(--ink-soft); line-height:1.6; margin-bottom:14px;">${b.description}</p>
+              <div class="stack-tags" style="margin-bottom:0;">
+                ${b.stack.map(s => `<span class="stack-tag">${s}</span>`).join('')}
+              </div>
             </div>
-            <h3>${b.title}</h3>
-            <p style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); margin-bottom:6px;">${b.tagline}</p>
-            <p>${b.description}</p>
+            <div class="build-card-actions">
+              <div style="display:flex; align-items:center; gap:8px;">
+                <button id="drawer-btn-${b.id}" class="inspect-btn" onclick="toggleStandaloneDrawer('${b.id}')">
+                  <span id="drawer-label-${b.id}">Technical Blueprint</span>
+                  <span id="drawer-arrow-${b.id}">▼</span>
+                </button>
+                <button onclick="openArchModal('${b.id}')" style="padding:9px 12px; border-radius:10px; border:1px solid var(--line); background:var(--paper); color:var(--ink-soft); cursor:pointer; font-family:'IBM Plex Mono'; font-size:0.85rem;" title="Fullscreen Modal">
+                  ↗
+                </button>
+              </div>
+              <span style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--ink-muted);">
+                ${(b.architecture.diagramSteps && b.architecture.diagramSteps.length) || (b.architecture.processing.length + 2)} node pipeline
+              </span>
+            </div>
           </div>
-          <div>
-            <div class="stack-tags">
-              ${b.stack.slice(0, 3).map(s => `<span class="stack-tag">${s}</span>`).join('')}
-              ${b.stack.length > 3 ? `<span class="stack-tag">+${b.stack.length - 3}</span>` : ''}
-            </div>
-            <div style="display:flex; gap:8px;">
-              <button class="inspect-btn" onclick="toggleStandaloneDrawer('${b.id}')" style="flex:1;">
-                <span>⚡ Technical Blueprint</span>
-                <span id="drawer-arrow-${b.id}">▼</span>
-              </button>
-              <button onclick="openArchModal('${b.id}')" style="padding:8px 12px; border-radius:8px; border:1px solid var(--line); background:var(--paper); color:var(--ink-soft); cursor:pointer; font-family:'IBM Plex Mono';" title="Fullscreen Modal">
-                ↗
-              </button>
+
+          <!-- Inline Expandable Drawer (100% width across card) -->
+          <div id="drawer-${b.id}" style="display:none; border-top:1px solid var(--line); background:var(--paper); padding:24px 28px; text-align:left;">
+            <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid var(--line);">
+              <div style="font-family:'IBM Plex Mono', monospace; font-size:0.78rem; color:var(--teal); font-weight:700;">
+                ● ${b.architecture && b.architecture.blueprintId ? b.architecture.blueprintId : 'PIPELINE ARCHITECTURE'}
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button type="button" onclick="openStandaloneDemo('${b.id}')" style="padding:6px 12px; border-radius:6px; background:var(--teal); color:#0E1416; font-family:'IBM Plex Mono', monospace; font-size:0.75rem; font-weight:700; border:none; cursor:pointer;">
+                  ▶ Watch Demo
+                </button>
+                <a href="${b.repoUrl || 'https://github.com/imoh-japhet'}" target="_blank" rel="noopener noreferrer" style="padding:6px 12px; border-radius:6px; background:var(--paper); color:var(--ink); font-family:'IBM Plex Mono', monospace; font-size:0.75rem; border:1px solid var(--line); text-decoration:none;">
+                  View Repo ↗
+                </a>
+              </div>
             </div>
 
-            <!-- Inline Expandable Drawer -->
-            <div id="drawer-${b.id}" style="display:none; margin-top:14px; padding-top:14px; border-top:1px solid var(--line); text-align:left;">
-              <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:8px; margin-bottom:12px; padding-bottom:8px; border-bottom:1px solid var(--line);">
-                <div style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--teal); font-weight:700;">
-                  ● ${b.architecture && b.architecture.blueprintId ? b.architecture.blueprintId : 'PIPELINE ARCHITECTURE'}
+            ${b.beforeAfter ? `
+              <!-- BEFORE AND AFTER SECTION -->
+              <div style="background:var(--paper); border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:16px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding-bottom:6px; border-bottom:1px solid var(--line);">
+                  <strong style="font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--ink); font-weight:700;">
+                    Workflow Transformation: Legacy Bottleneck vs Automated Pipeline
+                  </strong>
+                  <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--signal); font-weight:700; background:rgba(245, 166, 35, 0.1); border:1px solid rgba(245, 166, 35, 0.3); padding:2px 8px; border-radius:4px;">
+                    ⚡ ${b.beforeAfter.delta}
+                  </span>
                 </div>
-                <div style="display:flex; gap:6px;">
-                  <button type="button" onclick="openStandaloneDemo('${b.id}')" style="padding:5px 10px; border-radius:6px; background:var(--teal); color:#0E1416; font-family:'IBM Plex Mono', monospace; font-size:0.72rem; font-weight:700; border:none; cursor:pointer;">
-                    ▶ Watch Demo
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                  <div style="background:rgba(239, 68, 68, 0.08); border:1px solid rgba(239, 68, 68, 0.25); border-radius:10px; padding:12px 14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                      <strong style="color:#F87171; font-family:'IBM Plex Mono', monospace; font-size:0.7rem;">🔴 BEFORE: MANUAL BOTTLENECK</strong>
+                      <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#FCA5A5;">${b.beforeAfter.before ? b.beforeAfter.before.timeSpent : ''}</span>
+                    </div>
+                    <p style="font-size:0.75rem; color:var(--ink-soft); line-height:1.4; margin-bottom:8px;">${b.beforeAfter.before ? b.beforeAfter.before.summary : ''}</p>
+                    ${b.beforeAfter.before && b.beforeAfter.before.painPoints ? `
+                      <div style="border-top:1px solid rgba(239,68,68,0.15); padding-top:6px;">
+                        ${b.beforeAfter.before.painPoints.map(p => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#FCA5A5; margin-bottom:3px;">✕ ${p}</div>`).join('')}
+                      </div>
+                    ` : ''}
+                  </div>
+                  <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.25); border-radius:10px; padding:12px 14px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                      <strong style="color:#34D399; font-family:'IBM Plex Mono', monospace; font-size:0.7rem;">🟢 AFTER: AUTOMATED PIPELINE</strong>
+                      <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#6EE7B7;">${b.beforeAfter.after ? b.beforeAfter.after.efficiencyGain : ''}</span>
+                    </div>
+                    <p style="font-size:0.75rem; color:var(--ink-soft); line-height:1.4; margin-bottom:8px;">${b.beforeAfter.after ? b.beforeAfter.after.summary : ''}</p>
+                    ${b.beforeAfter.after && b.beforeAfter.after.improvements ? `
+                      <div style="border-top:1px solid rgba(16,185,129,0.15); padding-top:6px;">
+                        ${b.beforeAfter.after.improvements.map(im => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:#6EE7B7; margin-bottom:3px;">✓ ${im}</div>`).join('')}
+                      </div>
+                    ` : ''}
+                  </div>
+                </div>
+              </div>
+            ` : ''}
+            
+            <div style="background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px 14px; margin-bottom:14px; font-size:0.78rem; font-family:'IBM Plex Mono', monospace;">
+              <div style="color:var(--ink); margin-bottom:4px;"><strong>TRIGGER:</strong> ${b.architecture.trigger}</div>
+              <div style="color:var(--ink-soft);"><strong>DISPATCH:</strong> ${b.architecture.output}</div>
+            </div>
+
+            ${b.architecture.diagramSteps ? `
+              <div style="margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                  <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--teal); text-transform:uppercase; font-weight:700;">Multi-Node Pipeline Architecture & Step Execution</span>
+                  <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--ink-muted);">Deterministic Execution Path</span>
+                </div>
+                <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(140px, 1fr)); gap:8px;">
+                  ${b.architecture.diagramSteps.map(s => {
+                    let tagBg = 'rgba(255, 255, 255, 0.08)';
+                    let tagColor = 'var(--ink-soft)';
+                    let tagLabel = 'PROCESS';
+                    if (s.type === 'trigger') { tagBg = 'rgba(16, 185, 129, 0.15)'; tagColor = '#34D399'; tagLabel = 'TRIGGER'; }
+                    else if (s.type === 'ai') { tagBg = 'rgba(79, 209, 197, 0.15)'; tagColor = 'var(--teal)'; tagLabel = 'AI / LLM'; }
+                    else if (s.type === 'database') { tagBg = 'rgba(59, 130, 246, 0.15)'; tagColor = '#60A5FA'; tagLabel = 'DATA / DB'; }
+                    else if (s.type === 'router') { tagBg = 'rgba(168, 85, 247, 0.15)'; tagColor = '#C084FC'; tagLabel = 'ROUTER'; }
+                    else if (s.type === 'dispatch') { tagBg = 'rgba(245, 166, 35, 0.15)'; tagColor = '#FBBF24'; tagLabel = 'DISPATCH'; }
+                    return `
+                      <div style="background:rgba(255,255,255,0.02); padding:10px 12px; border-radius:8px; border:1px solid var(--line); font-family:'IBM Plex Mono', monospace;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+                          <span style="font-size:0.65rem; color:var(--ink-muted);">STEP 0${s.step}</span>
+                          <span style="background:${tagBg}; color:${tagColor}; font-size:0.62rem; font-weight:700; padding:1px 5px; border-radius:3px; text-transform:uppercase;">${tagLabel}</span>
+                        </div>
+                        <strong style="color:var(--ink); font-size:0.78rem; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</strong>
+                        <span style="font-size:0.68rem; color:var(--ink-soft); display:block; line-height:1.3; margin-top:3px;">${s.detail}</span>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+            ` : ''}
+
+            <div style="background:rgba(245, 166, 35, 0.08); border:1px solid rgba(245, 166, 35, 0.3); border-radius:10px; padding:10px 14px; margin-bottom:14px; font-size:0.75rem; font-family:'IBM Plex Mono', monospace; color:var(--signal);">
+              <strong>PRODUCTION FAIL-SAFE & RELIABILITY GUARANTEE:</strong> ${b.architecture.failSafe}
+            </div>
+
+            ${b.samplePayload ? `
+              <div style="margin-bottom:14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--ink-muted); text-transform:uppercase; font-weight:700;">Simulated JSON Payload Trace</span>
+                    <div style="display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--card);">
+                      <button id="tab-output-${b.id}" onclick="switchPayloadTab('${b.id}', 'output')" style="padding:3px 9px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:700; background:var(--teal); color:#0E1416; border:none; cursor:pointer;">
+                        Resolved Output
+                      </button>
+                      <button id="tab-input-${b.id}" onclick="switchPayloadTab('${b.id}', 'input')" style="padding:3px 9px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:500; background:transparent; color:var(--ink-soft); border:none; cursor:pointer;">
+                        Inbound Payload
+                      </button>
+                    </div>
+                  </div>
+                  <button onclick="copyCurrentPayload('${b.id}', this)" style="font-size:0.72rem; font-family:'IBM Plex Mono', monospace; color:var(--teal); border:none; background:none; cursor:pointer; font-weight:600;">
+                    Copy JSON
                   </button>
-                  <a href="${b.repoUrl || 'https://github.com/imoh-japhet'}" target="_blank" rel="noopener noreferrer" style="padding:5px 10px; border-radius:6px; background:var(--paper); color:var(--ink); font-family:'IBM Plex Mono', monospace; font-size:0.72rem; border:1px solid var(--line); text-decoration:none;">
-                    View Repo ↗
-                  </a>
                 </div>
+                <pre id="payloadCode-${b.id}" style="background:#070B0D; border:1px solid var(--line); border-radius:8px; padding:12px; font-size:0.72rem; font-family:'IBM Plex Mono', monospace; color:var(--teal); max-height:180px; overflow:auto; line-height:1.45;">${JSON.stringify(b.samplePayload.output, null, 2)}</pre>
               </div>
+            ` : ''}
 
-              ${b.beforeAfter ? `
-                <!-- BEFORE AND AFTER SECTION -->
-                <div style="background:var(--paper); border:1px solid var(--line); border-radius:10px; padding:12px; margin-bottom:12px;">
-                  <div style="font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--signal); font-weight:700; margin-bottom:8px;">
-                    ⚡ TRANSFORMATION DELTA: ${b.beforeAfter.delta}
-                  </div>
-                  <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
-                    <div style="background:rgba(239, 68, 68, 0.08); border:1px solid rgba(239, 68, 68, 0.25); border-radius:8px; padding:8px 10px;">
-                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
-                        <strong style="color:#F87171; font-family:'IBM Plex Mono', monospace; font-size:0.68rem;">🔴 BEFORE: MANUAL BOTTLENECK</strong>
-                        <span style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#FCA5A5;">${b.beforeAfter.before ? b.beforeAfter.before.timeSpent : ''}</span>
-                      </div>
-                      <p style="font-size:0.72rem; color:var(--ink-soft); line-height:1.35; margin-bottom:6px;">${b.beforeAfter.before ? b.beforeAfter.before.summary : ''}</p>
-                      ${b.beforeAfter.before && b.beforeAfter.before.painPoints ? `
-                        <div style="border-top:1px solid rgba(239,68,68,0.15); padding-top:4px;">
-                          ${b.beforeAfter.before.painPoints.map(p => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#FCA5A5; margin-bottom:2px;">✕ ${p}</div>`).join('')}
-                        </div>
-                      ` : ''}
-                    </div>
-                    <div style="background:rgba(16, 185, 129, 0.08); border:1px solid rgba(16, 185, 129, 0.25); border-radius:8px; padding:8px 10px;">
-                      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
-                        <strong style="color:#34D399; font-family:'IBM Plex Mono', monospace; font-size:0.68rem;">🟢 AFTER: AUTOMATED PIPELINE</strong>
-                        <span style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#6EE7B7;">${b.beforeAfter.after ? b.beforeAfter.after.efficiencyGain : ''}</span>
-                      </div>
-                      <p style="font-size:0.72rem; color:var(--ink-soft); line-height:1.35; margin-bottom:6px;">${b.beforeAfter.after ? b.beforeAfter.after.summary : ''}</p>
-                      ${b.beforeAfter.after && b.beforeAfter.after.improvements ? `
-                        <div style="border-top:1px solid rgba(16,185,129,0.15); padding-top:4px;">
-                          ${b.beforeAfter.after.improvements.map(im => `<div style="font-family:'IBM Plex Mono', monospace; font-size:0.65rem; color:#6EE7B7; margin-bottom:2px;">✓ ${im}</div>`).join('')}
-                        </div>
-                      ` : ''}
-                    </div>
-                  </div>
-                </div>
-              ` : ''}
-              
-              <div style="background:var(--paper); border:1px solid var(--line); border-radius:8px; padding:10px; margin-bottom:10px; font-size:0.78rem; font-family:'IBM Plex Mono', monospace;">
-                <div style="color:var(--ink); margin-bottom:4px;"><strong>TRIGGER:</strong> ${b.architecture.trigger}</div>
-                <div style="color:var(--ink-soft);"><strong>DISPATCH:</strong> ${b.architecture.output}</div>
-              </div>
-
-              ${b.architecture.diagramSteps ? `
-                <div style="margin-bottom:10px;">
-                  <div style="font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--ink-muted); text-transform:uppercase; margin-bottom:6px;">Pipeline Step Sequence:</div>
-                  <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:6px;">
-                    ${b.architecture.diagramSteps.map(s => {
-                      let tagBg = 'rgba(255, 255, 255, 0.08)';
-                      let tagColor = 'var(--ink-soft)';
-                      let tagLabel = 'PROCESS';
-                      if (s.type === 'trigger') { tagBg = 'rgba(16, 185, 129, 0.15)'; tagColor = '#34D399'; tagLabel = 'TRIGGER'; }
-                      else if (s.type === 'ai') { tagBg = 'rgba(79, 209, 197, 0.15)'; tagColor = 'var(--teal)'; tagLabel = 'AI / LLM'; }
-                      else if (s.type === 'database') { tagBg = 'rgba(59, 130, 246, 0.15)'; tagColor = '#60A5FA'; tagLabel = 'DATA / DB'; }
-                      else if (s.type === 'router') { tagBg = 'rgba(168, 85, 247, 0.15)'; tagColor = '#C084FC'; tagLabel = 'ROUTER'; }
-                      else if (s.type === 'dispatch') { tagBg = 'rgba(245, 166, 35, 0.15)'; tagColor = '#FBBF24'; tagLabel = 'DISPATCH'; }
-                      return `
-                        <div style="background:rgba(255,255,255,0.02); padding:8px 10px; border-radius:8px; border:1px solid var(--line); font-family:'IBM Plex Mono', monospace;">
-                          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-                            <span style="font-size:0.65rem; color:var(--ink-muted);">STEP 0${s.step}</span>
-                            <span style="background:${tagBg}; color:${tagColor}; font-size:0.62rem; font-weight:700; padding:1px 5px; border-radius:3px; text-transform:uppercase;">${tagLabel}</span>
-                          </div>
-                          <strong style="color:var(--ink); font-size:0.75rem; display:block; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${s.name}</strong>
-                          <span style="font-size:0.68rem; color:var(--ink-soft); display:block; line-height:1.25; margin-top:2px;">${s.detail}</span>
-                        </div>
-                      `;
-                    }).join('')}
-                  </div>
-                </div>
-              ` : ''}
-
-              <div style="background:rgba(245, 166, 35, 0.08); border:1px solid rgba(245, 166, 35, 0.3); border-radius:8px; padding:8px 10px; margin-bottom:10px; font-size:0.74rem; font-family:'IBM Plex Mono', monospace; color:var(--signal);">
-                <strong>FAIL-SAFE:</strong> ${b.architecture.failSafe}
-              </div>
-
-              ${b.samplePayload ? `
-                <div style="margin-bottom:10px;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                    <div style="display:flex; align-items:center; gap:6px;">
-                      <span style="font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--ink-muted); text-transform:uppercase; font-weight:700;">PAYLOAD INSPECTOR</span>
-                      <div style="display:inline-flex; border:1px solid var(--line); border-radius:6px; overflow:hidden; background:var(--card);">
-                        <button id="tab-output-${b.id}" onclick="switchPayloadTab('${b.id}', 'output')" style="padding:2px 8px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:700; background:var(--teal); color:#0E1416; border:none; cursor:pointer;">
-                          Resolved Output
-                        </button>
-                        <button id="tab-input-${b.id}" onclick="switchPayloadTab('${b.id}', 'input')" style="padding:2px 8px; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; font-weight:500; background:transparent; color:var(--ink-soft); border:none; cursor:pointer;">
-                          Inbound Payload
-                        </button>
-                      </div>
-                    </div>
-                    <button onclick="copyCurrentPayload('${b.id}', this)" style="font-size:0.7rem; font-family:'IBM Plex Mono', monospace; color:var(--teal); border:none; background:none; cursor:pointer; font-weight:600;">
-                      Copy JSON
-                    </button>
-                  </div>
-                  <pre id="payloadCode-${b.id}" style="background:#070B0D; border:1px solid var(--line); border-radius:6px; padding:10px; font-size:0.7rem; font-family:'IBM Plex Mono', monospace; color:var(--teal); max-height:150px; overflow:auto; line-height:1.4;">${JSON.stringify(b.samplePayload.output, null, 2)}</pre>
-                </div>
-              ` : ''}
-
-              <button onclick="inquireProjectScope('${b.id}')" style="display:block; width:100%; text-align:center; padding:9px; border-radius:8px; background:var(--signal); color:#0E1416; font-size:0.8rem; font-weight:700; border:none; cursor:pointer;">
-                Inquire to Deploy Similar System →
-              </button>
-            </div>
+            <button onclick="inquireProjectScope('${b.id}')" style="display:block; width:100%; text-align:center; padding:11px; border-radius:8px; background:var(--signal); color:#0E1416; font-size:0.85rem; font-weight:700; border:none; cursor:pointer;">
+              Inquire to Deploy Similar System →
+            </button>
           </div>
         </div>
       `).join('');
@@ -2037,11 +2080,29 @@
 
     function toggleStandaloneDrawer(id) {
       const drawer = document.getElementById('drawer-' + id);
+      const card = document.getElementById('build-card-' + id);
+      const btn = document.getElementById('drawer-btn-' + id);
       const arrow = document.getElementById('drawer-arrow-' + id);
+      const label = document.getElementById('drawer-label-' + id);
       if (!drawer) return;
       const isOpen = drawer.style.display !== 'none';
       drawer.style.display = isOpen ? 'none' : 'block';
       if (arrow) arrow.textContent = isOpen ? '▼' : '▲';
+      if (label) label.textContent = isOpen ? 'Technical Blueprint' : 'Hide Blueprint';
+      if (btn) {
+        if (isOpen) {
+          btn.style.background = 'rgba(255,255,255,0.04)';
+          btn.style.color = 'var(--ink)';
+          btn.style.borderColor = 'var(--line)';
+        } else {
+          btn.style.background = 'var(--teal)';
+          btn.style.color = '#0E1416';
+          btn.style.borderColor = 'var(--teal)';
+        }
+      }
+      if (card) {
+        card.style.borderColor = isOpen ? 'var(--card-border)' : 'var(--teal)';
+      }
     }
 
     function toggleAllStandaloneDrawers() {
@@ -2053,6 +2114,23 @@
       });
       document.querySelectorAll('[id^="drawer-arrow-"]').forEach(a => {
         a.textContent = anyClosed ? '▲' : '▼';
+      });
+      document.querySelectorAll('[id^="drawer-label-"]').forEach(l => {
+        l.textContent = anyClosed ? 'Hide Blueprint' : 'Technical Blueprint';
+      });
+      document.querySelectorAll('[id^="drawer-btn-"]').forEach(b => {
+        if (anyClosed) {
+          b.style.background = 'var(--teal)';
+          b.style.color = '#0E1416';
+          b.style.borderColor = 'var(--teal)';
+        } else {
+          b.style.background = 'rgba(255,255,255,0.04)';
+          b.style.color = 'var(--ink)';
+          b.style.borderColor = 'var(--line)';
+        }
+      });
+      document.querySelectorAll('[id^="build-card-"]').forEach(c => {
+        c.style.borderColor = anyClosed ? 'var(--teal)' : 'var(--card-border)';
       });
       if (btn) {
         btn.innerHTML = anyClosed ? '<span>⚡ Collapse All Drawers</span>' : '<span>⚡ Expand All Blueprints</span>';
