@@ -431,6 +431,58 @@
     .sim-btn:hover { border-color: var(--teal); color: var(--teal); }
     .sim-btn.active-zap { border-color: var(--signal); color: var(--signal); background: rgba(245, 166, 35, 0.08); }
     
+    .video-walkthrough-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 12px;
+      background: rgba(79, 209, 197, 0.15);
+      border: 1px solid rgba(79, 209, 197, 0.4);
+      color: #4FD1C5;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 14px rgba(79, 209, 197, 0.1);
+    }
+    .video-walkthrough-btn:hover {
+      background: rgba(79, 209, 197, 0.25);
+      border-color: #4FD1C5;
+      color: #76E4D7;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(79, 209, 197, 0.2);
+    }
+    .video-walkthrough-btn:active {
+      transform: scale(0.98);
+    }
+    .simulator-jump-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--line);
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .simulator-jump-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--ink);
+      border-color: var(--teal);
+      transform: translateY(-1px);
+    }
+    .simulator-jump-btn:active {
+      transform: scale(0.98);
+    }
+
     .live-console {
       background: #090E10;
       border: 1px solid var(--line);
@@ -1326,13 +1378,19 @@
         Presented by Imoh Japhet as the capstone project for the Cybervast AI Automation Cohort: an end-to-end automated system that tracks student referrals, calculates error-free commissions, and delivers monthly earnings statements without touching a spreadsheet—saving ~176 hours of manual bookkeeping every month.
       </p>
 
-      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:14px; margin-bottom:18px;">
-        <button type="button" onclick="openVideoModal('https://youtu.be/efCbtNRc_14?si=-0N9ZGJhhqBu6u-c', 'Cybervast Ambassador's Commission Automation — Full Architecture & Walkthrough', 'Zapier + Airtable 3-Zap Referral Pipeline', 'Zero manual steps between referral submission and verified 20% commission disbursement.', ['Zapier (3 Connected Zaps)', 'Airtable Relational CRM', 'Gmail API', 'Google Forms'])" style="display:inline-flex; align-items:center; gap:8px; padding:10px 18px; border-radius:10px; background:rgba(79, 209, 197, 0.15); border:1px solid rgba(79, 209, 197, 0.4); color:var(--teal); font-family:'IBM Plex Mono', monospace; font-size:0.82rem; font-weight:600; cursor:pointer;">
-          <span style="font-size:0.9rem;">▶</span> Watch Video Walkthrough <span style="background:rgba(79, 209, 197, 0.2); padding:2px 6px; border-radius:4px; font-size:0.7rem;">Demo</span>
+      <!-- Video Presentation & Simulator Navigation Bridge -->
+      <div style="display:flex; flex-wrap:wrap; align-items:center; gap:12px; margin-top:18px; margin-bottom:22px;">
+        <button type="button" onclick="openVideoModal('https://youtu.be/efCbtNRc_14?si=-0N9ZGJhhqBu6u-c', 'Cybervast Ambassador's Commission Automation — Full Architecture & Walkthrough', 'Zapier + Airtable 3-Zap Referral Pipeline', 'Zero manual steps between referral submission and verified 20% commission disbursement.', ['Zapier (3 Connected Zaps)', 'Airtable Relational CRM', 'Gmail API', 'Google Forms'])" class="video-walkthrough-btn">
+          <span style="font-size:0.85rem; color:#4FD1C5;">▶</span>
+          <span>Watch Video Walkthrough</span>
+          <span style="font-size:10px; color:#4FD1C5; background:rgba(79, 209, 197, 0.25); padding:2px 7px; border-radius:4px; font-family:'IBM Plex Mono', monospace; font-weight:700;">YouTube Demo ↗</span>
         </button>
+        <a href="#live-simulator" onclick="jumpToSimulator(event)" class="simulator-jump-btn">
+          <span>Test Interactive Simulator Below ↓</span>
+        </a>
       </div>
 
-      <div class="flagship-box">
+      <div class="flagship-box" id="live-simulator">
         <div class="sim-bar">
           <div>
             <strong style="font-size:1.1rem; color:var(--ink);">Interactive Production Pipeline Simulator</strong>
@@ -5664,11 +5722,11 @@ export function verifyWebhookSignature(payloadString, signatureHeader, secretKey
 
     function jumpToSimulator(e) {
       if (e && e.preventDefault) e.preventDefault();
-      const target = document.getElementById('work') || document.getElementById('simulator');
+      const target = document.getElementById('live-simulator') || document.getElementById('work') || document.getElementById('simulator');
       if (target) {
         target.scrollIntoView({ behavior: 'smooth' });
         setTimeout(() => {
-          const box = document.querySelector('.flagship-box');
+          const box = document.getElementById('live-simulator') || document.querySelector('.flagship-box');
           if (box) {
             box.classList.add('spotlight-pulse');
             setTimeout(() => box.classList.remove('spotlight-pulse'), 2200);
